@@ -11,7 +11,7 @@ class Game:
     def __init__(self) -> None:
         pg.init()
         self.Tela = pg.display.set_mode(TELA_RESOLUCAO)
-        self.fonte = pg.font.SysFont('arial', 12, True, False)
+        self.fonte = pg.font.SysFont('arial', 19, True, False)
         self.Relogio = pg.time.Clock()
         self.Tempo = TEMPO_LUTA
         self.Diretorio = os.path.dirname(__file__)
@@ -29,7 +29,7 @@ class Game:
                 sys.exit()
 
         self.Player01.eventos()
-        # self.Player02.eventos()
+        self.Player02.eventos()
         
     def atualizar(self):        
         self.Relogio.tick(FPS)
@@ -46,7 +46,7 @@ class Game:
         self.Estagio.desenhar() 
 
         self.Player01.desenhar() 
-        # self.Player02.desenhar()     
+        self.Player02.desenhar()     
           
         self.Placar.desenhar()       
         

@@ -26,18 +26,27 @@ class Estagio:
         chao = pg.image.load(os.path.join(self.game.Imagens, "chao.png"))
         
         eixoY = 100
+        eixoX = ((TELA_LARGURA // 2) * -1)
 
-        if self.game.Player01.direcao == 1 and self.hx > 0:
+        # CHAO DIREITA
+        if self.game.Player01.direcao == 1 and self.game.Player02.direcao == 1:
             self.hx += 1
-        elif self.game.Player01.direcao == 2 and self.hx < (TELA_LARGURA):
-            self.hx -= 1
+            eixoX += 1
+        # CHAO ESQUERDA
+        elif self.game.Player01.direcao == 2 and self.game.Player02.direcao == 2:
+            if self.hx < (TELA_LARGURA):
+                self.hx -= 1
+                eixoX -= 1
         
-        if self.game.Player01.pulo == 0:
-            eixoY = 100
-        else:
+        if self.game.Player01.pulo > 0 and self.game.Player02.pulo > 0:
             eixoY -= 5
 
         self.game.Tela.blit(pg.transform.scale(chao, (TELA_LARGURA * 2, 100)), (self.hx, TELA_ALTURA - eixoY))
+
+        if DEBUG:            
+            chaotext = f'chão x: {eixoX} y: {eixoY}'
+            texto = self.game.fonte.render(chaotext, True, 'Red')                
+            self.game.Tela.blit(texto, (5 , TELA_ALTURA_CHAO))
 
     def desenhar(self):
         self.fundo()

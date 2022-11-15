@@ -5,16 +5,22 @@ from data import *
 
 class Player01:
     def __init__(self, game) -> None:
-        self.game = game                        
-        self.Bloco = ryu[0]
-        self.sprites = ryu[1]
+        self.game = game                          
+        self.Bloco = pg.Rect(((TELA_LARGURA // 4)), (TELA_ALTURA_CHAO - 150), 80, 150 )
+        self.sprites = ryu[0]
         self.velx = 3
         self.vely = 6
         self.pulo = 0    
+        self.esquerda = True
+        self.limite_esquerdo = False
+        self.limite_direito = False
         self.saude = BARRA_ENERGIA            
-        self.direcao = 0 #0 = parado, 1 = esquerda, 2 = direita
+        self.direcao = 0 #0 = parado, 1 = esquerda, 2 = direita, 3 = agacha, 4 = pulo
 
     def eventos(self):
+        self.esquerda = (self.Bloco.x < self.game.Player02.Bloco.x)
+        self.limite_direito = False
+        self.limite_esquerdo = False
 
         if self.game.Tempo > 0 and self.saude > 0 or TEMPO_LUTA == -99:
             tecla = pg.key.get_pressed()
@@ -22,28 +28,43 @@ class Player01:
             # Diagonal esquerda
             if tecla[pg.K_w] and self.pulo == 0 and tecla[pg.K_a]:
                 self.pulo = 1
-                self.direcao = 1
+                self.direcao = 5
             # Diagonal Direita
             elif tecla[pg.K_w] and self.pulo == 0 and tecla[pg.K_d]:
                 self.pulo = 1
-                self.direcao = 2
-
-            # Pulo
-            if tecla[pg.K_w] and self.pulo == 0 :
-                self.pulo = 1
-            # Agacha
-            elif tecla[pg.K_s] and dy < (TELA_ALTURA - self.Bloco.h):            
-                self.direcao = 3
-        
+                self.direcao = 6
+                    
             if self.pulo == 0:  
+                
                 # Esquerda
                 if tecla[pg.K_a]:                            
                     self.direcao = 1
+
+                    #colisão esquerda
+                    if self.esquerda == False and self.game.Player02.pulo == 0:
+                        if self.Bloco.x <= (self.game.Player02.Bloco.x + self.game.Player02.Bloco.w):
+                            self.direcao = 0
+                            self.limite_esquerdo = True
+
                 # Direita
-                elif tecla[pg.K_d]:                            
+                elif tecla[pg.K_d]:                     
                     self.direcao = 2
+
+                    #colisão direita
+                    if self.esquerda and self.game.Player02.pulo == 0:
+                        if (self.Bloco.x + self.Bloco.w) >= self.game.Player02.Bloco.x:
+                            self.direcao = 0
+                            self.limite_direito = True                            
                 else:
                     self.direcao = 0
+                
+                # Pulo
+                if tecla[pg.K_w] :
+                    self.pulo = 1
+                    self.direcao = 4
+                # Agacha
+                elif tecla[pg.K_s] :
+                    self.direcao = 3
 
     def atualizar(self):
         global dx
@@ -52,10 +73,10 @@ class Player01:
         dx = self.Bloco.x
         dy = self.Bloco.y
         
-        # esquerda direita
-        if self.direcao == 1 and dx > 0:
+        # esquerda direita        
+        if self.direcao in [1,5] and dx > 0:
             dx -= self.velx
-        elif self.direcao == 2 and dx < (TELA_LARGURA - self.Bloco.w):
+        elif self.direcao in [2,6] and dx < (TELA_LARGURA - self.Bloco.w):
             dx += self.velx        
 
         #pulo
@@ -76,15 +97,6 @@ class Player01:
         self.Bloco.y = dy
 
     def desenhar(self):                                
-        redenderizar(self.game.Tela,'Blue', (self.Bloco.x,self.Bloco.y, self.Bloco.w, self.Bloco.h))
+        redenderizar(self.game.Tela,'Blue', self.Bloco)
 
-        if DEBUG:
-            msg = f'x:{self.Bloco.x} y:{self.Bloco.y}'
-            texto = self.game.fonte.render(msg, True, 'Blue')        
-            self.game.Tela.blit(texto, (self.Bloco.x + 5, self.Bloco.y))
-
-            chaotext = f'chao:{(TELA_ALTURA - (TELA_ALTURA_CHAO - self.Bloco.h))}'
-            texto = self.game.fonte.render(chaotext, True, 'Blue')                
-            self.game.Tela.blit(texto, (self.Bloco.x, (TELA_ALTURA_CHAO ) ))
-        
-        # self.game.Tela.blit(self.sprites, self.Bloco)
+        informacoes(self.game,'Blue', f'P1 e:{self.esquerda} x:{self.Bloco.x} y:{self.Bloco.y} w:{self.Bloco.w} d:{self.direcao}', 10, 100)            
