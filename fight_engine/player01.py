@@ -7,7 +7,7 @@ class Player01:
     def __init__(self, game) -> None:
         self.game = game                          
         self.Bloco = pg.Rect(((TELA_LARGURA // 4)), (TELA_ALTURA_CHAO - 150), 80, 150 )
-        self.sprites = ryu[0]
+        self.sprites = pg.image.load(os.path.join(self.game.Imagens, ryu[0]))
         self.velx = 3
         self.vely = 6
         self.pulo = 0    
@@ -98,5 +98,9 @@ class Player01:
 
     def desenhar(self):                                
         redenderizar(self.game.Tela,'Blue', self.Bloco)
+
+        #adicionar Surface
+        self.game.Tela.blit(pg.transform.scale(self.sprites, (self.Bloco.w, self.Bloco.h)), (self.Bloco.x, self.Bloco.y))
+
 
         informacoes(self.game,'Blue', f'P1 e:{self.esquerda} x:{self.Bloco.x} y:{self.Bloco.y} w:{self.Bloco.w} d:{self.direcao}', 10, 100)            
