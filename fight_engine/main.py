@@ -3,7 +3,9 @@ import os
 import sys
 from settings import *
 from player01 import *
+from player02 import *
 from stage import *
+from placar import *
 
 class Game:
     def __init__(self) -> None:
@@ -11,11 +13,14 @@ class Game:
         self.Tela = pg.display.set_mode(TELA_RESOLUCAO)
         self.fonte = pg.font.SysFont('arial', 12, True, False)
         self.Relogio = pg.time.Clock()
-        self.Diretorio = os.path.basename(__file__)
+        self.Tempo = TEMPO_LUTA
+        self.Diretorio = os.path.dirname(__file__)
         self.Imagens = os.path.join(self.Diretorio, 'imagens')
         self.Objetos = []
         self.Player01 = Player01(self)
+        self.Player02 = Player02(self)
         self.Estagio = Estagio(self)
+        self.Placar = Placar(self)
 
     def eventos(self):
         for evento in pg.event.get():
@@ -24,18 +29,27 @@ class Game:
                 sys.exit()
 
         self.Player01.eventos()
-
+        # self.Player02.eventos()
+        
     def atualizar(self):        
-        self.Player01.atualizar()
         self.Relogio.tick(FPS)
+
+        self.Player01.atualizar()
+        self.Player02.atualizar()
+        
+        self.Placar.atualizar()
         pg.display.flip()
+    
 
     def desenhar(self):
         self.Tela.fill((255,255,255))
         self.Estagio.desenhar() 
-        self.Player01.desenhar()       
-        
 
+        self.Player01.desenhar() 
+        # self.Player02.desenhar()     
+          
+        self.Placar.desenhar()       
+        
     def executar(self):    
         while True:
             self.eventos()

@@ -3,7 +3,7 @@ from util import *
 from settings import *
 from data import *
 
-class Player01:
+class Player02:
     def __init__(self, game) -> None:
         self.game = game                        
         self.Bloco = ryu[0]
@@ -15,7 +15,6 @@ class Player01:
         self.direcao = 0 #0 = parado, 1 = esquerda, 2 = direita
 
     def eventos(self):
-
         if self.game.Tempo > 0 and self.saude > 0 or TEMPO_LUTA == -99:
             tecla = pg.key.get_pressed()
 
@@ -76,15 +75,15 @@ class Player01:
         self.Bloco.y = dy
 
     def desenhar(self):                                
-        redenderizar(self.game.Tela,'Blue', (self.Bloco.x,self.Bloco.y, self.Bloco.w, self.Bloco.h))
+        redenderizar(self.game.Tela,'Red', (self.Bloco.x,self.Bloco.y, self.Bloco.w, self.Bloco.h))
 
         if DEBUG:
             msg = f'x:{self.Bloco.x} y:{self.Bloco.y}'
-            texto = self.game.fonte.render(msg, True, 'Blue')        
+            texto = self.game.fonte.render(msg, True, 'Red')        
             self.game.Tela.blit(texto, (self.Bloco.x + 5, self.Bloco.y))
 
             chaotext = f'chao:{(TELA_ALTURA - (TELA_ALTURA_CHAO - self.Bloco.h))}'
-            texto = self.game.fonte.render(chaotext, True, 'Blue')                
+            texto = self.game.fonte.render(chaotext, True, 'Red')                
             self.game.Tela.blit(texto, (self.Bloco.x, (TELA_ALTURA_CHAO ) ))
         
         # self.game.Tela.blit(self.sprites, self.Bloco)
