@@ -1,6 +1,6 @@
 
 DEBUG = True
-TEMPO_LUTA = 5 #-99 = Infinito
+TEMPO_LUTA = 99 #-99 = Infinito
 
 TELA_LARGURA = 900
 TELA_ALTURA = 600
