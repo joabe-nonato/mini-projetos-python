@@ -169,39 +169,54 @@ class Player01:
             if int(self.indice) > limite:
                 self.indice = limite            
             sprt = pg.sprite.Sprite(sprites)        
-            sprt.image = parado[int(self.indice)]
+            if self.esquerda:
+                sprt.image = parado[int(self.indice)]
+            else:
+                sprt.image = pg.transform.flip(parado[int(self.indice)], True, False)
             sprt.rect = pg.Rect(self.Bloco.x,self.Bloco.y,5,5) 
 
         if self.direcao == 1:                         
             limite = len(tras) - 1         
             if int(self.indice) > limite:
                 self.indice = limite
-            sprt = pg.sprite.Sprite(sprites)                    
-            sprt.image = tras[int(self.indice)]
+            sprt = pg.sprite.Sprite(sprites)      
+            if self.esquerda:
+                sprt.image = tras[int(self.indice)]
+            else:
+                sprt.image = pg.transform.flip(tras[int(self.indice)], True, False)
             sprt.rect = pg.Rect(self.Bloco.x,self.Bloco.y, self.Bloco.w ,self.Bloco.h) 
 
         if self.direcao == 2:                         
             limite = len(frente) - 1         
             if int(self.indice) > limite:
                 self.indice = limite
-            sprt = pg.sprite.Sprite(sprites)                    
-            sprt.image = frente[int(self.indice)]
+            sprt = pg.sprite.Sprite(sprites)         
+            if self.esquerda:
+                sprt.image = frente[int(self.indice)]
+            else:
+                sprt.image = pg.transform.flip(frente[int(self.indice)], True, False)
             sprt.rect = pg.Rect(self.Bloco.x,self.Bloco.y, self.Bloco.w ,self.Bloco.h)        
 
         if self.direcao == 3:                         
             limite = len(agachado) - 1         
             if int(self.indice) > limite:
                 self.indice = limite
-            sprt = pg.sprite.Sprite(sprites)                    
-            sprt.image = agachado[int(self.indice)]
+            sprt = pg.sprite.Sprite(sprites)           
+            if self.esquerda:
+                sprt.image = agachado[int(self.indice)]
+            else:
+                sprt.image = pg.transform.flip(agachado[int(self.indice)], True, False)
             sprt.rect = pg.Rect(self.Bloco.x,self.Bloco.y, self.Bloco.w ,self.Bloco.h) 
 
         if self.direcao == 4:                         
             limite = len(pulo) - 1         
             if int(self.indice) > limite:
                 self.indice = limite
-            sprt = pg.sprite.Sprite(sprites)                    
-            sprt.image = pulo[int(self.indice)]
+            sprt = pg.sprite.Sprite(sprites)       
+            if self.esquerda:
+                sprt.image = pulo[int(self.indice)]
+            else:
+                sprt.image = pg.transform.flip(pulo[int(self.indice)], True, False)
             sprt.rect = pg.Rect(self.Bloco.x,self.Bloco.y, self.Bloco.w ,self.Bloco.h) 
 
 
@@ -209,23 +224,31 @@ class Player01:
             limite = len(pulo_tras) - 1         
             if int(self.indice) > limite:
                 self.indice = limite
-            sprt = pg.sprite.Sprite(sprites)                    
-            sprt.image = pulo_tras[int(self.indice)]
+            sprt = pg.sprite.Sprite(sprites)            
+            if self.esquerda:
+                sprt.image = pulo_tras[int(self.indice)]
+            else:
+                sprt.image = pg.transform.flip(pulo_tras[int(self.indice)], True, False)
             sprt.rect = pg.Rect(self.Bloco.x,self.Bloco.y, self.Bloco.w ,self.Bloco.h)
 
         if self.direcao == 6:                         
             limite = len(pulo_frente) - 1         
             if int(self.indice) > limite:
                 self.indice = limite
-            sprt = pg.sprite.Sprite(sprites)                    
-            sprt.image = pulo_frente[int(self.indice)]
+            sprt = pg.sprite.Sprite(sprites)              
+            if self.esquerda:
+                sprt.image = pulo_frente[int(self.indice)]
+            else:
+                sprt.image = pg.transform.flip(pulo_frente[int(self.indice)], True, False)
             sprt.rect = pg.Rect(self.Bloco.x,self.Bloco.y, self.Bloco.w ,self.Bloco.h)
 
+
+        
         if self.game.luta_encerrada and self.Bloco.y == (TELA_ALTURA_CHAO - 290):
             limite = len(vitoria) - 1         
             if int(self.indice) > limite:
                 self.indice = limite
-            sprt = pg.sprite.Sprite(sprites)                    
+            sprt = pg.sprite.Sprite(sprites)                                
             sprt.image = vitoria[int(self.indice)]
             sprt.rect = pg.Rect(self.Bloco.x,self.Bloco.y, self.Bloco.w ,self.Bloco.h)
 
