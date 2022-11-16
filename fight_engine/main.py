@@ -14,6 +14,7 @@ class Game:
         self.fonte = pg.font.SysFont('arial', 19, True, False)
         self.Relogio = pg.time.Clock()
         self.Tempo = TEMPO_LUTA
+        self.luta_encerrada = False
         self.Diretorio = os.path.dirname(__file__)
         self.Imagens = os.path.join(self.Diretorio, 'imagens')
         self.Objetos = []
@@ -43,8 +44,8 @@ class Game:
 
     def desenhar(self):
         self.Tela.fill((255,255,255))
-        self.Estagio.desenhar() 
 
+        self.Estagio.desenhar() 
         self.Player01.desenhar() 
         self.Player02.desenhar()     
           

@@ -3,11 +3,61 @@ from util import *
 from settings import *
 from data import *
 
+parado = []
+frente = []
+tras = []
+agachado = []
+pulo = []
+pulo_frente = []
+pulo_tras = []
+
+animacao = [parado, frente, tras, agachado]
+
+def carregar_personagem(self):
+    spritesheet = pg.image.load(os.path.join(self.game.Imagens, self.personagem[0]))    
+    # parado.append(self.personagem[1])
+
+    for posicao in self.personagem[1]:
+        imagem = spritesheet.subsurface(posicao)
+        imagem = pg.transform.scale(imagem, (self.Bloco.w, self.Bloco.h))
+        parado.append(imagem)
+
+    for posicao in self.personagem[2]:
+        imagem = spritesheet.subsurface(posicao)
+        imagem = pg.transform.scale(imagem, (self.Bloco.w, self.Bloco.h))
+        frente.append(imagem)
+
+    for posicao in self.personagem[3]:
+        imagem = spritesheet.subsurface(posicao)
+        imagem = pg.transform.scale(imagem, (self.Bloco.w, self.Bloco.h))
+        tras.append(imagem)
+
+    for posicao in self.personagem[4]:
+        imagem = spritesheet.subsurface(posicao)
+        imagem = pg.transform.scale(imagem, (self.Bloco.w, self.Bloco.h))
+        agachado.append(imagem)
+
+    for posicao in self.personagem[5]:
+        imagem = spritesheet.subsurface(posicao)
+        imagem = pg.transform.scale(imagem, (self.Bloco.w, self.Bloco.h))
+        pulo.append(imagem)
+
+    for posicao in self.personagem[6]:
+        imagem = spritesheet.subsurface(posicao)
+        imagem = pg.transform.scale(imagem, (self.Bloco.w, self.Bloco.h))
+        pulo_frente.append(imagem)
+
+    reverter = self.personagem[6]
+    for posicao in reverter[::-1]:
+        imagem = spritesheet.subsurface(posicao)
+        imagem = pg.transform.scale(imagem, (self.Bloco.w, self.Bloco.h))
+        pulo_tras.append(imagem)
+
 class Player02:
     def __init__(self, game) -> None:
         self.game = game                        
-        self.Bloco = pg.Rect(((TELA_LARGURA // 2)), (TELA_ALTURA_CHAO - 150), 80, 150 )
-        self.sprites = ryu[0]
+        self.Bloco = pg.Rect(((TELA_LARGURA // 2)), (TELA_ALTURA_CHAO - 250), 120, 250 )
+        self.sprites = personagem[0]
         self.velx = 3
         self.vely = 6
         self.pulo = 0    
@@ -81,7 +131,7 @@ class Player02:
 
         #pulo
         if self.pulo == 1:
-            if self.Bloco.y > self.Bloco.h:
+            if self.Bloco.y > 30:
                 dy -= self.vely
             else:
                 self.pulo = 2
