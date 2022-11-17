@@ -1,3 +1,4 @@
+from movimentos import *
 # indice 0 = spritesheet
 # indice 1 = parado
 # indice 2 = frente
@@ -6,71 +7,98 @@
 # indice 5 = pulo
 # indice 6 = pulo_frente
 # indice 7 = pulo_tras
+spritesheet = "ryu.png"
 
-dimensao_padrao = (0,0)
+dimensao_padrao = (180, 290)
+colisao_padrao = []
 
-# [[(IMAGEM), (DIMENSAO)], [(COLISAO15),(COLISAO10),(COLISAO05)]]
+# [[(DIMENSOES IMAGEM ORIGEM), (DIMENSAO IMAGEM DESTINO), [(COLISAO6),(COLISAO3),(COLISAO01)]]]
 
 parado = [
-((0,0), (60,100))
-,((68,0), (60,100))
-,((135,0), (60,100))
-,((204,0), (60,100))
-,((270,0), (60,100))
+ [((0,0),  (60,100)), dimensao_padrao]
+,[((68,0), (60,100)), dimensao_padrao]
+,[((135,0),(60,100)), dimensao_padrao]
+,[((204,0),(60,100)), dimensao_padrao]
+,[((270,0),(60,100)), dimensao_padrao]
 ]
 
 frente = [
-    ((2,115), (63,100))
-, ((69,115), (70,100))
-, ((145,115), (70,100))
-, ((222,115), (65,100))
-, ((300,115), (65,100))
-, ((364,115), (55,100)) 
+# [((2,115),  (60,100)), dimensao_padrao],
+[((71,115), (65,100)), (200, 290)],
+[((145,115),(65,100)), (200, 290)],
+[((222,115),(65,100)), (200, 290)],
+[((300,115),(65,100)), (200, 290)],
+[((357,115),(65,100)), (200, 290)]
 ]
 
-tras = [((423,115), (65,100)), ((486,115), (65,100)), ((550,115), (65,100)), ((622,115), (65,100)), ((698,115), (65,100)), ((769,115), (65,100))]
+tras = [
+[((423,109), (60,100)), dimensao_padrao],
+[((486,109), (60,100)), dimensao_padrao],
+[((550,109), (60,100)), dimensao_padrao],
+[((622,109), (60,100)), dimensao_padrao],
+[((698,111), (60,100)), dimensao_padrao],
+[((769,111), (65,100)), (200, 290)],
+]
 
-agachado = [((543,0), (60,100)), ((604,0), (60,100)), ((672,0), (63,100))]
+agachado = [
+[((543,0), (60,100)), dimensao_padrao],
+[((604,0), (60,100)), dimensao_padrao],
+[((672,0), (63,100)), dimensao_padrao],
+]
 
-pulo = [((1,260), (60,100)), ((60,237), (60,100)), ((131,226), (60,100)), ((190,226), (60,100)), ((251,233), (60,100)), ((311,227), (55,100)), ((368,238), (56,110))]
+pulo = [
+[((60,237), (60,100)), dimensao_padrao],
+[((131,226), (60,100)), dimensao_padrao],
+[((190,226), (60,100)), dimensao_padrao],
+[((251,233), (60,100)), dimensao_padrao],
+[((311,227), (55,100)), dimensao_padrao],
+[((368,238), (56,110)), dimensao_padrao],
+]
 
-pulo_diagonal = [((368,238), (56,110)), ((435,254), (61,79)), ((500,252), (105,43)), ((609,234), (54,82)), ((669,251), (122,45)), ((797,252), (72,87)), ((368,238), (56,110))]
+pulo_frente = [
+[((368,238), (56,110)), dimensao_padrao],
+[((435,254), (61,79)), dimensao_padrao],
+[((500,252), (105,43)), (280,160)],
+[((609,234), (54,82)), dimensao_padrao],
+[((669,251), (122,45)), (280,160)],
+[((797,252), (72,87)), dimensao_padrao],
+[((368,238), (56,110)), dimensao_padrao],
+]
 
-vitoria = [((358,1913), (65,100)), ((424,1913), (65,100)), ((497,1913), (65,100)), ((570,1887), (60,125)), ((631,1897), (60,115))]
+pulo_tras = [
+[((368,238), (56,110)), dimensao_padrao],
+[((435,254), (61,79)), dimensao_padrao],
+[((500,252), (105,43)), (280,160)],
+[((609,234), (54,82)), dimensao_padrao],
+[((669,251), (122,45)), (280,160)],
+[((797,252), (72,87)), dimensao_padrao],
+[((368,238), (56,110)), dimensao_padrao],
+]
 
-derrota = []
-
-socoforte = []
-socomedia = []
-socofraco = []
-
-chuteforte = []
-chutemedia = []
-chutefraco = []
-
-voadoraforte = []
-voadoramedia = []
-voadorafraco = []
-
-especial01 = []
-especial02 = []
-especial03 = []
-especial04 = []
-especial05 = []
-especial06 = []
-especial07 = []
-especial08 = []
-especial09 = []
-especial10 = []
+vitoria = [
+[((358,1913), (65,100)), dimensao_padrao],
+[((424,1913), (65,100)), dimensao_padrao],
+[((497,1913), (65,100)), dimensao_padrao],
+[((570,1887), (60,125)), dimensao_padrao],
+[((631,1897), (60,115)), dimensao_padrao],
+]
 
 
-ryu=["ryu.png"
+socoforte = [
+[((0,359), (90,91)), (265, 285)],
+[((91,359),(94,91)), (270, 285)],
+[((0,359), (90,91)), (265, 285)],
+]
+
+personagem = [
+    spritesheet
     , parado
     , frente
     , tras
     , agachado
     , pulo
-    , pulo_diagonal
+    , pulo_frente
+    , pulo_frente
     , vitoria
     , derrota
     , socoforte 

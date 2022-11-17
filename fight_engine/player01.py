@@ -1,46 +1,47 @@
-from select import select
-from tkinter import SEL
 import pygame as pg
 from util import *
 from settings import *
 from data import *
 
-spritesheet = ''
-parado = []
-frente = []
-tras = []
-agachado = []
-pulo = []
-pulo_diagonal = []
-vitoria = []
-derrota = []
-socoforte  = []
-socomedia  = []
-socofraco  = []
-chuteforte = []
-chutemedia = []
-chutefraco = []
-voadoraforte = []
-voadoramedia = []
-voadorafraco = []
-especial01  = []
-especial02  = []
-especial03  = []
-especial04  = []
-especial05  = []
-especial06  = []
-especial07 = []
-especial08 = []
-especial09 = []
-especial10 = []
+selecionado = 0
 personagem_altura_chao = (TELA_ALTURA_CHAO - 290)
+
+spritesheet = ''
+parado = []                 
+frente = []                 
+tras = []                   
+agachado = []                   
+pulo = []                   
+pulo_frente = []
+pulo_tras = []                  
+vitoria = []                    
+derrota = []                    
+socoforte  = []                 
+socomedia  = []                 
+socofraco  = []                 
+chuteforte = []                 
+chutemedia = []                 
+chutefraco = []                 
+voadoraforte = []                   
+voadoramedia = []                   
+voadorafraco = []                   
+especial01  = []                    
+especial02  = []                    
+especial03  = []                    
+especial04  = []                    
+especial05  = []                    
+especial06  = []                    
+especial07 = []                 
+especial08 = []                 
+especial09 = []                 
+especial10 = []  
 
 class Player01:
     def __init__(self, game) -> None:
         self.game = game        
         self.indice = 0                  
         self.Bloco = pg.Rect(((TELA_LARGURA // 4)), personagem_altura_chao, 180, 290 )
-        self.personagem = personagem[0]        
+        self.personagem = personagem[selecionado]        
         # self.sprites = self.Grupo()
         self.velx = 3
         self.vely = 6
@@ -51,7 +52,13 @@ class Player01:
         self.saude = BARRA_ENERGIA            
         self.direcao = 0 #0 = parado, 1 = esquerda, 2 = direita, 3 = agacha, 4 = pulo
         
-        animacao_comportamento(self, spritesheet, parado, frente, tras, agachado, pulo, pulo_diagonal, vitoria, derrota, socoforte , socomedia , socofraco , chuteforte, chutemedia, chutefraco, voadoraforte, voadoramedia, voadorafraco, especial01 , especial02 , especial03 , especial04 , especial05 , especial06 , especial07, especial08, especial09, especial10)
+        animacao_comportamento(self, spritesheet, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, vitoria, derrota, socoforte , socomedia , socofraco , chuteforte, chutemedia, chutefraco, voadoraforte, voadoramedia, voadorafraco, especial01 , especial02 , especial03 , especial04 , especial05 , especial06 , especial07, especial08, especial09, especial10)
+
+    def golpe(self):
+        tecla = pg.key.get_pressed()        
+        # SOCO FORTE
+        if tecla[pg.K_KP1]:
+            self.direcao = 10
 
     def eventos(self):
         self.esquerda = (self.Bloco.x < self.game.Player02.Bloco.x)
@@ -75,7 +82,7 @@ class Player01:
                     self.indice = 0
                     
             if self.pulo == 0:  
-                
+
                 # Esquerda
                 if tecla[pg.K_a]:                            
                     self.direcao = 1
@@ -106,7 +113,8 @@ class Player01:
                 # Agacha
                 elif tecla[pg.K_s] :
                     self.direcao = 3
-
+            
+            self.golpe()
         else:
             self.game.luta_encerrada = True
 
@@ -117,9 +125,10 @@ class Player01:
         dx = self.Bloco.x
         dy = self.Bloco.y
         
-        # esquerda direita        
+        # esquerda 
         if self.direcao in [1,5] and dx > 0:
             dx -= self.velx
+         # direita        
         elif self.direcao in [2,6] and dx < (TELA_LARGURA - self.Bloco.w):
             dx += self.velx        
 
@@ -144,7 +153,7 @@ class Player01:
         
         # executar animações
         sprites = pg.sprite.Group()  
-        animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_diagonal, vitoria, derrota, socoforte , socomedia , socofraco , chuteforte, chutemedia, chutefraco, voadoraforte, voadoramedia, voadorafraco, especial01 , especial02 , especial03 , especial04 , especial05 , especial06 , especial07, especial08, especial09, especial10)
+        animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, vitoria, derrota, socoforte , socomedia , socofraco , chuteforte, chutemedia, chutefraco, voadoraforte, voadoramedia, voadorafraco, especial01 , especial02 , especial03 , especial04 , especial05 , especial06 , especial07, especial08, especial09, especial10)
         sprites.draw(self.game.Tela)
 
         # imagemteste = pg.image.load(os.path.join(self.game.Imagens, "teste.png")).convert_alpha()

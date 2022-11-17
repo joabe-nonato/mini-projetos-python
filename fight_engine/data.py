@@ -1,7 +1,12 @@
-from elenco.ryu import ryu
-from elenco.ken import ken
+import elenco.ryu as ryu
+import elenco.ken as ken
 
-personagem = [ryu, ken]
+personagem = [
+ryu.personagem, 
+ken.personagem
+]
+
+
 
 cenario = []
 

@@ -3,61 +3,45 @@ from util import *
 from settings import *
 from data import *
 
-parado = []
-frente = []
-tras = []
-agachado = []
-pulo = []
+selecionado = 1
+personagem_altura_chao = (TELA_ALTURA_CHAO - 290)
+spritesheet = ''
+
+parado = []                 
+frente = []                 
+tras = []                   
+agachado = []                   
+pulo = []                   
 pulo_frente = []
-pulo_tras = []
-
-animacao = [parado, frente, tras, agachado]
-
-def carregar_personagem(self):
-    spritesheet = pg.image.load(os.path.join(self.game.Imagens, self.personagem[0]))    
-    # parado.append(self.personagem[1])
-
-    for posicao in self.personagem[1]:
-        imagem = spritesheet.subsurface(posicao)
-        imagem = pg.transform.scale(imagem, (self.Bloco.w, self.Bloco.h))
-        parado.append(imagem)
-
-    for posicao in self.personagem[2]:
-        imagem = spritesheet.subsurface(posicao)
-        imagem = pg.transform.scale(imagem, (self.Bloco.w, self.Bloco.h))
-        frente.append(imagem)
-
-    for posicao in self.personagem[3]:
-        imagem = spritesheet.subsurface(posicao)
-        imagem = pg.transform.scale(imagem, (self.Bloco.w, self.Bloco.h))
-        tras.append(imagem)
-
-    for posicao in self.personagem[4]:
-        imagem = spritesheet.subsurface(posicao)
-        imagem = pg.transform.scale(imagem, (self.Bloco.w, self.Bloco.h))
-        agachado.append(imagem)
-
-    for posicao in self.personagem[5]:
-        imagem = spritesheet.subsurface(posicao)
-        imagem = pg.transform.scale(imagem, (self.Bloco.w, self.Bloco.h))
-        pulo.append(imagem)
-
-    for posicao in self.personagem[6]:
-        imagem = spritesheet.subsurface(posicao)
-        imagem = pg.transform.scale(imagem, (self.Bloco.w, self.Bloco.h))
-        pulo_frente.append(imagem)
-
-    reverter = self.personagem[6]
-    for posicao in reverter[::-1]:
-        imagem = spritesheet.subsurface(posicao)
-        imagem = pg.transform.scale(imagem, (self.Bloco.w, self.Bloco.h))
-        pulo_tras.append(imagem)
+pulo_tras = []                  
+vitoria = []                    
+derrota = []                    
+socoforte  = []                 
+socomedia  = []                 
+socofraco  = []                 
+chuteforte = []                 
+chutemedia = []                 
+chutefraco = []                 
+voadoraforte = []                   
+voadoramedia = []                   
+voadorafraco = []                   
+especial01  = []                    
+especial02  = []                    
+especial03  = []                    
+especial04  = []                    
+especial05  = []                    
+especial06  = []                    
+especial07 = []                 
+especial08 = []                 
+especial09 = []                 
+especial10 = []  
 
 class Player02:
     def __init__(self, game) -> None:
-        self.game = game                        
-        self.Bloco = pg.Rect(((TELA_LARGURA // 2)), (TELA_ALTURA_CHAO - 250), 120, 250 )
-        self.sprites = personagem[0]
+        self.game = game             
+        self.indice = 0             
+        self.Bloco = pg.Rect(((TELA_LARGURA // 2)), personagem_altura_chao, 180, 290 )      
+        self.personagem = personagem[selecionado]
         self.velx = 3
         self.vely = 6
         self.pulo = 0    
@@ -67,6 +51,13 @@ class Player02:
         self.saude = BARRA_ENERGIA            
         self.direcao = 0 #0 = parado, 1 = esquerda, 2 = direita, 3 = agacha, 4 = pulo
 
+        animacao_comportamento(self, spritesheet, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, vitoria, derrota, socoforte , socomedia , socofraco , chuteforte, chutemedia, chutefraco, voadoraforte, voadoramedia, voadorafraco, especial01 , especial02 , especial03 , especial04 , especial05 , especial06 , especial07, especial08, especial09, especial10)
+
+    def golpe(self):
+        tecla = pg.key.get_pressed()        
+        # SOCO FORTE
+        if tecla[pg.K_KP7]:
+            self.direcao = 10
 
     def eventos(self):        
         self.esquerda = (self.Bloco.x < self.game.Player01.Bloco.x)
@@ -80,10 +71,14 @@ class Player02:
             if tecla[pg.K_UP] and self.pulo == 0 and tecla[pg.K_LEFT]:
                 self.pulo = 1
                 self.direcao = 5
+                if self.Bloco.y == personagem_altura_chao:  
+                    self.indice = 0
             # Diagonal Direita
             elif tecla[pg.K_UP] and self.pulo == 0 and tecla[pg.K_RIGHT]:
                 self.pulo = 1
                 self.direcao = 6
+                if self.Bloco.y == personagem_altura_chao:  
+                    self.indice = 0
        
             if self.pulo == 0:  
                                 
@@ -112,9 +107,12 @@ class Player02:
                 if tecla[pg.K_UP] :
                     self.pulo = 1
                     self.direcao = 4
+                    self.indice = 0
                 # Agacha
                 elif tecla[pg.K_DOWN] :            
                     self.direcao = 3
+        
+        self.golpe()
 
     def atualizar(self):
         global dx
@@ -146,7 +144,13 @@ class Player02:
         self.Bloco.x = dx
         self.Bloco.y = dy
 
-    def desenhar(self):                                
+    def desenhar(self):  
+        # executar animações
+        sprites = pg.sprite.Group()  
+        animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, vitoria, derrota, socoforte , socomedia , socofraco , chuteforte, chutemedia, chutefraco, voadoraforte, voadoramedia, voadorafraco, especial01 , especial02 , especial03 , especial04 , especial05 , especial06 , especial07, especial08, especial09, especial10)
+        sprites.draw(self.game.Tela)
+
+
         redenderizar(self.game.Tela,'Red', self.Bloco)
 
         informacoes(self.game,'Red', f'P2 e:{self.esquerda} x:{self.Bloco.x} y:{self.Bloco.y} w:{self.Bloco.w} d:{self.direcao}', (TELA_LARGURA // 2), 100)

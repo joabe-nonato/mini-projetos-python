@@ -29,17 +29,17 @@ class Estagio:
         eixoX = ((TELA_LARGURA // 2) * -1)
 
         # CHAO DIREITA
-        if self.game.Player01.direcao == 1 and self.game.Player02.direcao == 1:
+        if self.game.Player01.direcao in [1,6] and self.game.Player02.direcao in [1,6]:
             self.hx += 1
             eixoX += 1
         # CHAO ESQUERDA
-        elif self.game.Player01.direcao == 2 and self.game.Player02.direcao == 2:
+        elif self.game.Player01.direcao in [2,5] and self.game.Player02.direcao in [2,5]:
             if self.hx < (TELA_LARGURA):
                 self.hx -= 1
                 eixoX -= 1
         
         if self.game.Player01.pulo > 0 and self.game.Player02.pulo > 0:
-            eixoY -= 5
+            eixoY -= 8
 
         self.game.Tela.blit(pg.transform.scale(chao, (TELA_LARGURA * 2, 100)), (self.hx, TELA_ALTURA - eixoY))
 
