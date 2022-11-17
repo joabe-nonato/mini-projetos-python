@@ -1,5 +1,5 @@
 import pygame as pg
-from util import *
+from essencial import *
 from settings import *
 from data import *
 
@@ -42,16 +42,20 @@ class Player01:
         self.indice = 0                  
         self.Bloco = pg.Rect(((TELA_LARGURA // 4)), personagem_altura_chao, 180, 290 )
         self.personagem = personagem[selecionado]        
-        # self.sprites = self.Grupo()
-        self.velx = 3
-        self.vely = 6
-        self.pulo = 0    
+        self.gravidade = (gravidade[selecionado] * -1)        
+        self.pulo = 0        
+        self.velocidade_x = velocidade_x[selecionado]
+        self.velocidade_y = velocidade_y[selecionado]
+        self.velocidade_xy = velocidade_xy[selecionado]
         self.esquerda = True
         self.limite_esquerdo = False
         self.limite_direito = False
         self.saude = BARRA_ENERGIA            
         self.direcao = 0 #0 = parado, 1 = esquerda, 2 = direita, 3 = agacha, 4 = pulo
         
+        global gravidadeY
+        gravidadeY = gravidade[selecionado]
+
         animacao_comportamento(self, spritesheet, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, vitoria, derrota, socoforte , socomedia , socofraco , chuteforte, chutemedia, chutefraco, voadoraforte, voadoramedia, voadorafraco, especial01 , especial02 , especial03 , especial04 , especial05 , especial06 , especial07, especial08, especial09, especial10)
 
     def golpe(self):
@@ -119,35 +123,7 @@ class Player01:
             self.game.luta_encerrada = True
 
     def atualizar(self):
-        global dx
-        global dy
-
-        dx = self.Bloco.x
-        dy = self.Bloco.y
-        
-        # esquerda 
-        if self.direcao in [1,5] and dx > 0:
-            dx -= self.velx
-         # direita        
-        elif self.direcao in [2,6] and dx < (TELA_LARGURA - self.Bloco.w):
-            dx += self.velx        
-
-        #pulo
-        if self.pulo == 1:
-            if self.Bloco.y > 30:
-                dy -= self.vely
-            else:
-                self.pulo = 2
-        
-        if self.pulo == 2:
-            if dy < (TELA_ALTURA_CHAO - self.Bloco.h):
-                dy += self.vely
-            else:
-                self.pulo = 0        
-                self.direcao = 0
-                   
-        self.Bloco.x = dx
-        self.Bloco.y = dy
+        aplicar_movimentacao(self, gravidadeY)        
 
     def desenhar(self):
         
@@ -160,4 +136,4 @@ class Player01:
         # self.game.Tela.blit(pg.transform.scale(imagemteste, (self.Bloco.w + 60, self.Bloco.h + 60)), (self.Bloco.x - 60, self.Bloco.y - 60))
 
         redenderizar(self.game.Tela,'Blue', self.Bloco)
-        informacoes(self.game,'Blue', f'P1 e:{self.esquerda} x:{self.Bloco.x} y:{self.Bloco.y} w:{self.Bloco.w} d:{self.direcao}', 10, 100)            
+        informacoes(self.game,'Blue', f'P1 e:{self.esquerda} x:{self.Bloco.x} y:{self.Bloco.y} w:{self.Bloco.w} d:{self.direcao} g:{self.gravidade}', 10, 100)            

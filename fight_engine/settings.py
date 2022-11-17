@@ -1,5 +1,5 @@
 
-DEBUG = True
+DEBUG = False
 TEMPO_LUTA = 99 #-99 = Infinito
 
 TELA_LARGURA = 900

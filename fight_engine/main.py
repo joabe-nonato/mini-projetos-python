@@ -46,10 +46,10 @@ class Game:
         self.Tela.fill((255,255,255))
 
         self.Estagio.desenhar() 
+        self.Placar.desenhar()       
         self.Player01.desenhar() 
         self.Player02.desenhar()     
-          
-        self.Placar.desenhar()       
+        
         
     def executar(self):    
         while True:

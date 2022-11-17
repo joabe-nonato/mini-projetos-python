@@ -6,8 +6,8 @@ def redenderizar(t, cor, objt):
     if DEBUG:
         pg.draw.rect(t, cor, objt, 2)
 
-def criarobjeto(posx, posy, larg, alt, velx = 1, vely = 1):
-    return [pg.Rect(posx, posy, larg, alt), [velx, vely]]
+def criarobjeto(posx, posy, larg, alt, velocidade_x = 1, velocidade_y = 1):
+    return [pg.Rect(posx, posy, larg, alt), [velocidade_x, velocidade_y]]
 
 def colisalateral(eesquerda, direcao, bloco_esquerda, bloco_direita):
     if eesquerda:
@@ -204,3 +204,36 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
             else:
                 self.indice += 0.1
         
+def aplicar_movimentacao(self, gravidadeY):
+    global dx
+    global dy
+    dx = self.Bloco.x
+    dy = self.Bloco.y
+    
+    # esquerda 
+    if self.direcao in [1] and dx > 0:
+        dx -= self.velocidade_x
+     # direita        
+    elif self.direcao in [2] and dx < (TELA_LARGURA - self.Bloco.w):
+        dx += self.velocidade_x        
+    
+    #pulo diagonal
+    if self.direcao in [5] and dx > 0:
+        dx -= self.velocidade_xy
+     # direita        
+    elif self.direcao in [6] and dx < (TELA_LARGURA - self.Bloco.w):
+        dx += self.velocidade_xy
+
+    #pulo reto
+    if self.pulo == 1:
+        self.gravidade += self.velocidade_y
+        dy += int(self.gravidade)
+        
+        if self.gravidade >= gravidadeY:        
+            self.pulo = 0        
+            self.direcao = 0
+            self.gravidade = (gravidadeY * -1)
+            dy = (TELA_ALTURA_CHAO - self.Bloco.h)
+               
+    self.Bloco.x = dx
+    self.Bloco.y = dy
