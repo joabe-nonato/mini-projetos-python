@@ -24,10 +24,16 @@ class Game:
         self.Placar = Placar(self)
 
     def eventos(self):
+        global ev
         for evento in pg.event.get():
             if evento.type == pg.QUIT:
                 pg.quit()
                 sys.exit()
+            
+            if evento.type == pg.KEYDOWN:
+                self.Player01.teclaprecionada = self.Player02.teclaprecionada = True
+                if evento.type == pg.KEYUP:
+                    self.Player01.teclaprecionada = self.Player02.teclaprecionada = False
 
         self.Player01.eventos()
         self.Player02.eventos()

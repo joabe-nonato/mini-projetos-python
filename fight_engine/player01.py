@@ -42,11 +42,12 @@ class Player01:
         self.indice = 0                  
         self.Bloco = pg.Rect(((TELA_LARGURA // 4)), personagem_altura_chao, 180, 290 )
         self.personagem = personagem[selecionado]        
-        self.gravidade = (gravidade[selecionado] * -1)        
-        self.pulo = 0        
+        self.gravidade = (gravidade[selecionado] * -1)                
         self.velocidade_x = velocidade_x[selecionado]
         self.velocidade_y = velocidade_y[selecionado]
         self.velocidade_xy = velocidade_xy[selecionado]
+        self.teclaprecionada = False
+        self.pulo = 0        
         self.esquerda = True
         self.limite_esquerdo = False
         self.limite_direito = False
@@ -58,16 +59,30 @@ class Player01:
 
         animacao_comportamento(self, spritesheet, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, vitoria, derrota, socoforte , socomedia , socofraco , chuteforte, chutemedia, chutefraco, voadoraforte, voadoramedia, voadorafraco, especial01 , especial02 , especial03 , especial04 , especial05 , especial06 , especial07, especial08, especial09, especial10)
 
-    def golpe(self):
-        tecla = pg.key.get_pressed()        
-        # SOCO FORTE
-        if tecla[pg.K_KP1]:
-            self.direcao = 10
+    def golpe(self, tecla):        
+
+        if self.teclaprecionada:            
+            if tecla[pg.K_KP1]:
+                self.direcao = 10
+            
+            if self.teclaprecionada == False:
+                self.direcao = 0
+
+        #     if golpe.type == pg.K_KP1:
+        #         print('OK')
+
+        # if self.direcao < 10:
+        #     tecla = pg.key.get_pressed()        
+        #     # SOCO FORTE
+        #     if tecla[pg.K_KP1]:
+        #         self.direcao = 10
 
     def eventos(self):
         self.esquerda = (self.Bloco.x < self.game.Player02.Bloco.x)
         self.limite_direito = False
         self.limite_esquerdo = False
+
+        # print(pg.key.stop_text_input(), pg.key.start_text_input())
 
         if self.game.Tempo > 0 and self.saude > 0 or TEMPO_LUTA == -99:
             tecla = pg.key.get_pressed()
@@ -116,11 +131,13 @@ class Player01:
                     self.indice = 0
                 # Agacha
                 elif tecla[pg.K_s] :
-                    self.direcao = 3
+                    self.direcao = 3         
             
-            self.golpe()
+            self.golpe(tecla)   
+
         else:
             self.game.luta_encerrada = True
+            self.direcao = 0
 
     def atualizar(self):
         aplicar_movimentacao(self, gravidadeY)        

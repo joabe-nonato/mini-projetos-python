@@ -42,11 +42,12 @@ class Player02:
         self.indice = 0             
         self.Bloco = pg.Rect(((TELA_LARGURA // 2)), personagem_altura_chao, 180, 290 )      
         self.personagem = personagem[selecionado]
-        self.gravidade = (gravidade[selecionado] * -1)                        
-        self.pulo = 0        
+        self.gravidade = (gravidade[selecionado] * -1)                                
         self.velocidade_x = velocidade_x[selecionado]
         self.velocidade_y = velocidade_y[selecionado]
         self.velocidade_xy = velocidade_xy[selecionado]
+        self.teclaprecionada = False
+        self.pulo = 0        
         self.esquerda = True
         self.limite_esquerdo = False
         self.limite_direito = False        
@@ -57,11 +58,9 @@ class Player02:
         gravidadeY = gravidade[selecionado]
         animacao_comportamento(self, spritesheet, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, vitoria, derrota, socoforte , socomedia , socofraco , chuteforte, chutemedia, chutefraco, voadoraforte, voadoramedia, voadorafraco, especial01 , especial02 , especial03 , especial04 , especial05 , especial06 , especial07, especial08, especial09, especial10)
 
-    def golpe(self):
-        tecla = pg.key.get_pressed()        
-        # SOCO FORTE
-        if tecla[pg.K_KP7]:
-            self.direcao = 10
+    def golpe(self, golpe):
+        pass
+
 
     def eventos(self):        
         self.esquerda = (self.Bloco.x < self.game.Player01.Bloco.x)
@@ -114,9 +113,11 @@ class Player02:
                     self.indice = 0
                 # Agacha
                 elif tecla[pg.K_DOWN] :            
-                    self.direcao = 3
-        
-        self.golpe()
+                    self.direcao = 3     
+
+        else:
+            self.game.luta_encerrada = True
+            self.direcao = 0               
 
     def atualizar(self):
         aplicar_movimentacao(self, gravidadeY)        

@@ -60,23 +60,32 @@ def animacao_comportamento(self, spritesheet, parado, frente, tras, agachado, pu
     carregar_movimentos(self, spritesheet, self.personagem[10], socoforte)
 
 # EXECUTAR ANIMAÇÕES
+# def aplicar_animacao(self, lista_origem, sprites):
+#     limite = len(lista_origem) - 1      
+#     if int(self.indice) > limite:
+#         self.indice = limite            
+#     sprt = pg.sprite.Sprite(sprites)        
+#     sprt.image = lista_origem[int(self.indice)]
+#     sprt.rect = pg.Rect(self.Bloco.x,self.Bloco.y, self.Bloco.w ,self.Bloco.h) 
+
 def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, vitoria, derrota, socoforte , socomedia , socofraco , chuteforte, chutemedia, chutefraco, voadoraforte, voadoramedia, voadorafraco, especial01 , especial02 , especial03 , especial04 , especial05 , especial06 , especial07, especial08, especial09, especial10):          
         limite = 0  
         # self.game.luta_encerrada
         
-        if self.direcao == 10:            
+        if self.direcao == 10: 
             limite = len(socoforte) - 1      
-            if int(self.indice) > limite:
-                self.indice = limite            
-            sprt = pg.sprite.Sprite(sprites)        
-            sprt.image = socoforte[int(self.indice)]
-            sprt.rect = pg.Rect(self.Bloco.x,self.Bloco.y, self.Bloco.w ,self.Bloco.h) 
+            if int(self.indice) <= limite:                                            
+                self.teclaprecionada = False
+                sprt = pg.sprite.Sprite(sprites)        
+                sprt.image = socoforte[int(self.indice)]
+                sprt.rect = pg.Rect(self.Bloco.x,self.Bloco.y, self.Bloco.w ,self.Bloco.h) 
 
         #Animação        
         if self.esquerda:
-            
 
-            if self.direcao == 0:     
+            if self.direcao == 0:                     
+                
+                # aplicar_animacao(self, parado, sprites)
                 limite = len(parado) - 1      
                 if int(self.indice) > limite:
                     self.indice = limite            
@@ -117,11 +126,11 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
                 sprt.rect = pg.Rect(self.Bloco.x,self.Bloco.y, self.Bloco.w ,self.Bloco.h) 
 
             if self.direcao == 5:                         
-                limite = len(pulo_frente) - 1         
+                limite = len(pulo_tras) - 1         
                 if int(self.indice) > limite:
                     self.indice = limite
                 sprt = pg.sprite.Sprite(sprites)            
-                sprt.image = pulo_frente[int(self.indice)]
+                sprt.image = pulo_tras[int(self.indice)]
                 sprt.rect = pg.Rect(self.Bloco.x,self.Bloco.y, self.Bloco.w ,self.Bloco.h)
 
             if self.direcao == 6:                         
@@ -173,11 +182,11 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
                 sprt.rect = pg.Rect(self.Bloco.x,self.Bloco.y, self.Bloco.w ,self.Bloco.h) 
 
             if self.direcao == 6:                         
-                limite = len(pulo_frente) - 1         
+                limite = len(pulo_tras) - 1         
                 if int(self.indice) > limite:
                     self.indice = limite
                 sprt = pg.sprite.Sprite(sprites)            
-                sprt.image = pg.transform.flip(pulo_frente[int(self.indice)], True, False)
+                sprt.image = pg.transform.flip(pulo_tras[int(self.indice)], True, False)
                 sprt.rect = pg.Rect(self.Bloco.x,self.Bloco.y, self.Bloco.w ,self.Bloco.h)
 
             if self.direcao == 5:                         

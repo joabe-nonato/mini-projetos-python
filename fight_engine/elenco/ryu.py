@@ -9,7 +9,7 @@ from movimentos import *
 # indice 7 = pulo_tras
 spritesheet = "ryu.png"
 gravidade = 20
-velocidade_x = 3
+velocidade_x = 4
 velocidade_y = 0.8
 velocidade_xy = 7
 dimensao_padrao = (180, 290)
