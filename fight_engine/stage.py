@@ -56,7 +56,7 @@ class Estagio:
         self.game.Tela.blit(modelo, (0, 0))
 
     def desenhar(self):
-        # self.fundo()
-        # self.chao()        
-        self.modelo()
+        self.fundo()
+        self.chao()        
+        # self.modelo()
         
