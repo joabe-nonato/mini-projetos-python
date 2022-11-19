@@ -22,6 +22,8 @@ class Estagio:
 
         self.game.Tela.blit(pg.transform.scale(bckgrd, (TELA_LARGURA * 2, TELA_ALTURA - 90)), (eixoX, eixoY))
 
+
+
     def chao(self):
         chao = pg.image.load(os.path.join(self.game.Imagens, "chao.png"))
         
@@ -38,7 +40,7 @@ class Estagio:
                 self.hx -= 1
                 eixoX -= 1
         
-        if self.game.Player01.pulo > 0 and self.game.Player02.pulo > 0:
+        if self.game.Player01.pulo > 0 or self.game.Player02.pulo > 0:
             eixoY -= 8
 
         self.game.Tela.blit(pg.transform.scale(chao, (TELA_LARGURA * 2, 100)), (self.hx, TELA_ALTURA - eixoY))
@@ -48,7 +50,13 @@ class Estagio:
             texto = self.game.fonte.render(chaotext, True, 'Red')                
             self.game.Tela.blit(texto, (5 , TELA_ALTURA_CHAO))
 
+    def modelo(self):        
+        dirimage = os.path.join(self.game.Imagens, "modelo.png")
+        modelo = pg.image.load(dirimage)      
+        self.game.Tela.blit(modelo, (0, 0))
+
     def desenhar(self):
-        self.fundo()
-        self.chao()        
+        # self.fundo()
+        # self.chao()        
+        self.modelo()
         

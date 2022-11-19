@@ -1,4 +1,5 @@
 from movimentos import *
+from settings import *
 # indice 0 = spritesheet
 # indice 1 = parado
 # indice 2 = frente
@@ -8,11 +9,13 @@ from movimentos import *
 # indice 6 = pulo_frente
 # indice 7 = pulo_tras
 spritesheet = "ryuB.png"
-gravidade = 20
-velocidade_x = 3
+gravidade = 27
+velocidade_x = 4
 velocidade_y = 0.8
 velocidade_xy = 7
-dimensao_padrao = (180, 290)
+largura = (TELA_LARGURA * 0.1593)   #largura = 204
+altura = (TELA_ALTURA * 0.4625)     #altura = 444
+dimensao_padrao = (largura, altura)
 colisao_padrao = []
 
 # [[(DIMENSOES IMAGEM ORIGEM), (DIMENSAO IMAGEM DESTINO), [(COLISAO6),(COLISAO3),(COLISAO01)]]]
@@ -24,6 +27,7 @@ parado = [
 ,[((204,0),(60,100)), dimensao_padrao]
 ,[((270,0),(60,100)), dimensao_padrao]
 ]
+
 
 frente = [
 # [((2,115),  (60,100)), dimensao_padrao],
