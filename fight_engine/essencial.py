@@ -17,7 +17,7 @@ def redenderizar(t, cor, objt):
 def criarobjeto(posx, posy, larg, alt, velocidade_x = 1, velocidade_y = 1):
     return [pg.Rect(posx, posy, larg, alt), [velocidade_x, velocidade_y]]
 
-def colisalateral(eesquerda, direcao, bloco_esquerda, bloco_direita):
+def colisalateral(eesquerda, movimento, bloco_esquerda, bloco_direita):
     if eesquerda:
         if (bloco_esquerda.x + bloco_esquerda.w) >= bloco_direita.x:
             return 0
@@ -25,7 +25,7 @@ def colisalateral(eesquerda, direcao, bloco_esquerda, bloco_direita):
         if bloco_esquerda.x <= (bloco_direita.x + bloco_direita.w):
             return 0
     
-    return direcao
+    return movimento
 
 def informacoes(game, cor, msg, left, topo):
     if DEBUG:
@@ -93,95 +93,103 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
         def retorno_padrao(sprt):
             return pg.Rect(self.Bloco.x, TELA_ALTURA_CHAO - int(sprt.image.get_height()) , self.Bloco.w ,self.Bloco.h)
 
-        if self.direcao == 10: 
-            limite = len(socoforte) - 1      
-            if int(self.indice) <= limite:                                            
-                self.teclaprecionada = False
-                sprt.image = socoforte[int(self.indice)]                
-                sprt.rect = retorno_padrao(sprt)
+        if self.movimento == 10: 
+            limite = calcular_limite(socoforte)
+            sprt.image = socoforte[int(self.indice)]                
+            # if self.esquerda == False:
+            #     sprt.image = pg.transform.flip(socoforte[int(self.indice)], True, False)
+            sprt.rect = retorno_padrao(sprt)
 
         #Animação        
         if self.esquerda:
 
-            if self.direcao == 0:                     
+            if self.movimento == 0:                     
                 
                 # aplicar_animacao(self, parado, sprites)
                 limite = calcular_limite(parado)
                 sprt.image = parado[int(self.indice)]                
                 sprt.rect = retorno_padrao(sprt)
             
-            if self.direcao == 1:                         
+            if self.movimento == 1:                         
                 limite = calcular_limite(tras)
                 sprt.image = tras[int(self.indice)]
                 sprt.rect = retorno_padrao(sprt)
 
-            if self.direcao == 2:                         
+            if self.movimento == 2:                         
                 limite = calcular_limite(frente)
                 sprt.image = frente[int(self.indice)]
                 sprt.rect = retorno_padrao(sprt)
 
-            if self.direcao == 3:                         
+            if self.movimento == 3:                         
                 limite = calcular_limite(agachado)
                 sprt.image = agachado[int(self.indice)]
                 sprt.rect = retorno_padrao(sprt)
 
-            if self.direcao == 4:                         
+            if self.movimento == 4:                         
                 limite = calcular_limite(pulo)
                 sprt.image = pulo[int(self.indice)]
                 sprt.rect = pg.Rect(self.Bloco.x,self.Bloco.y, self.Bloco.w ,self.Bloco.h)
 
-            if self.direcao == 5:                         
+            if self.movimento == 5:                         
                 limite = calcular_limite(pulo_tras)
                 sprt.image = pulo_tras[int(self.indice)]
                 sprt.rect = pg.Rect(self.Bloco.x,self.Bloco.y, self.Bloco.w ,self.Bloco.h)
 
-            if self.direcao == 6:                         
+            if self.movimento == 6:                         
                 limite = calcular_limite(pulo_frente)                 
                 sprt.image = pulo_frente[int(self.indice)]
                 sprt.rect = pg.Rect(self.Bloco.x,self.Bloco.y, self.Bloco.w ,self.Bloco.h)
         else:
-            if self.direcao == 0:     
+            if self.movimento == 0:     
                 limite = calcular_limite(parado)
                 sprt.image = pg.transform.flip(parado[int(self.indice)], True, False)
                 sprt.rect = retorno_padrao(sprt)
             
-            if self.direcao == 2:                         
+            if self.movimento == 2:                         
                 limite = calcular_limite(tras)
                 sprt.image = pg.transform.flip(tras[int(self.indice)], True, False)
                 sprt.rect = retorno_padrao(sprt)
 
-            if self.direcao == 1:                         
+            if self.movimento == 1:                         
                 limite = calcular_limite(frente)
                 sprt.image = pg.transform.flip(frente[int(self.indice)], True, False)
                 sprt.rect = retorno_padrao(sprt) 
 
-            if self.direcao == 3:                         
+            if self.movimento == 3:                         
                 limite = calcular_limite(agachado)
                 sprt.image = pg.transform.flip(agachado[int(self.indice)], True, False)
                 sprt.rect = retorno_padrao(sprt)
 
-            if self.direcao == 4:                         
+            if self.movimento == 4:                         
                 limite = calcular_limite(pulo)
                 sprt.image = pg.transform.flip(pulo[int(self.indice)], True, False)
                 sprt.rect = pg.Rect(self.Bloco.x,self.Bloco.y, self.Bloco.w ,self.Bloco.h) 
 
-            if self.direcao == 6:                         
+            if self.movimento == 6:                         
                 limite = calcular_limite(pulo_tras)
                 sprt.image = pg.transform.flip(pulo_tras[int(self.indice)], True, False)
                 sprt.rect = pg.Rect(self.Bloco.x,self.Bloco.y, self.Bloco.w ,self.Bloco.h)
 
-            if self.direcao == 5:                         
+            if self.movimento == 5:                         
                 limite = calcular_limite(pulo_frente)
                 sprt.image = pg.transform.flip(pulo_frente[int(self.indice)], True, False)
                 sprt.rect = pg.Rect(self.Bloco.x,self.Bloco.y, self.Bloco.w ,self.Bloco.h)
         
 
+        
+        if self.golpe:
+            if  self.indice < limite:
+                self.indice += 1
+            else:
+                self.indice = 0
+                self.movimento = 0
+                self.golpe = False
         # agachar e pulo 
-        if self.direcao in [3,4]:
+        elif self.movimento in [3,4]:
             if  self.indice < limite:
                 self.indice += 0.1
         # pulo diagonal
-        elif self.direcao in [5,6]:
+        elif self.movimento in [5,6]:
             if  self.indice < limite:
                 self.indice += 0.15
         # direta esquerda
@@ -198,17 +206,17 @@ def aplicar_movimentacao(self, gravidadeY):
     dy = self.Bloco.y
     
     # esquerda 
-    if self.direcao in [1] and dx > 0:
+    if self.movimento in [1] and dx > 0:
         dx -= self.velocidade_x
      # direita        
-    elif self.direcao in [2] and dx < (TELA_LARGURA - self.Bloco.w):
+    elif self.movimento in [2] and dx < (TELA_LARGURA - self.Bloco.w):
         dx += self.velocidade_x        
     
     #pulo diagonal
-    if self.direcao in [5] and dx > 0:
+    if self.movimento in [5] and dx > 0:
         dx -= self.velocidade_xy
      # direita        
-    elif self.direcao in [6] and dx < (TELA_LARGURA - self.Bloco.w):
+    elif self.movimento in [6] and dx < (TELA_LARGURA - self.Bloco.w):
         dx += self.velocidade_xy
 
     #pulo reto
@@ -218,7 +226,7 @@ def aplicar_movimentacao(self, gravidadeY):
         
         if self.gravidade >= gravidadeY:        
             self.pulo = 0        
-            self.direcao = 0
+            self.movimento = 0
             self.gravidade = (gravidadeY * -1)
             dy = (TELA_ALTURA_CHAO - self.Bloco.h)
                

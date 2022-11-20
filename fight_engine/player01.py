@@ -47,95 +47,82 @@ class Player01:
         self.velocidade_y = velocidade_y[selecionado]
         self.velocidade_xy = velocidade_xy[selecionado]
         self.teclaprecionada = False
-        self.pulo = 0        
+        self.pulo = 0       
+        self.golpe = False 
         self.esquerda = True
         self.saude = BARRA_ENERGIA            
-        self.direcao = 0 #0 = parado, 1 = esquerda, 2 = direita, 3 = agacha, 4 = pulo
+        self.movimento = 0 #0 = parado, 1 = esquerda, 2 = direita, 3 = agacha, 4 = pulo
         
         global gravidadeY
         gravidadeY = gravidade[selecionado]
 
         animacao_comportamento(self, spritesheet, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, vitoria, derrota, socoforte , socomedia , socofraco , chuteforte, chutemedia, chutefraco, voadoraforte, voadoramedia, voadorafraco, especial01 , especial02 , especial03 , especial04 , especial05 , especial06 , especial07, especial08, especial09, especial10)
 
-    def golpe(self, tecla):        
-
-        if self.teclaprecionada:            
-            if tecla[pg.K_KP1]:
-                self.direcao = 10
-            
-            if self.teclaprecionada == False:
-                self.direcao = 0
-
-        #     if golpe.type == pg.K_KP1:
-        #         print('OK')
-
-        # if self.direcao < 10:
-        #     tecla = pg.key.get_pressed()        
-        #     # SOCO FORTE
-        #     if tecla[pg.K_KP1]:
-        #         self.direcao = 10
+    def Golpe(self, tecla):
+            if tecla[pg.K_p] and self.movimento != 10:
+                self.movimento = 10
+                self.golpe = True
 
     def eventos(self):
         self.esquerda = (self.Bloco.x < self.game.Player02.Bloco.x)
-        self.limite_direito = False
-        self.limite_esquerdo = False
-
+        
         # print(pg.key.stop_text_input(), pg.key.start_text_input())
 
         if self.game.Tempo > 0 and self.saude > 0 or TEMPO_LUTA == -99:
             tecla = pg.key.get_pressed()
 
+            if tecla[pg.K_p] and self.movimento != 10:
+                if tecla[pg.KEYUP]:
+                    self.movimento = 10
+                    self.golpe = True
+
+            if self.golpe == False:
             # Diagonal esquerda
-            if tecla[pg.K_w] and self.pulo == 0 and tecla[pg.K_a]:                
-                self.pulo = 1
-                self.direcao = 5     
-                if self.Bloco.y == personagem_altura_chao:  
-                    self.indice = 0         
+                    if tecla[pg.K_w] and self.pulo == 0 and tecla[pg.K_a]:                
+                        self.pulo = 1
+                        self.movimento = 5     
+                        if self.Bloco.y == personagem_altura_chao:  
+                            self.indice = 0         
             # Diagonal Direita
-            elif tecla[pg.K_w] and self.pulo == 0 and tecla[pg.K_d]:
-                self.pulo = 1
-                self.direcao = 6
-                if self.Bloco.y == personagem_altura_chao:  
-                    self.indice = 0
-                    
-            if self.pulo == 0:  
+                    elif tecla[pg.K_w] and self.pulo == 0 and tecla[pg.K_d]:
+                        self.pulo = 1
+                        self.movimento = 6
+                        if self.Bloco.y == personagem_altura_chao:  
+                            self.indice = 0
+                            
+                    if self.pulo == 0:  
 
-                # Esquerda
-                if tecla[pg.K_a]:                            
-                    self.direcao = 1
+                        # Esquerda
+                        if tecla[pg.K_a]:                            
+                            self.movimento = 1
 
-                    #colisão esquerda
-                    if self.esquerda == False and self.game.Player02.pulo == 0:
-                        if self.Bloco.x <= (self.game.Player02.Bloco.x + self.game.Player02.Bloco.w):
-                            self.direcao = 0
-                            self.limite_esquerdo = True
+                            #colisão esquerda
+                            if self.esquerda == False and self.game.Player02.pulo == 0:
+                                if self.Bloco.x <= (self.game.Player02.Bloco.x + self.game.Player02.Bloco.w):
+                                    self.movimento = 0
 
-                # Direita
-                elif tecla[pg.K_d]:                     
-                    self.direcao = 2
+                        # Direita
+                        elif tecla[pg.K_d]:                     
+                            self.movimento = 2
 
-                    #colisão direita
-                    if self.esquerda and self.game.Player02.pulo == 0:
-                        if (self.Bloco.x + self.Bloco.w) >= self.game.Player02.Bloco.x:
-                            self.direcao = 0
-                            self.limite_direito = True                            
-                else:
-                    self.direcao = 0
-                
-                # Pulo
-                if tecla[pg.K_w] :                    
-                    self.pulo = 1                    
-                    self.direcao = 4
-                    self.indice = 0
-                # Agacha
-                elif tecla[pg.K_s] :
-                    self.direcao = 3         
+                            #colisão direita
+                            if self.esquerda and self.game.Player02.pulo == 0:
+                                if (self.Bloco.x + self.Bloco.w) >= self.game.Player02.Bloco.x:
+                                    self.movimento = 0                            
+                        else:
+                            self.movimento = 0
+                        
+                        # Pulo
+                        if tecla[pg.K_w] :                    
+                            self.pulo = 1                    
+                            self.movimento = 4
+                            self.indice = 0
+                        # Agacha
+                        elif tecla[pg.K_s] :
+                            self.movimento = 3         
             
-            self.golpe(tecla)   
-
         else:
-            self.game.luta_encerrada = True
-            self.direcao = 0
+            self.movimento = 0
 
     def atualizar(self):
         aplicar_movimentacao(self, gravidadeY)        
@@ -151,4 +138,4 @@ class Player01:
         # self.game.Tela.blit(pg.transform.scale(imagemteste, (self.Bloco.w + 60, self.Bloco.h + 60)), (self.Bloco.x - 60, self.Bloco.y - 60))
 
         redenderizar(self.game.Tela,'Blue', self.Bloco)
-        informacoes(self.game,'Blue', f'P1 e:{self.esquerda} x:{self.Bloco.x} y:{self.Bloco.y} w:{self.Bloco.w} d:{self.direcao} g:{self.gravidade}', 10, 100)            
+        informacoes(self.game,'Blue', f'P1 e:{self.esquerda} x:{self.Bloco.x} y:{self.Bloco.y} w:{self.Bloco.w} h:{self.Bloco.h} d:{self.movimento} g:{self.gravidade}', 10, 100)            

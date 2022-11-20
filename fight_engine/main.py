@@ -29,16 +29,16 @@ class Game:
 
     def eventos(self):
         global ev
-        
+        tcl = pg.key.get_pressed()
+
         for evento in pg.event.get():
-            if evento.type == pg.QUIT or pg.key.get_pressed()[pg.K_ESCAPE] :
+            if evento.type == pg.QUIT or tcl[pg.K_ESCAPE] :
                 pg.quit()
                 sys.exit()
             
-            if evento.type == pg.KEYDOWN:
-                self.Player01.teclaprecionada = self.Player02.teclaprecionada = True
-                if evento.type == pg.KEYUP:
-                    self.Player01.teclaprecionada = self.Player02.teclaprecionada = False
+            elif evento.type == pg.KEYUP:
+                self.Player01.Golpe(tcl)
+                self.Player02.Golpe(tcl)
 
         self.Player01.eventos()
         self.Player02.eventos()
