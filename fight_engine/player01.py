@@ -49,8 +49,6 @@ class Player01:
         self.teclaprecionada = False
         self.pulo = 0        
         self.esquerda = True
-        # self.limite_esquerdo = False
-        # self.limite_direito = False
         self.saude = BARRA_ENERGIA            
         self.direcao = 0 #0 = parado, 1 = esquerda, 2 = direita, 3 = agacha, 4 = pulo
         

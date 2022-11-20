@@ -9,7 +9,7 @@ from settings import *
 # indice 6 = pulo_frente
 # indice 7 = pulo_tras
 spritesheet = "ryuB.png"
-gravidade =  (TELA_ALTURA * 0.029) #27px
+gravidade =  (TELA_ALTURA * 0.027) #27px
 velocidade_x = 4 #frente
 velocidade_y = 0.8 #pulo
 velocidade_xy = 11 #pulo diagonal

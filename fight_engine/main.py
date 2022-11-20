@@ -29,8 +29,9 @@ class Game:
 
     def eventos(self):
         global ev
+        
         for evento in pg.event.get():
-            if evento.type == pg.QUIT:
+            if evento.type == pg.QUIT or pg.key.get_pressed()[pg.K_ESCAPE] :
                 pg.quit()
                 sys.exit()
             

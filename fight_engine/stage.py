@@ -27,7 +27,7 @@ class Estagio:
     def chao(self):
         chao = pg.image.load(os.path.join(self.game.Imagens, "chao.png"))
         
-        eixoY = 100
+        eixoY = 150
         eixoX = ((TELA_LARGURA // 2) * -1)
 
         # CHAO DIREITA
@@ -40,10 +40,11 @@ class Estagio:
                 self.hx -= 1
                 eixoX -= 1
         
+        # PULO
         if self.game.Player01.pulo > 0 or self.game.Player02.pulo > 0:
-            eixoY -= 8
+            eixoY -= 11        
 
-        self.game.Tela.blit(pg.transform.scale(chao, (TELA_LARGURA * 2, 100)), (self.hx, TELA_ALTURA - eixoY))
+        self.game.Tela.blit(pg.transform.scale(chao, (TELA_LARGURA * 2, 150)), (self.hx, TELA_ALTURA - eixoY))
 
         if DEBUG:            
             chaotext = f'chão x: {eixoX} y: {eixoY}'
