@@ -53,7 +53,7 @@ agachado = [
 ]
 
 pulo = [
-[((60,237), (60,100)), dimensao_padrao],
+[((60,237), (60,110)), (largura, altura + 10)],
 [((131,226), (60,100)), dimensao_padrao],
 [((190,226), (60,100)), dimensao_padrao],
 [((251,233), (60,100)), dimensao_padrao],
@@ -62,23 +62,23 @@ pulo = [
 ]
 
 pulo_frente = [
-[((368,238), (56,110)), dimensao_padrao],
+[((368,238), (60,110)), (largura, altura + 10)],
 [((435,254), (61,79)), dimensao_padrao],
-[((500,252), (105,43)), (280,160)],
+[((500,252), (111,48)), (altura, largura)],
 [((609,234), (54,82)), dimensao_padrao],
-[((669,251), (122,45)), (280,160)],
+[((669,251), (122,45)), (altura, largura)],
 [((797,252), (72,87)), dimensao_padrao],
-[((368,238), (56,110)), dimensao_padrao],
+[((368,238), (60,110)), (largura, altura + 10)],
 ]
 
 pulo_tras = [
-[((368,238), (56,110)), dimensao_padrao],
+[((368,238), (60,110)), (largura, altura + 10)],
 [((435,254), (61,79)), dimensao_padrao],
-[((500,252), (105,43)), (280,160)],
+[((500,252), (111,48)), (altura, largura)],
 [((609,234), (54,82)), dimensao_padrao],
-[((669,251), (122,45)), (280,160)],
+[((669,251), (122,45)), (altura, largura)],
 [((797,252), (72,87)), dimensao_padrao],
-[((368,238), (56,110)), dimensao_padrao],
+[((368,238), (60,110)), (largura, altura + 10)],
 ]
 
 vitoria = [
