@@ -10,7 +10,8 @@ from placar import *
 class Game:
     def __init__(self) -> None:
         pg.init()
-        self.Tela = pg.display.set_mode(TELA_RESOLUCAO)
+        # self.Tela = pg.display.set_mode(TELA_RESOLUCAO)
+        self.Tela = pg.display.set_mode()
         self.fonte = pg.font.SysFont('arial', 19, True, False)
         self.Relogio = pg.time.Clock()
         self.Tempo = TEMPO_LUTA
@@ -22,6 +23,9 @@ class Game:
         self.Player02 = Player02(self)
         self.Estagio = Estagio(self)
         self.Placar = Placar(self)
+
+        TELA_RESOLUCAO = self.Tela.get_size()
+        # print(TELA_RESOLUCAO, 'resolução')
 
     def eventos(self):
         global ev

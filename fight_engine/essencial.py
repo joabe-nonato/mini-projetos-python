@@ -3,6 +3,13 @@ import pygame as pg
 import os
 from settings import *
 
+
+def alinhar_centro(largura, destino, esquerda = True):
+    if esquerda:
+        return ((destino - largura) / 2)
+    else:
+        return destino + ((destino - largura) / 2)
+
 def redenderizar(t, cor, objt):
     if DEBUG:
         pg.draw.rect(t, cor, objt, 2)

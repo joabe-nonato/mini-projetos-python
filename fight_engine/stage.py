@@ -52,7 +52,9 @@ class Estagio:
 
     def modelo(self):        
         dirimage = os.path.join(self.game.Imagens, "modelo.png")
-        modelo = pg.image.load(dirimage)      
+        modelo = pg.image.load(dirimage) 
+        modelo = pg.transform.scale(modelo, TELA_RESOLUCAO)     
+        modelo = pg.transform.flip(modelo, True, False)
         self.game.Tela.blit(modelo, (0, 0))
 
     def desenhar(self):

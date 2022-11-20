@@ -9,12 +9,12 @@ from settings import *
 # indice 6 = pulo_frente
 # indice 7 = pulo_tras
 spritesheet = "ryu.png"
-gravidade = 27
-velocidade_x = 4
-velocidade_y = 0.8
-velocidade_xy = 7
-largura = (TELA_LARGURA * 0.1593)   #largura = 204
-altura = (TELA_ALTURA * 0.4625)     #altura = 444
+gravidade =  (TELA_ALTURA * 0.029) #27px
+velocidade_x = 4 #frente
+velocidade_y = 0.8 #pulo
+velocidade_xy = 11 #pulo diagonal
+largura = (TELA_LARGURA * 0.1593)   #largura = 204px
+altura = (TELA_ALTURA * 0.4625)     #altura = 444px
 dimensao_padrao = (largura, altura)
 colisao_padrao = []
 

@@ -1,6 +1,8 @@
 import elenco.ryu as ryu
 import elenco.ken as ken
 
+datap = [ryu, ken]
+
 personagem = [
 ryu.personagem, 
 ken.personagem

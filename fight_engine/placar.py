@@ -1,5 +1,5 @@
 import pygame as pg
-from settings import *
+from essencial import *
 
 class Placar:
     def __init__(self, game):
@@ -24,9 +24,6 @@ class Placar:
             self.game.Player01.saude -= int(self.velocidade)
             self.game.Player02.saude -= int(self.velocidade)
 
-    def alinhar_centro(self, largura, destino):
-        return ((destino - largura) / 2)
-
     def barra_energia(self, esquerda, saude):
                 
         margem_lateral = 5
@@ -36,7 +33,7 @@ class Placar:
         x = TELA_CENTRO_V + margem_lateral + 1
         
         if esquerda:
-            x = self.alinhar_centro(branca_largura, TELA_CENTRO_V) 
+            x = alinhar_centro(branca_largura, TELA_CENTRO_V) 
         
         bar = pg.Rect(x, self.barra_y, branca_largura, self.barra_altura)
         pg.draw.rect(self.game.Tela, BRANCO, bar, 3) 
@@ -71,8 +68,8 @@ class Placar:
             tempo = fonte_tempo.render(f'0{int(self.game.Tempo)}', True, cor_tempo)
             tempo_sombra = fonte_tempo.render(f'0{ int(self.game.Tempo) }', True, PRETO)
 
-        barra_tempo = pg.Rect(self.alinhar_centro(60, TELA_LARGURA ), self.barra_altura + 23, 60, self.barra_altura)        
-        barra_tempo_combra = pg.Rect(self.alinhar_centro(60, TELA_LARGURA) + 2, self.barra_altura + 26, 60, self.barra_altura)
+        barra_tempo = pg.Rect(alinhar_centro(60, TELA_LARGURA ), self.barra_altura + 23, 60, self.barra_altura)        
+        barra_tempo_combra = pg.Rect(alinhar_centro(60, TELA_LARGURA) + 2, self.barra_altura + 26, 60, self.barra_altura)
     
         self.game.Tela.blit(tempo_sombra, barra_tempo_combra)
         self.game.Tela.blit(tempo, barra_tempo)        

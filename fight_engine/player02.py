@@ -40,7 +40,7 @@ class Player02:
     def __init__(self, game) -> None:
         self.game = game             
         self.indice = 0             
-        self.Bloco = pg.Rect(((TELA_LARGURA // 2)), personagem_altura_chao, 180, 290 )      
+        self.Bloco = pg.Rect(alinhar_centro(datap[selecionado].largura, TELA_CENTRO_V, False), TELA_ALTURA_CHAO - datap[selecionado].altura, datap[selecionado].largura, datap[selecionado].altura)
         self.personagem = personagem[selecionado]
         self.gravidade = (gravidade[selecionado] * -1)                                
         self.velocidade_x = velocidade_x[selecionado]
