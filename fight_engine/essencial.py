@@ -218,6 +218,10 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
         if self.golpe:
             if  self.indice < limite:
                 self.indice += 1
+            elif self.movimento in [11] :
+                # self.indice = 0
+                # self.movimento = 0
+                self.golpe = False
             else:
                 self.indice = 0
                 self.movimento = 0
