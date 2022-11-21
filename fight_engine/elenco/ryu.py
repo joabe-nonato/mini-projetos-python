@@ -44,8 +44,7 @@ tras = [
 [((486,109), (60,100)), dimensao_padrao],
 [((550,109), (60,100)), dimensao_padrao],
 [((622,109), (60,100)), dimensao_padrao],
-[((698,111), (60,100)), dimensao_padrao],
-[((769,111), (65,100)), (200, 290)],
+[((698,109), (60,100)), dimensao_padrao],
 ]
 
 agachado = [
@@ -114,6 +113,7 @@ socoagachado = [
 # parado = [
 #     [((630,838), (93,61)), (300, 190), ((90,220), (215,40))],
 # ]
+
 #largura = 204px
 #altura = 444px
 
