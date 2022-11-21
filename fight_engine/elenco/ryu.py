@@ -16,9 +16,11 @@ velocidade_xy = 11 #pulo diagonal
 largura = (TELA_LARGURA * 0.1593)   #largura = 204px
 altura = (TELA_ALTURA * 0.4625)     #altura = 444px
 dimensao_padrao = (largura, altura)
-colisao_padrao = []
 
-# [[(DIMENSOES IMAGEM ORIGEM), (DIMENSAO IMAGEM DESTINO), [(COLISAO6),(COLISAO3),(COLISAO01)]]]
+colisao_padrao = []
+bloco_golpe = (10,10, 20, 30)
+
+# [[(DIMENSOES IMAGEM ORIGEM), (DIMENSAO IMAGEM DESTINO), (BLOCO GOLPE), [(COLISAO6),(COLISAO3),(COLISAO01)]]]
 
 parado = [
  [((0,0),  (60,100)), dimensao_padrao]
@@ -89,59 +91,59 @@ vitoria = [
 [((631,1897), (60,115)), dimensao_padrao],
 ]
 
-
-#largura = 204px
-#altura = 444px
-
 socoforte = [
 [((0,460), (60,95)), dimensao_padrao],
 [((80,460),(75,95)), (largura, 350)],
 [((170,460), (110,95)), (360, 350)],
+[((170,460), (110,95)), (360, 350), ((70,70), (250,40))],
 [((170,460), (110,95)), (360, 350)],
 [((80,460),(75,95)), (largura, 350)],
 [((0,460), (60,95)), dimensao_padrao],
 ]
 
-chuteforte = [
-[((0,359), (90,91)), (265, 285)],
-[((91,359),(94,91)), (270, 285)],
-[((0,359), (90,91)), (265, 285)],
+
+# parado = [[((170,460), (110,95)), (360, 350), ((70,70), (250,40))],]
+#largura = 204px
+#altura = 444px
+
+socoagachado = [
+[((240,575), (67,100)), dimensao_padrao],
+[((312,575), (67,100)), dimensao_padrao],
+[((386,575), (93,100)), (300, altura), ((90,170), (215,40))],
 ]
 
-socofraco = [
-[((0,359), (90,91)), (265, 285)],
-[((91,359),(94,91)), (270, 285)],
-[((0,359), (90,91)), (265, 285)],
-]
 
-personagem = [
-    spritesheet
-    , parado
+personagem = [ 
+    parado
     , frente
     , tras
     , agachado
     , pulo
     , pulo_frente
-    , pulo_frente
-    , vitoria
-    , derrota
+    , pulo_tras
+
     , socoforte 
-    , socomedia 
-    , socofraco 
-    , chuteforte
-    , chutemedia
-    , chutefraco
-    , voadoraforte
-    , voadoramedia
-    , voadorafraco
-    , especial01 
-    , especial02 
-    , especial03 
-    , especial04 
-    , especial05 
-    , especial06 
-    , especial07
-    , especial08
-    , especial09
-    , especial10
+    , socoagachado
+    
+    # , socomedia 
+    # , socofraco 
+    # , chuteforte
+    # , chutemedia
+    # , chutefraco
+    # , voadoraforte
+    # , voadoramedia
+    # , voadorafraco
+    # , especial01 
+    # , especial02 
+    # , especial03 
+    # , especial04 
+    # , especial05 
+    # , especial06 
+    # , especial07
+    # , especial08
+    # , especial09
+    # , especial10
+
+    # , vitoria
+    # , derrota
 ]

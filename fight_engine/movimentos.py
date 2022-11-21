@@ -7,7 +7,8 @@ pulo_frente = []
 pulo_tras = []                  
 vitoria = []                    
 derrota = []                    
-socoforte  = []                 
+socoforte  = []  
+socoagachado = []               
 socomedia  = []                 
 socofraco  = []                 
 chuteforte = []                 
@@ -26,3 +27,8 @@ especial07 = []
 especial08 = []                 
 especial09 = []                 
 especial10 = []  
+
+
+class lista_movimento:
+    def __init__(self):
+        lista_movimentos = []

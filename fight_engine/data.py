@@ -8,6 +8,11 @@ ryu.personagem,
 ken.personagem
 ]
 
+spritesheet = [
+ryu.spritesheet, 
+ken.spritesheet
+]
+
 gravidade = [
 ryu.gravidade, 
 ken.gravidade
@@ -27,6 +32,7 @@ velocidade_xy = [
 ryu.velocidade_xy, 
 ken.velocidade_xy
 ]
+
 
 cenario = []
 

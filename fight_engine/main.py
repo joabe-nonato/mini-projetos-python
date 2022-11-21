@@ -7,6 +7,8 @@ from player02 import *
 from stage import *
 from placar import *
 
+teclas = [pg.K_p, pg.K_k, pg.K_m, pg.K_l]
+
 class Game:
     def __init__(self) -> None:
         pg.init()
@@ -28,17 +30,15 @@ class Game:
         # print(TELA_RESOLUCAO, 'resolução')
 
     def eventos(self):
-        global ev
-        tcl = pg.key.get_pressed()
-
+        
         for evento in pg.event.get():
-            if evento.type == pg.QUIT or tcl[pg.K_ESCAPE] :
-                pg.quit()
-                sys.exit()
-            
-            elif evento.type == pg.KEYUP:
-                self.Player01.Golpe(tcl)
-                self.Player02.Golpe(tcl)
+            if evento.type == pg.KEYDOWN:
+                if evento.type == pg.QUIT or evento.key == pg.K_ESCAPE:
+                    pg.quit()
+                    sys.exit()
+                elif  evento.key in teclas:
+                    self.Player01.Golpe(evento.key)
+                    self.Player02.Golpe(evento.key)
 
         self.Player01.eventos()
         self.Player02.eventos()
