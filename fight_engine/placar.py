@@ -36,14 +36,14 @@ class Placar:
             x = alinhar_centro(branca_largura, TELA_CENTRO_V) 
         
         bar = pg.Rect(x, self.barra_y, branca_largura, self.barra_altura)
-        pg.draw.rect(self.game.Tela, BRANCO, bar, 3) 
+        pg.draw.rect(self.game.superficie, BRANCO, bar, 3) 
 
         if esquerda:            
-            pg.draw.rect(self.game.Tela, AMARELO, (x, bar.y + 3, branca_largura , bar.h - 6))            
-            pg.draw.rect(self.game.Tela, VERMELHO, (x, bar.y + 3, self.reverter , bar.h - 6)) 
+            pg.draw.rect(self.game.superficie, AMARELO, (x, bar.y + 3, branca_largura , bar.h - 6))            
+            pg.draw.rect(self.game.superficie, VERMELHO, (x, bar.y + 3, self.reverter , bar.h - 6)) 
         else:            
-            pg.draw.rect(self.game.Tela, AMARELO, (x, bar.y + 3, branca_largura , bar.h - 6)) 
-            pg.draw.rect(self.game.Tela, VERMELHO, (x, bar.y + 3, saude , bar.h - 6))
+            pg.draw.rect(self.game.superficie, AMARELO, (x, bar.y + 3, branca_largura , bar.h - 6)) 
+            pg.draw.rect(self.game.superficie, VERMELHO, (x, bar.y + 3, saude , bar.h - 6))
         
 
     def desenhar(self):
@@ -71,8 +71,8 @@ class Placar:
         barra_tempo = pg.Rect(alinhar_centro(60, TELA_LARGURA ), self.barra_altura + 23, 60, self.barra_altura)        
         barra_tempo_combra = pg.Rect(alinhar_centro(60, TELA_LARGURA) + 2, self.barra_altura + 26, 60, self.barra_altura)
     
-        self.game.Tela.blit(tempo_sombra, barra_tempo_combra)
-        self.game.Tela.blit(tempo, barra_tempo)        
+        self.game.superficie.blit(tempo_sombra, barra_tempo_combra)
+        self.game.superficie.blit(tempo, barra_tempo)        
 
         if DEBUG:
-            pg.draw.line(self.game.Tela, 'White', (TELA_CENTRO_V, 0), (TELA_CENTRO_V, TELA_ALTURA), 3)
+            pg.draw.line(self.game.superficie, 'White', (TELA_CENTRO_V, 0), (TELA_CENTRO_V, TELA_ALTURA), 3)

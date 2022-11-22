@@ -20,13 +20,20 @@ class Game:
         self.luta_encerrada = False
         self.Diretorio = os.path.dirname(__file__)
         self.Imagens = os.path.join(self.Diretorio, 'imagens')
-        self.Objetos = []
+        
+        TELA_RESOLUCAO = self.Tela.get_size()
+        self.Topo = 0
+        self.Esquerda = 0
+        self.superficie = pg.Surface((TELA_RESOLUCAO))                
+        self.Palco = pg.Rect(self.Esquerda, self.Topo, self.superficie.get_width(), (self.superficie.get_height() - (self.superficie.get_height() * 0.1)))
+        self.chao = self.Palco.bottom
+
         self.Player01 = Player01(self)
         self.Player02 = Player02(self)
         self.Estagio = Estagio(self)
         self.Placar = Placar(self)
 
-        TELA_RESOLUCAO = self.Tela.get_size()
+        
         # print(TELA_RESOLUCAO, 'resolução')
 
     def eventos(self):
@@ -45,6 +52,8 @@ class Game:
         
     def atualizar(self):        
         self.Relogio.tick(FPS)
+        self.Palco = pg.Rect(self.Esquerda, self.Topo, self.superficie.get_width(), (self.superficie.get_height() - (self.superficie.get_height() * 0.1)))
+        self.Tela.blit(self.superficie, [0,0])
 
         self.Player01.atualizar()
         self.Player02.atualizar()
@@ -55,11 +64,16 @@ class Game:
 
     def desenhar(self):
         self.Tela.fill((255,255,255))
+        self.superficie.fill(BRANCO)
+        if DEBUG:
+            pg.draw.rect(self.superficie, PRETO, self.Palco, 1)
 
         self.Estagio.desenhar() 
         self.Placar.desenhar()       
         self.Player01.desenhar() 
         self.Player02.desenhar()     
+
+                
         
         
     def executar(self):    

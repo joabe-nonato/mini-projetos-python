@@ -3,7 +3,6 @@ from essencial import *
 from settings import *
 from data import *
 
-selecionado = 0
 
 parado = []                 
 frente = []                 
@@ -35,11 +34,11 @@ especial08 = []
 especial09 = []                 
 especial10 = []  
 
-class Player01:
-    def __init__(self, game) -> None:
+class Player:
+    def __init__(self, game, selecionado, posicao_inicial) -> None:
         self.game = game        
         self.indice = 0                  
-        self.Bloco = pg.Rect(alinhar_centro(datap[selecionado].largura, TELA_CENTRO_V), self.game.chao, datap[selecionado].largura, datap[selecionado].altura)
+        self.Bloco = pg.Rect(alinhar_centro(datap[selecionado].largura, TELA_CENTRO_V), TELA_ALTURA_CHAO - datap[selecionado].altura, datap[selecionado].largura, datap[selecionado].altura)
         self.personagem = personagem[selecionado]
         self.spritesheet = spritesheet[selecionado]                
         self.gravidade = (gravidade[selecionado] * -1)                
@@ -50,7 +49,7 @@ class Player01:
         self.pulo = 0       
         self.golpe = False 
         self.bloco_golpe = pg.Rect(0,0,0,0)
-        self.esquerda = True
+        self.esquerda = posicao_inicial
         self.saude = BARRA_ENERGIA            
         self.movimento = 0 #0 = parado, 1 = esquerda, 2 = direita, 3 = agacha, 4 = pulo
 
@@ -92,7 +91,7 @@ class Player01:
         # executar animações
         sprites = pg.sprite.Group()  
         animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, vitoria, derrota, socoforte, socoagachado , socomedia , socofraco , chuteforte, chutemedia, chutefraco, voadoraforte, voadoramedia, voadorafraco, especial01 , especial02 , especial03 , especial04 , especial05 , especial06 , especial07, especial08, especial09, especial10)
-        sprites.draw(self.game.superficie)
+        sprites.draw(self.game.Tela)
         
         informacoes(self.game,'Blue', f'P1 e:{self.esquerda} x:{self.Bloco.x} y:{self.Bloco.y} w:{self.Bloco.w} h:{self.Bloco.h} d:{self.movimento} g:{self.gravidade}', 10, 100)            
 

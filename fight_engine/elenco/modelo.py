@@ -1,13 +1,5 @@
-from movimentos import *
 from settings import *
-# indice 0 = spritesheet
-# indice 1 = parado
-# indice 2 = frente
-# indice 3 = tras
-# indice 4 = agachado
-# indice 5 = pulo
-# indice 6 = pulo_frente
-# indice 7 = pulo_tras
+
 spritesheet = "ryu.png"
 gravidade =  (TELA_ALTURA * 0.027) #27px
 velocidade_x = 4 #frente
@@ -44,8 +36,7 @@ tras = [
 [((486,109), (60,100)), dimensao_padrao],
 [((550,109), (60,100)), dimensao_padrao],
 [((622,109), (60,100)), dimensao_padrao],
-[((698,111), (60,100)), dimensao_padrao],
-[((769,111), (65,100)), (200, 290)],
+[((698,109), (60,100)), dimensao_padrao],
 ]
 
 agachado = [
@@ -63,7 +54,7 @@ pulo = [
 [((368,238), (56,110)), dimensao_padrao],
 ]
 
-pulo_frente = [
+pulo_diagonal = [
 [((368,238), (60,110)), (largura, altura + 10)],
 [((435,254), (61,79)), dimensao_padrao],
 [((500,252), (111,48)), (altura, largura)],
@@ -71,45 +62,6 @@ pulo_frente = [
 [((669,251), (122,45)), (altura, largura)],
 [((797,252), (72,87)), dimensao_padrao],
 [((368,238), (60,110)), (largura, altura + 10)],
-]
-
-pulo_tras = [
-[((368,238), (60,110)), (largura, altura + 10)],
-[((435,254), (61,79)), dimensao_padrao],
-[((500,252), (111,48)), (altura, largura)],
-[((609,234), (54,82)), dimensao_padrao],
-[((669,251), (122,45)), (altura, largura)],
-[((797,252), (72,87)), dimensao_padrao],
-[((368,238), (60,110)), (largura, altura + 10)],
-]
-
-vitoria = [
-[((358,1913), (65,100)), dimensao_padrao],
-[((424,1913), (65,100)), dimensao_padrao],
-[((497,1913), (65,100)), dimensao_padrao],
-[((570,1887), (60,125)), dimensao_padrao],
-[((631,1897), (60,115)), dimensao_padrao],
-]
-
-socoforte = [
-[((0,460), (60,95)), dimensao_padrao],
-[((80,460),(75,95)), (largura, 350)],
-[((170,460), (110,95)), (360, 350)],
-[((170,460), (110,95)), (360, 350), ((70,70), (250,40))],
-[((170,460), (110,95)), (360, 350)],
-[((80,460),(75,95)), (largura, 350)],
-[((0,460), (60,95)), dimensao_padrao],
-]
-
-
-# parado = [[((170,460), (110,95)), (360, 350), ((70,70), (250,40))],]
-#largura = 204px
-#altura = 444px
-
-socoagachado = [
-[((240,575), (67,100)), dimensao_padrao],
-[((312,575), (67,100)), dimensao_padrao],
-[((386,575), (93,100)), (300, altura), ((90,170), (215,40))],
 ]
 
 
@@ -119,31 +71,5 @@ personagem = [
     , tras
     , agachado
     , pulo
-    , pulo_frente
-    , pulo_tras
-
-    , socoforte 
-    , socoagachado
-    
-    # , socomedia 
-    # , socofraco 
-    # , chuteforte
-    # , chutemedia
-    # , chutefraco
-    # , voadoraforte
-    # , voadoramedia
-    # , voadorafraco
-    # , especial01 
-    # , especial02 
-    # , especial03 
-    # , especial04 
-    # , especial05 
-    # , especial06 
-    # , especial07
-    # , especial08
-    # , especial09
-    # , especial10
-
-    # , vitoria
-    # , derrota
+    , pulo_diagonal
 ]

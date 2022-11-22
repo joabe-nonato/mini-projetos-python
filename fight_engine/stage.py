@@ -6,6 +6,7 @@ class Estagio:
 
     def __init__(self, game) -> None:
         self.game = game
+        self.top = 0
         self.hx = ((TELA_LARGURA // 2) * -1)
         
     def fundo(self):        
@@ -13,22 +14,16 @@ class Estagio:
         bckgrd = pg.image.load(dirimage)
         eixoX = (-400 - (self.game.Player01.Bloco.x * (0.2)))        
 
-        eixoY = 10
+        eixoY = self.game.Palco.top
 
-        # if self.game.Player01.pulo == 1:
-        #     eixoY += 10
-        # elif self.game.Player01.pulo == 0:
-        #     eixoY = 10
-
-        self.game.Tela.blit(pg.transform.scale(bckgrd, (TELA_LARGURA * 2, TELA_ALTURA - 90)), (eixoX, eixoY))
-
+        self.game.superficie.blit(pg.transform.scale(bckgrd, (TELA_LARGURA * 2, self.game.Palco.h)), (eixoX, eixoY))
 
 
     def chao(self):
         chao = pg.image.load(os.path.join(self.game.Imagens, "chao.png"))
         
-        eixoY = 150
-        eixoX = ((TELA_LARGURA // 2) * -1)
+        eixoY = self.game.Palco.bottom
+        eixoX = self.game.Palco.centerx
 
         # CHAO DIREITA
         if self.game.Player01.movimento in [2,6] and self.game.Player02.movimento in [2,6]:
@@ -39,24 +34,28 @@ class Estagio:
             self.hx += 1.5
             eixoX += 1.5
 
-        
         # PULO
         if self.game.Player01.pulo > 0 or self.game.Player02.pulo > 0:
-            eixoY -= 15
+            eixoY += 15
+            self.game.Palco.top -+ 15
+        
+        bloco = pg.Rect(0, 0, TELA_LARGURA + (TELA_LARGURA // 2), 150)
+        bloco.centerx = eixoX
+        bloco.centery = eixoY
 
-        self.game.Tela.blit(pg.transform.scale(chao, (TELA_LARGURA * 2, 150)), (self.hx, TELA_ALTURA - eixoY))
+        self.game.superficie.blit(pg.transform.scale(chao, (bloco.w, bloco.h)), (bloco.x, bloco.y))
 
         if DEBUG:            
             chaotext = f'chão x: {eixoX} y: {eixoY}'
             texto = self.game.fonte.render(chaotext, True, 'Red')                
-            self.game.Tela.blit(texto, (5 , TELA_ALTURA_CHAO))
+            self.game.superficie.blit(texto, (5 , self.game.Palco.bottom))
 
     def modelo(self):        
         dirimage = os.path.join(self.game.Imagens, "modelo.png")
         modelo = pg.image.load(dirimage) 
         modelo = pg.transform.scale(modelo, TELA_RESOLUCAO)     
         modelo = pg.transform.flip(modelo, True, False)
-        self.game.Tela.blit(modelo, (0, 0))
+        self.game.superficie.blit(modelo, (0, 0))
 
     def desenhar(self):
         self.fundo()

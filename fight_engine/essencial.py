@@ -12,8 +12,8 @@ def alinhar_centro(largura, destino, esquerda = True):
 
 def redenderizar(self, cor):
     if DEBUG:
-        pg.draw.rect(self.game.Tela, cor, self.Bloco, 2)
-        pg.draw.rect(self.game.Tela, VERMELHO, self.bloco_golpe, 3)
+        pg.draw.rect(self.game.superficie, cor, self.Bloco, 2)
+        pg.draw.rect(self.game.superficie, VERMELHO, self.bloco_golpe, 3)
 
 def criarobjeto(posx, posy, larg, alt, velocidade_x = 1, velocidade_y = 1):
     return [pg.Rect(posx, posy, larg, alt), [velocidade_x, velocidade_y]]
@@ -33,7 +33,7 @@ def informacoes(game, cor, msg, left, topo):
         linhas = msg.split(' ')            
         for escrever in linhas:
             texto = game.fonte.render(escrever, True, cor)                        
-            game.Tela.blit(texto, (left , topo))
+            game.superficie.blit(texto, (left , topo))
             topo += 17
 
 
@@ -99,7 +99,11 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
             return lmt
                 
         def retorno_padrao(sprt):
-            return pg.Rect(self.Bloco.x, TELA_ALTURA_CHAO - int(sprt.image.get_height()) , self.Bloco.w ,self.Bloco.h)
+            # return pg.Rect(self.Bloco.x, TELA_ALTURA_CHAO - int(sprt.image.get_height()) , self.Bloco.w ,self.Bloco.h)
+            r1 = pg.Rect(0, 0 , self.Bloco.w ,self.Bloco.h)
+            r1.centerx = self.Bloco.centerx
+            r1.bottom = self.Bloco.bottom
+            return r1
 
         
         if self.movimento == 10: 
@@ -107,7 +111,7 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
             if self.esquerda:
                 sprt.image = socoforte[int(self.indice)][0]               
             else:
-                sprt.image = pg.transform.flip(socoforte[int(self.indice)][0], True, False)   
+                sprt.image = pg.transform.flip(socoforte[int(self.indice)][0], True, False)               
 
             sprt.rect = retorno_padrao(sprt)
 
@@ -120,11 +124,16 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
                     else:
                         self.bloco_golpe.x = self.Bloco.x - self.Bloco.w + self.bloco_golpe.x
                     
-                    pg.draw.rect(self.game.Tela, VERMELHO, self.bloco_golpe, 3)
+                    pg.draw.rect(self.game.superficie, VERMELHO, self.bloco_golpe, 3)
 
         if self.movimento == 11: 
             limite = calcular_limite(socoagachado)
-            sprt.image = socoagachado[int(self.indice)][0]               
+            
+            if self.esquerda:
+                sprt.image = socoagachado[int(self.indice)][0]               
+            else:
+                sprt.image = pg.transform.filp(socoagachado[int(self.indice)][0], True, False)
+
             sprt.rect = retorno_padrao(sprt)
 
             if len(socoagachado[int(self.indice)]):
@@ -136,7 +145,7 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
                     else:
                         self.bloco_golpe.x = self.Bloco.x - self.Bloco.w + self.bloco_golpe.x
 
-                    pg.draw.rect(self.game.Tela, VERMELHO, self.bloco_golpe, 3)  
+                    pg.draw.rect(self.game.superficie, VERMELHO, self.bloco_golpe, 3)  
 
                 
         #Animação        
@@ -273,22 +282,12 @@ def aplicar_movimentacao(self, gravidadeY):
             self.pulo = 0        
             self.movimento = 0
             self.gravidade = (gravidadeY * -1)
-            dy = (TELA_ALTURA_CHAO - self.Bloco.h)
+            dy = (self.game.chao - self.Bloco.h)
                
     self.Bloco.x = dx
     self.Bloco.y = dy
 
-    # if self.golpe:
-    #     self.indice += 1
-    # else:
-    #     self.indice = 0
-    #     self.movimento = 0
-    #     self.golpe = False
-
-
 def monitorar_teclas_movimento(self, oponente):
-
-        personagem_altura_chao = (TELA_ALTURA_CHAO - self.Bloco.height)
 
         tecla = pg.key.get_pressed()
 
@@ -297,13 +296,13 @@ def monitorar_teclas_movimento(self, oponente):
                 if tecla[self.tecla_cima] and self.pulo == 0 and tecla[self.tecla_esquerda]:                
                     self.pulo = 1
                     self.movimento = 5     
-                    if self.Bloco.y == personagem_altura_chao:  
+                    if self.Bloco.bottom == self.game.chao:  
                         self.indice = 0         
         # Diagonal Direita
                 elif tecla[self.tecla_cima] and self.pulo == 0 and tecla[self.tecla_direita]:
                     self.pulo = 1
                     self.movimento = 6
-                    if self.Bloco.y == personagem_altura_chao:  
+                    if self.Bloco.bottom == self.game.chao:  
                         self.indice = 0
                         
                 if self.pulo == 0:  

@@ -39,7 +39,7 @@ class Player02:
     def __init__(self, game) -> None:
         self.game = game             
         self.indice = 0             
-        self.Bloco = pg.Rect(alinhar_centro(datap[selecionado].largura, TELA_CENTRO_V, False), TELA_ALTURA_CHAO - datap[selecionado].altura, datap[selecionado].largura, datap[selecionado].altura)
+        self.Bloco = pg.Rect(alinhar_centro(datap[selecionado].largura, TELA_CENTRO_V, False), self.game.chao, datap[selecionado].largura, datap[selecionado].altura)
         self.personagem = personagem[selecionado]
         self.spritesheet = spritesheet[selecionado]
         self.gravidade = (gravidade[selecionado] * -1)                                
@@ -89,10 +89,10 @@ class Player02:
         # executar animações
         sprites = pg.sprite.Group()  
         animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, vitoria, derrota, socoforte, socoagachado , socomedia , socofraco , chuteforte, chutemedia, chutefraco, voadoraforte, voadoramedia, voadorafraco, especial01 , especial02 , especial03 , especial04 , especial05 , especial06 , especial07, especial08, especial09, especial10)
-        sprites.draw(self.game.Tela)
+        sprites.draw(self.game.superficie)
 
         redenderizar(self,'Red')
 
         informacoes(self.game,'Red', f'P2 e:{self.esquerda} x:{self.Bloco.x} y:{self.Bloco.y} w:{self.Bloco.w} d:{self.movimento} g:{self.gravidade}', (TELA_LARGURA // 2), 100)
         
-        # self.game.Tela.blit(self.sprites, self.Bloco)
+        # self.game.superficie.blit(self.sprites, self.Bloco)
