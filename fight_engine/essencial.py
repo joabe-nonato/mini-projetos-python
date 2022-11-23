@@ -12,11 +12,12 @@ def alinhar_centro(largura, destino, esquerda = True):
 
 def redenderizar(self, cor):
     if DEBUG:
-        pg.draw.rect(self.game.superficie, cor, self.Bloco, 2)
-        pg.draw.rect(self.game.superficie, VERMELHO, self.bloco_golpe, 3)
+        pg.draw.rect(self.game.superficie, BRANCO, self.Bloco, 2)        
+        pg.draw.rect(self.game.superficie, cor, self.BlocoImagem, 2)
+        pg.draw.rect(self.game.superficie, VERDE, self.bloco_golpe)
 
-def criarobjeto(posx, posy, larg, alt, velocidade_x = 1, velocidade_y = 1):
-    return [pg.Rect(posx, posy, larg, alt), [velocidade_x, velocidade_y]]
+# def criarobjeto(posx, posy, larg, alt, velocidade_x = 1, velocidade_y = 1):
+#     return [pg.Rect(posx, posy, larg, alt), [velocidade_x, velocidade_y]]
 
 def colisalateral(eesquerda, movimento, bloco_esquerda, bloco_direita):
     if eesquerda:
@@ -98,13 +99,35 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
                 self.indice = lmt
             return lmt
                 
-        def retorno_padrao(sprt):
-            # return pg.Rect(self.Bloco.x, TELA_ALTURA_CHAO - int(sprt.image.get_height()) , self.Bloco.w ,self.Bloco.h)
-            r1 = pg.Rect(0, 0 , self.Bloco.w ,self.Bloco.h)
-            r1.centerx = self.Bloco.centerx
-            r1.bottom = self.Bloco.bottom
-            return r1
 
+        def aplicar_animacao(self, lista_origem):
+            limite = calcular_limite(lista_origem)
+            sprt.image = lista_origem[int(self.indice)][0]
+
+            self.BlocoImagem = pg.Rect(0, 0 , sprt.image.get_width(), sprt.image.get_height())
+            self.BlocoImagem.centerx = self.Bloco.centerx
+            self.BlocoImagem.bottom = self.Bloco.bottom
+            sprt.rect = self.BlocoImagem.bottom
+
+        def executar_golpe(lista_golpe):
+            if len(socoforte[int(self.indice)]):
+                self.bloco_golpe = pg.Rect(socoforte[int(self.indice)][1])
+                self.bloco_golpe.center + self.BlocoImagem.center
+                self.bloco_golpe.y = (self.BlocoImagem.y + self.bloco_golpe.y)
+
+                if self.esquerda:
+                    self.bloco_golpe.x = (self.bloco_golpe.x + self.BlocoImagem.centerx)
+                else:
+                    self.bloco_golpe.x = ((self.bloco_golpe.x * -1) + self.BlocoImagem.x)
+                
+
+        def retorno_padrao(sprt):
+            # return pg.Rect(self.Bloco.x, self.game.chao - int(sprt.image.get_height()) , self.Bloco.w ,self.Bloco.h)
+            self.BlocoImagem = pg.Rect(0, 0 , sprt.image.get_width(), sprt.image.get_height())
+            self.BlocoImagem.centerx = self.Bloco.centerx
+            self.BlocoImagem.bottom = self.Bloco.bottom
+            # self.BlocoImagem = r1
+            return self.BlocoImagem
         
         if self.movimento == 10: 
             limite = calcular_limite(socoforte)
@@ -115,24 +138,15 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
 
             sprt.rect = retorno_padrao(sprt)
 
-            if len(socoforte[int(self.indice)]):
-                    self.bloco_golpe = pg.Rect(socoforte[int(self.indice)][1])
-                    self.bloco_golpe.y = (self.Bloco.y + self.bloco_golpe.y)
-
-                    if self.esquerda:
-                        self.bloco_golpe.x = centro_bloco
-                    else:
-                        self.bloco_golpe.x = self.Bloco.x - self.Bloco.w + self.bloco_golpe.x
-                    
-                    pg.draw.rect(self.game.superficie, VERMELHO, self.bloco_golpe, 3)
-
+            executar_golpe(socoforte)
+            
         if self.movimento == 11: 
             limite = calcular_limite(socoagachado)
             
             if self.esquerda:
                 sprt.image = socoagachado[int(self.indice)][0]               
             else:
-                sprt.image = pg.transform.filp(socoagachado[int(self.indice)][0], True, False)
+                sprt.image = pg.transform.flip(socoagachado[int(self.indice)][0], True, False)
 
             sprt.rect = retorno_padrao(sprt)
 
@@ -152,9 +166,9 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
         if self.esquerda:
 
             if self.movimento == 0:                     
-                # aplicar_animacao(self, parado, sprites)
+                # aplicar_animacao(self, parado)
                 limite = calcular_limite(parado)
-                sprt.image = parado[int(self.indice)][0]                
+                sprt.image = parado[int(self.indice)][0]    
                 sprt.rect = retorno_padrao(sprt)
  
             if self.movimento == 1:                         
@@ -175,17 +189,17 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
             if self.movimento == 4:                         
                 limite = calcular_limite(pulo)
                 sprt.image = pulo[int(self.indice)][0]
-                sprt.rect = pg.Rect(self.Bloco.x,self.Bloco.y, self.Bloco.w ,self.Bloco.h)
+                sprt.rect = retorno_padrao(sprt)
 
             if self.movimento == 5:                         
                 limite = calcular_limite(pulo_tras)
                 sprt.image = pulo_tras[int(self.indice)][0]
-                sprt.rect = pg.Rect(self.Bloco.x,self.Bloco.y, self.Bloco.w ,self.Bloco.h)
+                sprt.rect = retorno_padrao(sprt)
 
             if self.movimento == 6:                         
                 limite = calcular_limite(pulo_frente)                 
                 sprt.image = pulo_frente[int(self.indice)][0]
-                sprt.rect = pg.Rect(self.Bloco.x,self.Bloco.y, self.Bloco.w ,self.Bloco.h)
+                sprt.rect = retorno_padrao(sprt)
         else:
             if self.movimento == 0:     
                 limite = calcular_limite(parado)
@@ -210,17 +224,17 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
             if self.movimento == 4:                         
                 limite = calcular_limite(pulo)
                 sprt.image = pg.transform.flip(pulo[int(self.indice)][0], True, False)
-                sprt.rect = pg.Rect(self.Bloco.x,self.Bloco.y, self.Bloco.w ,self.Bloco.h) 
+                sprt.rect = retorno_padrao(sprt)
 
             if self.movimento == 6:                         
                 limite = calcular_limite(pulo_tras)
                 sprt.image = pg.transform.flip(pulo_tras[int(self.indice)][0], True, False)
-                sprt.rect = pg.Rect(self.Bloco.x,self.Bloco.y, self.Bloco.w ,self.Bloco.h)
+                sprt.rect = retorno_padrao(sprt)
 
             if self.movimento == 5:                         
                 limite = calcular_limite(pulo_frente)
                 sprt.image = pg.transform.flip(pulo_frente[int(self.indice)][0], True, False)
-                sprt.rect = pg.Rect(self.Bloco.x,self.Bloco.y, self.Bloco.w ,self.Bloco.h)
+                sprt.rect = retorno_padrao(sprt)
 
         # sprt.rect.center = (self.Bloco.w  - self.Bloco.x ,self.Bloco.h //2)
 
@@ -286,6 +300,10 @@ def aplicar_movimentacao(self, gravidadeY):
                
     self.Bloco.x = dx
     self.Bloco.y = dy
+
+    self.BlocoImagem.center = self.Bloco.center
+    self.BlocoImagem.bottom = self.Bloco.bottom
+
 
 def monitorar_teclas_movimento(self, oponente):
 

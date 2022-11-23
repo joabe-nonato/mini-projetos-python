@@ -39,7 +39,11 @@ class Player02:
     def __init__(self, game) -> None:
         self.game = game             
         self.indice = 0             
-        self.Bloco = pg.Rect(alinhar_centro(datap[selecionado].largura, TELA_CENTRO_V, False), self.game.chao, datap[selecionado].largura, datap[selecionado].altura)
+        self.Bloco = pg.Rect(alinhar_centro(datap[selecionado].largura, TELA_CENTRO_V, False), self.game.chao, 100, 250)
+        self.Bloco.bottom = self.game.chao
+        self.BlocoImagem = pg.Rect(0, 0, 200, 300)
+        self.BlocoImagem.center = self.Bloco.center
+        self.BlocoImagem.bottom = self.Bloco.bottom
         self.personagem = personagem[selecionado]
         self.spritesheet = spritesheet[selecionado]
         self.gravidade = (gravidade[selecionado] * -1)                                

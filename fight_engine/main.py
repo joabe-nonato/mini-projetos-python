@@ -32,9 +32,7 @@ class Game:
         self.Player02 = Player02(self)
         self.Estagio = Estagio(self)
         self.Placar = Placar(self)
-
         
-        # print(TELA_RESOLUCAO, 'resolução')
 
     def eventos(self):
         

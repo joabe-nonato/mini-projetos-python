@@ -15,7 +15,7 @@ velocidade_y = 0.8 #pulo
 velocidade_xy = 11 #pulo diagonal
 largura = (TELA_LARGURA * 0.1593)   #largura = 204px
 altura = (TELA_ALTURA * 0.4625)     #altura = 444px
-dimensao_padrao = (largura, altura)
+dimensao_padrao = [largura, altura]
 
 colisao_padrao = []
 bloco_golpe = (10,10, 20, 30)
@@ -94,7 +94,7 @@ socoforte = [
 [((0,460), (60,95)), dimensao_padrao],
 [((80,460),(75,95)), (largura, 350)],
 [((170,460), (110,95)), (360, 350)],
-[((170,460), (110,95)), (360, 350), ((70,70), (250,40))],
+[((170,460), (110,95)), (360, 350), ((50,60), (180,40))],
 [((170,460), (110,95)), (360, 350)],
 [((80,460),(75,95)), (largura, 350)],
 [((0,460), (60,95)), dimensao_padrao],
@@ -111,7 +111,7 @@ socoagachado = [
 
 
 # parado = [
-#     [((170,460), (110,95)), (360, 350), ((70,70), (250,40))],
+# [((170,460), (110,95)), (360, 350), ((0,60), (180,40))],
 # ]
 
 #largura = 204px
