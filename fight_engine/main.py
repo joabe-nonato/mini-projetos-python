@@ -28,10 +28,12 @@ class Game:
         self.Palco = pg.Rect(self.Esquerda, self.Topo, self.superficie.get_width(), (self.superficie.get_height() - (self.superficie.get_height() * 0.1)))
         self.chao = self.Palco.bottom
 
-        self.Player01 = Player01(self)
-        self.Player02 = Player02(self)
         self.Estagio = Estagio(self)
         self.Placar = Placar(self)
+
+        self.Player01 = Player01(self)
+        self.Player02 = Player02(self)
+        
         
 
     def eventos(self):
@@ -67,13 +69,10 @@ class Game:
             pg.draw.rect(self.superficie, PRETO, self.Palco, 1)
 
         self.Estagio.desenhar() 
-        self.Placar.desenhar()       
+        # self.Placar.desenhar()       
         self.Player01.desenhar() 
         self.Player02.desenhar()     
 
-                
-        
-        
     def executar(self):    
         while True:
             self.eventos()

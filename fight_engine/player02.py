@@ -31,19 +31,16 @@ especial04  = []
 especial05  = []                    
 especial06  = []                    
 especial07 = []                 
+
 especial08 = []                 
 especial09 = []                 
 especial10 = []  
 
 class Player02:
     def __init__(self, game) -> None:
-        self.game = game             
-        self.indice = 0             
-        self.Bloco = pg.Rect(alinhar_centro(datap[selecionado].largura, TELA_CENTRO_V, False), self.game.chao, 100, 250)
-        self.Bloco.bottom = self.game.chao
-        self.BlocoImagem = pg.Rect(0, 0, 200, 300)
-        self.BlocoImagem.center = self.Bloco.center
-        self.BlocoImagem.bottom = self.Bloco.bottom
+        self.game = game 
+        self.IDP = 'P2'            
+        self.indice = 0          
         self.personagem = personagem[selecionado]
         self.spritesheet = spritesheet[selecionado]
         self.gravidade = (gravidade[selecionado] * -1)                                
@@ -51,15 +48,19 @@ class Player02:
         self.velocidade_y = velocidade_y[selecionado]
         self.velocidade_xy = velocidade_xy[selecionado]
         self.teclaprecionada = False
+        # self.colisao_direita  = False
+        # self.colisao_esquerda = False
         self.pulo = 0        
         self.golpe = False 
         self.bloco_golpe = pg.Rect(0,0,0,0)
-        self.esquerda = True
+        self.esquerda = False
         self.limite_esquerdo = False
         self.limite_direito = False        
         self.saude = BARRA_ENERGIA            
         self.movimento = 0 #0 = parado, 1 = esquerda, 2 = direita, 3 = agacha, 4 = pulo
 
+        self.BlocoMov = pg.Rect(alinhar_centro(datap[selecionado].largura, TELA_CENTRO_V, self.esquerda), self.game.chao, datap[selecionado].largura, datap[selecionado].altura)
+        self.BlocoMov.bottom = self.game.chao
         self.tecla_esquerda = pg.K_LEFT
         self.tecla_cima = pg.K_UP
         self.tecla_direita = pg.K_RIGHT
@@ -77,8 +78,6 @@ class Player02:
 
 
     def eventos(self):        
-        self.esquerda = (self.Bloco.x < self.game.Player01.Bloco.x)
-              
         if self.game.Tempo > 0 and self.saude > 0 or TEMPO_LUTA == -99:
             monitorar_teclas_movimento(self, self.game.Player01)           
         else:
@@ -86,7 +85,8 @@ class Player02:
 
 
     def atualizar(self):
-        aplicar_movimentacao(self, gravidadeY)        
+        self.esquerda = (self.BlocoMov.x < self.game.Player01.BlocoMov.x)
+        aplicar_movimentacao(self, gravidadeY, self.game.Player01)          
         
 
     def desenhar(self):  
@@ -97,6 +97,6 @@ class Player02:
 
         redenderizar(self,'Red')
 
-        informacoes(self.game,'Red', f'P2 e:{self.esquerda} x:{self.Bloco.x} y:{self.Bloco.y} w:{self.Bloco.w} d:{self.movimento} g:{self.gravidade}', (TELA_LARGURA // 2), 100)
+        informacoes(self.game,'Red', f'P2 e:{self.esquerda} x:{self.BlocoMov.x} y:{self.BlocoMov.y} w:{self.BlocoMov.w} d:{self.movimento} g:{self.gravidade}', (TELA_LARGURA // 2), 100)
         
         # self.game.superficie.blit(self.sprites, self.Bloco)

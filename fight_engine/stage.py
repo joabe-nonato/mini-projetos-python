@@ -2,26 +2,28 @@ import pygame as pg
 import os
 from settings import *
 
+
+
 class Estagio:
 
     def __init__(self, game) -> None:
         self.game = game
         self.top = 0
         self.hx = ((TELA_LARGURA // 2) * -1)
+        self.dirimage = os.path.join(self.game.Imagens, "tatame.png")
+        self.bckgrd = pg.image.load(self.dirimage)
+        self.chaoImg = pg.image.load(os.path.join(self.game.Imagens, "chao.png"))
         
     def fundo(self):        
-        dirimage = os.path.join(self.game.Imagens, "fundo.png")
-        bckgrd = pg.image.load(dirimage)
-        eixoX = (-400 - (self.game.Player01.Bloco.x * (0.2)))        
+        # dirimage = os.path.join(self.game.Imagens, "fundo.png")
+        eixoX = (-400 - (self.game.Player01.BlocoMov.x * (0.2)))       
 
         eixoY = self.game.Palco.top
 
-        self.game.superficie.blit(pg.transform.scale(bckgrd, (TELA_LARGURA * 2, self.game.Palco.h)), (eixoX, eixoY))
+        self.game.superficie.blit(pg.transform.scale(self.bckgrd, (TELA_LARGURA * 2, self.game.Palco.h)), (eixoX, eixoY))
 
 
-    def chao(self):
-        chao = pg.image.load(os.path.join(self.game.Imagens, "chao.png"))
-        
+    def chao(self):                
         eixoY = self.game.Palco.bottom
         eixoX = self.game.Palco.centerx
 
@@ -43,7 +45,7 @@ class Estagio:
         bloco.centerx = eixoX
         bloco.centery = eixoY
 
-        self.game.superficie.blit(pg.transform.scale(chao, (bloco.w, bloco.h)), (bloco.x, bloco.y))
+        self.game.superficie.blit(pg.transform.scale(self.chaoImg, (bloco.w, bloco.h)), (bloco.x, bloco.y))
 
         if DEBUG:            
             chaotext = f'chão x: {eixoX} y: {eixoY}'
@@ -53,8 +55,8 @@ class Estagio:
     def modelo(self):        
         dirimage = os.path.join(self.game.Imagens, "modelo.png")
         modelo = pg.image.load(dirimage) 
-        modelo = pg.transform.scale(modelo, TELA_RESOLUCAO)     
-        modelo = pg.transform.flip(modelo, True, False)
+        # modelo = pg.transform.scale(modelo, TELA_RESOLUCAO)     
+        # modelo = pg.transform.flip(modelo, True, False)
         self.game.superficie.blit(modelo, (0, 0))
 
     def desenhar(self):

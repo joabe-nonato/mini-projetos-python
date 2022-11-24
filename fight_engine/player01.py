@@ -38,12 +38,8 @@ especial10 = []
 class Player01:
     def __init__(self, game) -> None:
         self.game = game        
-        self.indice = 0                  
-        self.Bloco = pg.Rect(alinhar_centro(datap[selecionado].largura, TELA_CENTRO_V), self.game.chao, 100, 250)
-        self.Bloco.bottom = self.game.chao
-        self.BlocoImagem = pg.Rect(0, 0, 200, 300)
-        self.BlocoImagem.center = self.Bloco.center
-        self.BlocoImagem.bottom = self.Bloco.bottom
+        self.IDP = 'P1'         
+        self.indice = 0         
         self.personagem = personagem[selecionado]
         self.spritesheet = spritesheet[selecionado]                
         self.gravidade = (gravidade[selecionado] * -1)                
@@ -53,6 +49,8 @@ class Player01:
         self.largura = datap[selecionado].largura
         self.altura = datap[selecionado].altura
         self.teclaprecionada = False
+        # self.colisao_direita  = False
+        # self.colisao_esquerda = False
         self.pulo = 0       
         self.golpe = False 
         self.bloco_golpe = pg.Rect(0,0,0,0)
@@ -60,6 +58,8 @@ class Player01:
         self.saude = BARRA_ENERGIA            
         self.movimento = 0 #0 = parado, 1 = esquerda, 2 = direita, 3 = agacha, 4 = pulo
 
+        self.BlocoMov = pg.Rect(alinhar_centro(datap[selecionado].largura, TELA_CENTRO_V, self.esquerda), self.game.chao, datap[selecionado].largura, datap[selecionado].altura)
+        self.BlocoMov.bottom = self.game.chao
         self.tecla_esquerda = pg.K_a
         self.tecla_cima = pg.K_w
         self.tecla_direita = pg.K_d
@@ -80,16 +80,15 @@ class Player01:
                 self.golpe = True
                 self.indice = 0
 
-    def eventos(self):
-        self.esquerda = (self.Bloco.x < self.game.Player02.Bloco.x)
-        
+    def eventos(self):                
         if self.game.Tempo > 0 and self.saude > 0 or TEMPO_LUTA == -99:
             monitorar_teclas_movimento(self, self.game.Player02)           
         else:
             self.movimento = 0
 
     def atualizar(self):
-        aplicar_movimentacao(self, gravidadeY)        
+        self.esquerda = (self.BlocoMov.x < self.game.Player02.BlocoMov.x)
+        aplicar_movimentacao(self, gravidadeY, self.game.Player02)        
 
     def desenhar(self):
         
@@ -100,6 +99,6 @@ class Player01:
         animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, vitoria, derrota, socoforte, socoagachado , socomedia , socofraco , chuteforte, chutemedia, chutefraco, voadoraforte, voadoramedia, voadorafraco, especial01 , especial02 , especial03 , especial04 , especial05 , especial06 , especial07, especial08, especial09, especial10)
         sprites.draw(self.game.superficie)
         
-        informacoes(self.game,'Blue', f'P1 e:{self.esquerda} x:{self.Bloco.x} y:{self.Bloco.y} w:{self.Bloco.w} h:{self.Bloco.h} d:{self.movimento} g:{self.gravidade}', 10, 100)            
+        informacoes(self.game,'Blue', f'P1 e:{self.esquerda} x:{self.BlocoMov.x} y:{self.BlocoMov.y} w:{self.BlocoMov.w} h:{self.BlocoMov.h} d:{self.movimento} g:{self.gravidade}', 10, 100)            
 
         
