@@ -58,7 +58,7 @@ class Player01:
         self.saude = BARRA_ENERGIA            
         self.movimento = 0 #0 = parado, 1 = esquerda, 2 = direita, 3 = agacha, 4 = pulo
 
-        self.BlocoMov = pg.Rect(alinhar_centro(datap[selecionado].largura, TELA_CENTRO_V, self.esquerda), self.game.chao, datap[selecionado].largura, datap[selecionado].altura)
+        self.BlocoMov = pg.Rect(alinhar_centro(datap[selecionado].largura, TELA_CENTRO_V, self.esquerda), self.game.chao, 200, 250)
         self.BlocoMov.bottom = self.game.chao
         self.tecla_esquerda = pg.K_a
         self.tecla_cima = pg.K_w
