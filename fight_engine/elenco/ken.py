@@ -1,13 +1,5 @@
-from movimentos import *
 from settings import *
-# indice 0 = spritesheet
-# indice 1 = parado
-# indice 2 = frente
-# indice 3 = tras
-# indice 4 = agachado
-# indice 5 = pulo
-# indice 6 = pulo_frente
-# indice 7 = pulo_tras
+
 spritesheet = "ryuB.png"
 gravidade =  (TELA_ALTURA * 0.032) #27px
 velocidade_x = 4 #frente
@@ -21,8 +13,8 @@ bloco_golpe = (10,10, 20, 30)
 
 # [[(DIMENSOES IMAGEM ORIGEM), (DIMENSAO IMAGEM DESTINO), [(COLISAO6),(COLISAO3),(COLISAO01)], (BLOCO GOLPE)]
 
-colisao = (0, 0, 100,100)
-colisoes = [colisao, colisao, colisao]
+colisao = (0, 0, 100,100) # esquerda, topo, largura, altura, golpe, valor
+colisoes = [(0, 0, 220, 100, False, 10), (20, 100, 160, 170, False, 15), (90, 250, 75, 80, False, 20)]
 
 parado = [
  [((0,0),  (60,100)), dimensao_padrao, colisoes]
@@ -92,15 +84,38 @@ vitoria = [
 [((631,1897), (60,115)), dimensao_padrao, colisoes],
 ]
 
+# EM PÉ
 socoforte = [
 [((0,460), (60,95)), dimensao_padrao, colisoes],
 [((80,460),(75,95)), (largura, 350), colisoes],
 [((170,460), (110,95)), (360, 350), colisoes],
-[((170,460), (110,95)), (360, 350), colisoes, ((0,250), (180,40))],
+[((170,460), (110,95)), (360, 350), [(0, 0, 210, 100, False, 10), (20, 100, 160, 170, False, 15), (90, 250, 75, 80, False, 20), (175, 250, 180, 40, True, 10)]],
 [((170,460), (110,95)), (360, 350), colisoes],
 [((80,460),(75,95)), (largura, 350), colisoes],
 [((0,460), (60,95)), dimensao_padrao, colisoes],
 ]
+
+colisoes = [(0, 0, 220, 100, False, 10), (20, 100, 160, 220, False, 15), (0, 270, 90, 90, False, 20)]
+chuteforte = [
+[((0,1189), (60,90)), dimensao_padrao, [(120, 0, 100, 100, False, 10), (30, 100, 180, 170, False, 15), (10, 250, 130, 100, False, 20)]],
+[((66,1185), (94,95)), (360, 350), [(170, 0, 90, 100, False, 10), (30, 100, 240, 170, False, 15), (160, 250, 200, 90, False, 20), (270, 300, 100, 50, True, 15)]],
+[((171,1185), (121,95)), (360, 350), [(130, 0, 80, 100, False, 10), (0, 100, 220, 170, False, 15), (160, 250, 200, 90, False, 20), (170, 270, 200, 80, True, 15)]],
+[((299,1200), (102,80)), (350, 330), [(140, 0, 110, 110, False, 10), (0, 100, 220, 210, False, 15), (160, 150, 200, 90, False, 20), (230, 160, 130, 120, True, 15)]],
+[((412,1200), (65,81)), dimensao_padrao, [(0, 0, 220, 100, False, 10), (20, 100, 160, 220, False, 15), (0, 270, 90, 90, False, 20)]],
+]
+
+# parado = [
+# [((412,1200), (65,81)), dimensao_padrao, [(0, 0, 220, 100, False, 10), (20, 100, 160, 220, False, 15), (0, 270, 90, 90, False, 20)]],
+# ]
+
+colisoes = [(0, 0, 200, 110), (0, 110, 140, 80)]
+chuteagachado = [
+[((1419,1217), (53,61)), (200, 200), colisoes],
+[((1481,1218), (121,58)), (360, 200), [(60, 0, 300, 60), (10, 30, 165, 163)], ((0,250), (180,40))],
+[((1605,1222), (64,57)), (200, 200), colisoes],
+[((1675,1219), (63,60)), (200, 200), colisoes],
+]
+
 
 colisoes = [(630, 838, 180, 210)]
 socoagachado = [
@@ -112,13 +127,7 @@ socoagachado = [
 [((482,838), (65,61)), (largura, 230), colisoes],
 ]
 
-# socoaereo = [
-# [((242,825), (68,78)), (largura, 230), colisoes],
-# ]
 
-# parado = [
-# [((672,0), (63,100)), dimensao_padrao, [(672,0, 63,100)]],
-# ]
 
 #largura = 204px
 #altura = 444px
@@ -132,29 +141,9 @@ personagem = [
     , pulo
     , pulo_frente
     , pulo_tras
-
     , socoforte 
     , socoagachado
+    , chuteforte
+    , chuteagachado
     
-    # , socomedia 
-    # , socofraco 
-    # , chuteforte
-    # , chutemedia
-    # , chutefraco
-    # , voadoraforte
-    # , voadoramedia
-    # , voadorafraco
-    # , especial01 
-    # , especial02 
-    # , especial03 
-    # , especial04 
-    # , especial05 
-    # , especial06 
-    # , especial07
-    # , especial08
-    # , especial09
-    # , especial10
-
-    # , vitoria
-    # , derrota
 ]

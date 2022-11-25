@@ -47,6 +47,7 @@ class Player02:
         self.tecla_direita = pg.K_RIGHT
         self.tecla_baixo = pg.K_DOWN
         self.tecla_soco = pg.K_m
+        self.tecla_chute = pg.K_n
 
         global gravidadeY
         gravidadeY = gravidade[selecionado]
@@ -60,6 +61,18 @@ class Player02:
                 self.indice = 0
             if tecla == self.tecla_soco and self.movimento in [3] :
                 self.movimento = 11
+                self.golpe = True
+                self.indice = 0
+            if tecla == self.tecla_soco and self.movimento in [4,5,6] :
+                self.movimento = 11
+                self.golpe = True
+                self.indice = 0
+            if tecla == self.tecla_chute and self.movimento in [0,1,2] :
+                self.movimento = 12
+                self.golpe = True
+                self.indice = 0
+            if tecla == self.tecla_chute and self.movimento in [3] :
+                self.movimento = 13
                 self.golpe = True
                 self.indice = 0
 
