@@ -9,7 +9,7 @@ from settings import *
 # indice 6 = pulo_frente
 # indice 7 = pulo_tras
 spritesheet = "ryuB.png"
-gravidade =  (TELA_ALTURA * 0.027) #27px
+gravidade =  (TELA_ALTURA * 0.032) #27px
 velocidade_x = 4 #frente
 velocidade_y = 0.8 #pulo
 velocidade_xy = 11 #pulo diagonal
@@ -90,11 +90,12 @@ vitoria = [
 [((631,1897), (60,115)), dimensao_padrao],
 ]
 
+# [[(DIMENSOES IMAGEM ORIGEM), (DIMENSAO IMAGEM DESTINO), (BLOCO GOLPE), [(COLISAO6),(COLISAO3),(COLISAO01)]]]
 socoforte = [
 [((0,460), (60,95)), dimensao_padrao],
 [((80,460),(75,95)), (largura, 350)],
 [((170,460), (110,95)), (360, 350)],
-[((170,460), (110,95)), (360, 350), ((50,60), (180,40))],
+[((170,460), (110,95)), (360, 350), ((0,60), (180,40))],
 [((170,460), (110,95)), (360, 350)],
 [((80,460),(75,95)), (largura, 350)],
 [((0,460), (60,95)), dimensao_padrao],
@@ -111,7 +112,8 @@ socoagachado = [
 
 
 # parado = [
-# [((170,460), (110,95)), (360, 350), ((0,60), (180,40))],
+# # [((68,0), (60,100)), dimensao_padrao],
+# [((170,460), (110,95)), (0, 0, 360, 350), ((50,60), (180,40))],
 # ]
 
 #largura = 204px

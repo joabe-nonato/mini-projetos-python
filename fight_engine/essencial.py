@@ -49,12 +49,18 @@ def carregar_movimentos(self, spritesheet, lista_origem, lista_destino):
             if len(frame) > 0:
                 transform = frame[1]
 
+            #COLISÕES
+            colisao = ((0,0), (100,100))
+            colisoes = ([colisao, colisao, colisao])
+            if len(frame) > 2:
+                colisao = frame[2] 
+
             #GOLPE
             golpe = (0,0,0,0)
-            if len(frame) > 2:
-                golpe = frame[2] 
+            if len(frame) > 3:
+                golpe = frame[3] 
             
-            lista_destino.append([imagem, transform, golpe])
+            lista_destino.append([imagem, transform, colisoes, golpe])
 
 def animacao_comportamento(self, spritesheet, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, vitoria, derrota, socoforte, socoagachado , socomedia , socofraco , chuteforte, chutemedia, chutefraco, voadoraforte, voadoramedia, voadorafraco, especial01 , especial02 , especial03 , especial04 , especial05 , especial06 , especial07, especial08, especial09, especial10):
    
@@ -101,25 +107,17 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
                 self.indice = lmt
             return lmt
                 
-
         def executar_golpe(lista_golpe):
-            if len(socoforte[int(self.indice)]):
-                self.bloco_golpe = pg.Rect(socoforte[int(self.indice)][2])
-                self.bloco_golpe.center + self.BlocoImagem.center
-                self.bloco_golpe.y = (self.BlocoImagem.y + self.bloco_golpe.y)
+            if len(socoforte[int(self.indice)]) > 0:
+                golpe = pg.Rect(socoforte[int(self.indice)][3])
+                
+                self.bloco_golpe = golpe
+                self.bloco_golpe.bottom = self.BlocoMov.bottom - golpe.y
 
                 if self.esquerda:
-                    self.bloco_golpe.x = (self.bloco_golpe.x + self.BlocoImagem.centerx)
+                    self.bloco_golpe.left = (self.BlocoMov.right + self.bloco_golpe.x)
                 else:
-                    self.bloco_golpe.x = ((self.bloco_golpe.x * -1) + self.BlocoImagem.x)
-                
-
-        def retorno_padrao(sprt):            
-            blc = pg.Rect(0, 0 , sprt.image.get_width(), sprt.image.get_height())
-            blc.centerx = self.BlocoMov.centerx
-            blc.bottom = self.BlocoMov.bottom
-            
-            return blc
+                    self.bloco_golpe.right = (self.BlocoMov.left + self.bloco_golpe.x)
 
 
         def retorno_imagem(esquerda, posicao_imagem):            
@@ -130,6 +128,18 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
                 imagemLocal = pg.transform.flip(imagemLocal, True, False)
 
             return imagemLocal
+
+
+        def colisoes(self, lista_colisoes):
+
+            indice_colisao = 0
+            for bloco_colisao in lista_colisoes[2]:
+                bc = pg.Rect(bloco_colisao) 
+                bc.center = self.BlocoMov.center
+                bc.bottom = self.BlocoMov.bottom - (bc.h * indice_colisao)
+
+                indice_colisao += 1                
+                pg.draw.rect(self.game.superficie, PRETO, bc, 2)
 
 
         def retorno_retangulo(esquerda, posicao_tamanho):  
@@ -188,7 +198,9 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
         if self.golpe:
             executar_golpe(generico)
 
+        
         limite = calcular_limite(generico)
+        colisoes(self, generico[int(self.indice)])
         sprt.rect = retorno_retangulo(self.esquerda, generico[int(self.indice)])
         sprt.image = retorno_imagem(self.esquerda, generico[int(self.indice)])
         

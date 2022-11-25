@@ -64,6 +64,7 @@ class Player01:
         self.tecla_cima = pg.K_w
         self.tecla_direita = pg.K_d
         self.tecla_baixo = pg.K_s
+        self.tecla_soco = pg.K_p
         
         global gravidadeY
         gravidadeY = gravidade[selecionado]
@@ -71,11 +72,11 @@ class Player01:
         animacao_comportamento(self, spritesheet, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, vitoria, derrota, socoforte, socoagachado , socomedia , socofraco , chuteforte, chutemedia, chutefraco, voadoraforte, voadoramedia, voadorafraco, especial01 , especial02 , especial03 , especial04 , especial05 , especial06 , especial07, especial08, especial09, especial10)
 
     def Golpe(self, tecla):
-            if tecla == pg.K_p and self.movimento in [0,1,2] :
+            if tecla == self.tecla_soco and self.movimento in [0,1,2] :
                 self.movimento = 10
                 self.golpe = True
                 self.indice = 0
-            if tecla == pg.K_p and self.movimento in [3] :
+            if tecla == self.tecla_soco and self.movimento in [3] :
                 self.movimento = 11
                 self.golpe = True
                 self.indice = 0

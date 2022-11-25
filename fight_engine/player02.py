@@ -65,6 +65,7 @@ class Player02:
         self.tecla_cima = pg.K_UP
         self.tecla_direita = pg.K_RIGHT
         self.tecla_baixo = pg.K_DOWN
+        self.tecla_soco = pg.K_m
 
         global gravidadeY
         gravidadeY = gravidade[selecionado]
@@ -72,31 +73,36 @@ class Player02:
         animacao_comportamento(self, spritesheet, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, vitoria, derrota, socoforte, socoagachado , socomedia , socofraco , chuteforte, chutemedia, chutefraco, voadoraforte, voadoramedia, voadorafraco, especial01 , especial02 , especial03 , especial04 , especial05 , especial06 , especial07, especial08, especial09, especial10)
 
     def Golpe(self, tecla):
-            if tecla == pg.K_m:
+            if tecla == self.tecla_soco and self.movimento in [0,1,2] :
                 self.movimento = 10
                 self.golpe = True
+                self.indice = 0
+            if tecla == self.tecla_soco and self.movimento in [3] :
+                self.movimento = 11
+                self.golpe = True
+                self.indice = 0
 
-
-    def eventos(self):        
+    def eventos(self):                
         if self.game.Tempo > 0 and self.saude > 0 or TEMPO_LUTA == -99:
             monitorar_teclas_movimento(self, self.game.Player01)           
         else:
-            self.movimento = 0  
-
+            self.movimento = 0
 
     def atualizar(self):
         self.esquerda = (self.BlocoMov.x < self.game.Player01.BlocoMov.x)
-        aplicar_movimentacao(self, gravidadeY, self.game.Player01)          
-        
+        aplicar_movimentacao(self, gravidadeY, self.game.Player01)        
 
-    def desenhar(self):  
+    def desenhar(self):
+        
+        redenderizar(self,'Blue')
+
         # executar animações
         sprites = pg.sprite.Group()  
         animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, vitoria, derrota, socoforte, socoagachado , socomedia , socofraco , chuteforte, chutemedia, chutefraco, voadoraforte, voadoramedia, voadorafraco, especial01 , especial02 , especial03 , especial04 , especial05 , especial06 , especial07, especial08, especial09, especial10)
         sprites.draw(self.game.superficie)
-
-        redenderizar(self,'Red')
+        
 
         informacoes(self.game,'Red', f'P2 e:{self.esquerda} x:{self.BlocoMov.x} y:{self.BlocoMov.y} w:{self.BlocoMov.w} d:{self.movimento} g:{self.gravidade}', (TELA_LARGURA // 2), 100)
         
-        # self.game.superficie.blit(self.sprites, self.Bloco)
+
+    
