@@ -5,35 +5,17 @@ from data import *
 
 selecionado = 0
 
-parado = []                 
-frente = []                 
-tras = []                   
-agachado = []                   
-pulo = []                   
+parado = []
+frente = []
+tras = []
+agachado = []
+pulo = []
 pulo_frente = []
-pulo_tras = []                  
-vitoria = []                    
-derrota = []                    
-socoforte  = []    
-socoagachado = []             
-socomedia  = []                 
-socofraco  = []                 
-chuteforte = []                 
-chutemedia = []                 
-chutefraco = []                 
-voadoraforte = []                   
-voadoramedia = []                   
-voadorafraco = []                   
-especial01  = []                    
-especial02  = []                    
-especial03  = []                    
-especial04  = []                    
-especial05  = []                    
-especial06  = []                    
-especial07 = []                 
-especial08 = []                 
-especial09 = []                 
-especial10 = []  
+pulo_tras = []
+socoforte  = []
+socoagachado = []
+chuteforte = []
+chuteagachado = []
 
 class Player01:
     def __init__(self, game) -> None:
@@ -69,7 +51,7 @@ class Player01:
         global gravidadeY
         gravidadeY = gravidade[selecionado]
 
-        animacao_comportamento(self, spritesheet, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, vitoria, derrota, socoforte, socoagachado , socomedia , socofraco , chuteforte, chutemedia, chutefraco, voadoraforte, voadoramedia, voadorafraco, especial01 , especial02 , especial03 , especial04 , especial05 , especial06 , especial07, especial08, especial09, especial10)
+        animacao_comportamento(self, spritesheet, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, socoforte , socoagachado, chuteforte, chuteagachado)
 
     def Golpe(self, tecla):
             if tecla == self.tecla_soco and self.movimento in [0,1,2] :
@@ -82,6 +64,14 @@ class Player01:
                 self.indice = 0
             if tecla == self.tecla_soco and self.movimento in [4,5,6] :
                 self.movimento = 11
+                self.golpe = True
+                self.indice = 0
+            if tecla == self.tecla_chute and self.movimento in [0,1,2] :
+                self.movimento = 12
+                self.golpe = True
+                self.indice = 0
+            if tecla == self.tecla_chute and self.movimento in [3] :
+                self.movimento = 13
                 self.golpe = True
                 self.indice = 0
             # if tecla == self.tecla_chute and self.movimento in [0,1,2] :
@@ -103,7 +93,7 @@ class Player01:
 
         # executar animações
         sprites = pg.sprite.Group()  
-        animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, vitoria, derrota, socoforte, socoagachado , socomedia , socofraco , chuteforte, chutemedia, chutefraco, voadoraforte, voadoramedia, voadorafraco, especial01 , especial02 , especial03 , especial04 , especial05 , especial06 , especial07, especial08, especial09, especial10)
+        animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, socoforte , socoagachado, chuteforte, chuteagachado)
         sprites.draw(self.game.superficie)
         
         informacoes(self.game,'Blue', f'P1 e:{self.esquerda} x:{self.BlocoMov.x} y:{self.BlocoMov.y} w:{self.BlocoMov.w} h:{self.BlocoMov.h} d:{self.movimento} g:{self.gravidade}', 10, 100)            

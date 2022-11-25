@@ -1,4 +1,3 @@
-from tkinter import CENTER
 import pygame as pg
 import os
 from settings import *
@@ -39,8 +38,16 @@ def informacoes(game, cor, msg, left, topo):
 
 
 # LISTAS DE IMAGENS POR MOVIMENTOS
-def carregar_movimentos(self, spritesheet, lista_origem, lista_destino):
-        for frame in lista_origem:
+def carregar_movimentos(self, spritesheet,  inverter, lista_origem, numero, lista_destino):
+    
+    if len(self.personagem) > numero:
+
+        lista_generica = lista_origem[numero]
+
+        if inverter:
+            lista_generica = lista_origem[numero][::-1]
+
+        for frame in lista_generica:
             # RECUPERA IMAGEM
             imagem = spritesheet.subsurface(frame[0])        
 
@@ -63,36 +70,43 @@ def carregar_movimentos(self, spritesheet, lista_origem, lista_destino):
             
             lista_destino.append([imagem, transform, self.colisoes, golpe])
 
-def animacao_comportamento(self, spritesheet, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, vitoria, derrota, socoforte, socoagachado , socomedia , socofraco , chuteforte, chutemedia, chutefraco, voadoraforte, voadoramedia, voadorafraco, especial01 , especial02 , especial03 , especial04 , especial05 , especial06 , especial07, especial08, especial09, especial10):
+def animacao_comportamento(self, spritesheet, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, socoforte , socoagachado, chuteforte, chuteagachado):
    
 # RECUPERAR TODAS AS IMAGENS
     spritesheet = pg.image.load(os.path.join(self.game.Imagens, self.spritesheet))    
     
+    # for numero in self.personagem:
+    #     carregar_movimentos(self, spritesheet, False,  self.personagem, numero, parado)
+
 # PARADO
-    carregar_movimentos(self, spritesheet, self.personagem[0], parado)    
+    carregar_movimentos(self, spritesheet, False,  self.personagem, 0, parado)    
 # FRENTE
-    carregar_movimentos(self, spritesheet, self.personagem[1], frente)    
+    carregar_movimentos(self, spritesheet, False,  self.personagem, 1, frente)    
 # TRAS
-    carregar_movimentos(self, spritesheet, self.personagem[2], tras)    
+    carregar_movimentos(self, spritesheet, False,  self.personagem, 2, tras)    
 # AGACHADO
-    carregar_movimentos(self, spritesheet, self.personagem[3], agachado)    
+    carregar_movimentos(self, spritesheet, False,  self.personagem, 3, agachado)    
 # PULO RETO
-    carregar_movimentos(self, spritesheet, self.personagem[4], pulo)    
+    carregar_movimentos(self, spritesheet, False,  self.personagem, 4, pulo)    
 # PULO FRENTE
-    carregar_movimentos(self, spritesheet, self.personagem[5], pulo_frente)
+    carregar_movimentos(self, spritesheet, False,  self.personagem, 5, pulo_frente)
 # PULO TRAS
-    carregar_movimentos(self, spritesheet, self.personagem[5][::-1], pulo_tras)    
+    carregar_movimentos(self, spritesheet, True,  self.personagem, 6, pulo_tras)    
 
 # SOCO FORTE
-    carregar_movimentos(self, spritesheet, self.personagem[7], socoforte)
+    carregar_movimentos(self, spritesheet, False,  self.personagem, 7, socoforte)
 # SOCO AGACHADO
-    carregar_movimentos(self, spritesheet, self.personagem[8], socoagachado)
+    carregar_movimentos(self, spritesheet, False,  self.personagem, 8, socoagachado)
+# CHUTE FORTE
+    carregar_movimentos(self, spritesheet, False,  self.personagem, 9, chuteforte)
+# CHUTE AGACHADO
+    carregar_movimentos(self, spritesheet, False,  self.personagem, 10, chuteagachado)
 
 # VITORIA
-    # carregar_movimentos(self, spritesheet, self.personagem[6], vitoria)
+    # carregar_movimentos(self, spritesheet, False,  self.personagem[6], vitoria)
 
-
-def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, vitoria, derrota, socoforte, socoagachado , socomedia , socofraco , chuteforte, chutemedia, chutefraco, voadoraforte, voadoramedia, voadorafraco, especial01 , especial02 , especial03 , especial04 , especial05 , especial06 , especial07, especial08, especial09, especial10):          
+# APLICAR ANIMAÇÕES
+def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, socoforte , socoagachado, chuteforte, chuteagachado):
         
         limite = 0  
 
@@ -195,6 +209,12 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
         if self.movimento == 11:
             generico = socoagachado
 
+        if self.movimento == 12:
+            generico = chuteforte
+        
+        if self.movimento == 13:
+            generico = chuteagachado
+
         if self.golpe:
             executar_golpe(generico)
 
@@ -236,6 +256,7 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
             else:
                 self.indice += 0.1
         
+# APLICAR MOVIMENTAÇÃO        
 def aplicar_movimentacao(self, gravidadeY, oponente):
     global dx
     global dy
@@ -281,7 +302,7 @@ def aplicar_movimentacao(self, gravidadeY, oponente):
     colisao_esquerda = False
     colisao_direita = False
     
-
+# RECUPERAR ENTRADA DE COMANDOS
 def monitorar_teclas_movimento(self, oponente):
 
         tecla = pg.key.get_pressed()
