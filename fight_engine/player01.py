@@ -49,8 +49,7 @@ class Player01:
         self.largura = datap[selecionado].largura
         self.altura = datap[selecionado].altura
         self.teclaprecionada = False
-        # self.colisao_direita  = False
-        # self.colisao_esquerda = False
+        self.colisoes = []
         self.pulo = 0       
         self.golpe = False 
         self.bloco_golpe = pg.Rect(0,0,0,0)
@@ -65,6 +64,7 @@ class Player01:
         self.tecla_direita = pg.K_d
         self.tecla_baixo = pg.K_s
         self.tecla_soco = pg.K_p
+        self.tecla_chute = pg.K_k
         
         global gravidadeY
         gravidadeY = gravidade[selecionado]
@@ -80,6 +80,12 @@ class Player01:
                 self.movimento = 11
                 self.golpe = True
                 self.indice = 0
+            if tecla == self.tecla_soco and self.movimento in [4,5,6] :
+                self.movimento = 11
+                self.golpe = True
+                self.indice = 0
+            # if tecla == self.tecla_chute and self.movimento in [0,1,2] :
+            # if tecla == self.tecla_chute and self.movimento in [3] :
 
     def eventos(self):                
         if self.game.Tempo > 0 and self.saude > 0 or TEMPO_LUTA == -99:

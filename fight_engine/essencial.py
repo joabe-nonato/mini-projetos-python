@@ -50,17 +50,18 @@ def carregar_movimentos(self, spritesheet, lista_origem, lista_destino):
                 transform = frame[1]
 
             #COLISÕES
-            colisao = ((0,0), (100,100))
-            colisoes = ([colisao, colisao, colisao])
+            # colisao = ((0,0), (100,100))
+            # colisoes = [colisao, colisao, colisao]
             if len(frame) > 2:
                 colisao = frame[2] 
+                self.colisoes = colisao
 
             #GOLPE
             golpe = (0,0,0,0)
             if len(frame) > 3:
                 golpe = frame[3] 
             
-            lista_destino.append([imagem, transform, colisoes, golpe])
+            lista_destino.append([imagem, transform, self.colisoes, golpe])
 
 def animacao_comportamento(self, spritesheet, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, vitoria, derrota, socoforte, socoagachado , socomedia , socofraco , chuteforte, chutemedia, chutefraco, voadoraforte, voadoramedia, voadorafraco, especial01 , especial02 , especial03 , especial04 , especial05 , especial06 , especial07, especial08, especial09, especial10):
    
@@ -95,9 +96,6 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
         
         limite = 0  
 
-        
-        centro_bloco = (self.BlocoMov.x + (self.BlocoMov.w // 2))
-        
         sprt = pg.sprite.Sprite(sprites)
         transform = ((0,0),(0,0))
         
@@ -139,7 +137,9 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
                 bc.bottom = self.BlocoMov.bottom - (bc.h * indice_colisao)
 
                 indice_colisao += 1                
-                pg.draw.rect(self.game.superficie, PRETO, bc, 2)
+
+                if DEBUG:
+                    pg.draw.rect(self.game.superficie, PRETO, bc, 2)
 
 
         def retorno_retangulo(esquerda, posicao_tamanho):  
@@ -200,9 +200,10 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
 
         
         limite = calcular_limite(generico)
-        colisoes(self, generico[int(self.indice)])
+        
         sprt.rect = retorno_retangulo(self.esquerda, generico[int(self.indice)])
         sprt.image = retorno_imagem(self.esquerda, generico[int(self.indice)])
+        colisoes(self, generico[int(self.indice)])
         
 
 ####################################################################

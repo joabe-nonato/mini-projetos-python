@@ -48,8 +48,7 @@ class Player02:
         self.velocidade_y = velocidade_y[selecionado]
         self.velocidade_xy = velocidade_xy[selecionado]
         self.teclaprecionada = False
-        # self.colisao_direita  = False
-        # self.colisao_esquerda = False
+        self.colisoes = []
         self.pulo = 0        
         self.golpe = False 
         self.bloco_golpe = pg.Rect(0,0,0,0)
