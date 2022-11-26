@@ -16,6 +16,7 @@ socoforte  = []
 socoagachado = []
 chuteforte = []
 chuteagachado = []
+voadoradiagonal = []
 
 class Player01:
     def __init__(self, game) -> None:
@@ -51,7 +52,7 @@ class Player01:
         global gravidadeY
         gravidadeY = gravidade[selecionado]
 
-        animacao_comportamento(self, spritesheet, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, socoforte , socoagachado, chuteforte, chuteagachado)
+        animacao_comportamento(self, spritesheet, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, socoforte , socoagachado, chuteforte, chuteagachado, voadoradiagonal)
 
     def Golpe(self, tecla):
             if tecla == self.tecla_soco and self.movimento in [0,1,2] :
@@ -74,6 +75,10 @@ class Player01:
                 self.movimento = 13
                 self.golpe = True
                 self.indice = 0
+            if tecla == self.tecla_chute and self.movimento in [5,6] :
+                self.movimento = 14
+                self.golpe = True
+                self.indice = 0
             # if tecla == self.tecla_chute and self.movimento in [0,1,2] :
             # if tecla == self.tecla_chute and self.movimento in [3] :
 
@@ -93,7 +98,7 @@ class Player01:
 
         # executar animações
         sprites = pg.sprite.Group()  
-        animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, socoforte , socoagachado, chuteforte, chuteagachado)
+        animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, socoforte , socoagachado, chuteforte, chuteagachado, voadoradiagonal)
         sprites.draw(self.game.superficie)
         
         informacoes(self.game,'Blue', f'P1 e:{self.esquerda} x:{self.BlocoMov.x} y:{self.BlocoMov.y} w:{self.BlocoMov.w} h:{self.BlocoMov.h} d:{self.movimento} g:{self.gravidade}', 10, 100)            

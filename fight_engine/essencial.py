@@ -65,7 +65,7 @@ def carregar_movimentos(self, spritesheet,  inverter, lista_origem, numero, list
 
             lista_destino.append([imagem, transform, self.colisoes])
 
-def animacao_comportamento(self, spritesheet, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, socoforte , socoagachado, chuteforte, chuteagachado):
+def animacao_comportamento(self, spritesheet, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, socoforte , socoagachado, chuteforte, chuteagachado, voadoradiagonal):
    
 # RECUPERAR TODAS AS IMAGENS
     spritesheet = pg.image.load(os.path.join(self.game.Imagens, self.spritesheet))    
@@ -96,12 +96,14 @@ def animacao_comportamento(self, spritesheet, parado, frente, tras, agachado, pu
     carregar_movimentos(self, spritesheet, False,  self.personagem, 9, chuteforte)
 # CHUTE AGACHADO
     carregar_movimentos(self, spritesheet, False,  self.personagem, 10, chuteagachado)
-
+# CHUTE VOADORA
+    carregar_movimentos(self, spritesheet, False,  self.personagem, 11, voadoradiagonal)
+    
 # VITORIA
     # carregar_movimentos(self, spritesheet, False,  self.personagem[6], vitoria)
 
 # APLICAR ANIMAÇÕES
-def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, socoforte , socoagachado, chuteforte, chuteagachado):
+def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, socoforte , socoagachado, chuteforte, chuteagachado, voadoradiagonal):
         
         limite = 0  
 
@@ -126,8 +128,9 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
 
 
         def colisoes(self, lista_colisoes):
-
+            retorno = False
             indice_colisao = 0
+            
             for bloco_colisao in lista_colisoes[2]:
                 bc = pg.Rect(bloco_colisao[0], bloco_colisao[1], bloco_colisao[2], bloco_colisao[3]) 
                 bc.center = self.BlocoMov.center
@@ -150,10 +153,12 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
                     else:
                         if DEBUG:
                             pg.draw.rect(self.game.superficie, PRETO, bc, 2)
-
+                                        
                     # if len(bloco_colisao) > 5:
                     #     CALCULAR DANO
-                    
+
+                    retorno = bloco_colisao[4]
+            return retorno
 
         def retorno_retangulo(esquerda, posicao_tamanho):  
             blocoimg = posicao_tamanho[1]          
@@ -213,6 +218,9 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
         
         if self.movimento == 13:
             generico = chuteagachado
+
+        if self.movimento == 14:
+            generico = voadoradiagonal
         
         limite = calcular_limite(generico)
         
