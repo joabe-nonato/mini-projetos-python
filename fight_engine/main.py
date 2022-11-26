@@ -50,6 +50,7 @@ class Game:
         self.Player01.eventos()
         self.Player02.eventos()
         
+
     def atualizar(self):        
         self.Relogio.tick(FPS)
         self.Palco = pg.Rect(self.Esquerda, self.Topo, self.superficie.get_width(), (self.superficie.get_height() - (self.superficie.get_height() * 0.1)))
@@ -57,7 +58,7 @@ class Game:
 
         self.Player01.atualizar()
         self.Player02.atualizar()
-        
+
         self.Placar.atualizar()
         pg.display.flip()
     
