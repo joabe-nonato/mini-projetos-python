@@ -68,7 +68,7 @@ class Player01:
                 self.movimento = 11
                 self.golpe = True
                 self.indice = 0
-            if tecla == self.tecla_chute and self.movimento in [0,1,2] :
+            if tecla == self.tecla_chute and self.movimento in [0,1,2] and self.pulo == False:
                 self.movimento = 12
                 self.golpe = True
                 self.indice = 0
@@ -76,7 +76,7 @@ class Player01:
                 self.movimento = 13
                 self.golpe = True
                 self.indice = 0
-            if tecla == self.tecla_chute and self.movimento in [5,6] :
+            if tecla == self.tecla_chute and self.movimento in [5,6]:
                 self.movimento = 14
                 self.golpe = True
                 self.indice = 0

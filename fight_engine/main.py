@@ -70,7 +70,7 @@ class Game:
             pg.draw.rect(self.superficie, PRETO, self.Palco, 1)
 
         self.Estagio.desenhar() 
-        # self.Placar.desenhar()       
+        self.Placar.desenhar()       
         self.Player01.desenhar() 
         self.Player02.desenhar()     
 

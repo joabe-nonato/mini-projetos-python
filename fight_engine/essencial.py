@@ -132,6 +132,7 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
         def colisoes(self, oponente, lista_colisoes):
             retorno = False
             indice_colisao = 0
+            self.colisoes = []
             
             for bloco_colisao in lista_colisoes[2]:
                 bc = pg.Rect(bloco_colisao[0], bloco_colisao[1], bloco_colisao[2], bloco_colisao[3]) 
@@ -148,26 +149,38 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
 
                 indice_colisao += 1                
 
+# CALCULO PRINCIPAL DE GOLPES
                 if len(bloco_colisao) > 4:
                     if bloco_colisao[4]:
-                        
-                        self.colisoes.append(bc)
+                        # # oponente.movimento = 100      
 
-                        # oponente.movimento = 100      
-                        if (bc.x, bc.y) in oponente.colisoes:
-                            oponente.movimento = 100
+                        for ebloc in oponente.colisoes:   
+                            bc2 = pg.Rect(ebloc[0], ebloc[1], ebloc[2], ebloc[3])                         
+                            if pg.Rect.colliderect(bc, bc2):
+                                oponente.movimento = 100
+                                oponente.indice = 0
+                                oponente_saude = 0
+
+                                if len(ebloc) > 5:
+                                    oponente_saude = ebloc[5]
+
+                                oponente.saude = (oponente.saude - (bloco_colisao[5] + oponente_saude) )
+# CALCULO PRINCIPAL DE GOLPES - FIM
 
                         if DEBUG:
                             pg.draw.rect(self.game.superficie, VERDE, bc)
                     else:
+                        self.colisoes.append(bc)
                         if DEBUG:
                             pg.draw.rect(self.game.superficie, PRETO, bc, 2)
                                         
                     # if len(bloco_colisao) > 5:
                     #     CALCULAR DANO
+                    
 
                     retorno = bloco_colisao[4]
             return retorno
+
 
         def retorno_retangulo(esquerda, posicao_tamanho):  
             blocoimg = posicao_tamanho[1]          
