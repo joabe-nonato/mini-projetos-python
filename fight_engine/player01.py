@@ -90,7 +90,10 @@ class Player01:
             self.movimento = 0
 
     def atualizar(self):
-        self.esquerda = (self.BlocoMov.x < self.game.Player02.BlocoMov.x)
+        # self.esquerda = (self.BlocoMov.x < self.game.Player02.BlocoMov.x)
+        if self.BlocoMov.bottom == self.game.chao:
+            self.esquerda = (self.BlocoMov.x < self.game.Player02.BlocoMov.x)
+
         aplicar_movimentacao(self, gravidadeY, self.game.Player02)        
 
     def desenhar(self):

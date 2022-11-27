@@ -124,8 +124,7 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
             imagemLocal = pg.transform.scale(imagemLocal, (sprt.rect.w, sprt.rect.h))
 
             if esquerda == False:
-                imagemLocal = pg.transform.flip(imagemLocal, True, False)
-
+                imagemLocal = pg.transform.flip(imagemLocal, True, False)                
             return imagemLocal
 
 
@@ -151,8 +150,9 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
 
 # CALCULO PRINCIPAL DE GOLPES
                 if len(bloco_colisao) > 4:
+
+                    # É UMA CAIXA GOLPE
                     if bloco_colisao[4]:
-                        # # oponente.movimento = 100      
 
                         for ebloc in oponente.colisoes:   
                             bc2 = pg.Rect(ebloc[0], ebloc[1], ebloc[2], ebloc[3])                         
@@ -163,6 +163,9 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
 
                                 if len(ebloc) > 5:
                                     oponente_saude = ebloc[5]
+                                    
+                                if DEBUG:
+                                    pg.draw.rect(self.game.superficie, VERMELHO, bc2)
 
                                 oponente.saude = (oponente.saude - (bloco_colisao[5] + oponente_saude) )
 # CALCULO PRINCIPAL DE GOLPES - FIM
@@ -256,6 +259,7 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
 
         sprt.rect = retorno_retangulo(self.esquerda, generico[int(self.indice)])
         sprt.image = retorno_imagem(self.esquerda, generico[int(self.indice)])
+
         colisoes(self, oponente,  generico[int(self.indice)])
         
 
