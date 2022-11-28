@@ -158,7 +158,7 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
                             bc2 = pg.Rect(ebloc[0], ebloc[1], ebloc[2], ebloc[3])                         
                             if pg.Rect.colliderect(bc, bc2):
                                 oponente.movimento = 100
-                                oponente.indice = 0
+                                # oponente.indice = 0
                                 oponente_saude = 0
 
                                 if len(ebloc) > 5:
@@ -264,13 +264,20 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
         
 
 ####################################################################
-        if self.golpe:
+        if self.movimento in [100]:
+                if  int(self.indice) < limite:
+                    self.indice += 0.005
+                    self.movimento = 100
+        elif self.golpe:
             if  self.indice < limite:
                 self.indice += 0.5
             elif self.movimento in [11] :
                 # self.indice = 0
                 # self.movimento = 0
                 self.golpe = False
+            elif self.movimento in [14]:
+                if  self.indice < limite:
+                    self.indice += 0.15
             else:
                 self.indice = 0
                 self.movimento = 0

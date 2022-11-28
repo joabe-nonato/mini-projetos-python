@@ -11,6 +11,7 @@ class Estagio:
         self.top = 0
         self.hx = ((TELA_LARGURA // 2) * -1)
         self.dirimage = os.path.join(self.game.Imagens, "tatame.png")
+        # self.dirimage = os.path.join(self.game.Imagens, "fundo.png")
         self.bckgrd = pg.image.load(self.dirimage)
         self.chaoImg = pg.image.load(os.path.join(self.game.Imagens, "chao.png"))
         

@@ -74,5 +74,13 @@ class Placar:
         self.game.superficie.blit(tempo_sombra, barra_tempo_combra)
         self.game.superficie.blit(tempo, barra_tempo)        
 
+        # cronometo = pg.sprite.Group()  
+        
+        # sprt = pg.sprite.Sprite(cronometo)
+        # transform = ((0,0),(0,0))
+        # sprt.rect = retorno_retangulo(self.esquerda, generico[int(self.indice)])
+        # sprt.image = retorno_imagem(self.esquerda, generico[int(self.indice)])        
+        # cronometo.draw(self.game.superficie)
+
         if DEBUG:
             pg.draw.line(self.game.superficie, 'White', (TELA_CENTRO_V, 0), (TELA_CENTRO_V, TELA_ALTURA), 3)
