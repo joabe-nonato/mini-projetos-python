@@ -12,8 +12,8 @@ teclas = [pg.K_p, pg.K_k, pg.K_m, pg.K_l]
 class Game:
     def __init__(self) -> None:
         pg.init()
-        # self.Tela = pg.display.set_mode(TELA_RESOLUCAO)
-        self.Tela = pg.display.set_mode()
+        self.Tela = pg.display.set_mode(TELA_RESOLUCAO)
+        # self.Tela = pg.display.set_mode()
         self.fonte = pg.font.SysFont('arial', 19, True, False)
         self.Relogio = pg.time.Clock()
         self.Tempo = TEMPO_LUTA
@@ -21,10 +21,10 @@ class Game:
         self.Diretorio = os.path.dirname(__file__)
         self.Imagens = os.path.join(self.Diretorio, 'imagens')
         
-        TELA_RESOLUCAO = self.Tela.get_size()
+        # TELA_RESOLUCAO = self.Tela.get_size()
         self.Topo = 0
         self.Esquerda = 0
-        self.superficie = pg.Surface((TELA_RESOLUCAO))                
+        self.superficie = pg.Surface(TELA_RESOLUCAO)
         self.Palco = pg.Rect(self.Esquerda, self.Topo, self.superficie.get_width(), (self.superficie.get_height() - (self.superficie.get_height() * 0.1)))
         self.chao = self.Palco.bottom
 

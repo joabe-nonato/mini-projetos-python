@@ -57,6 +57,7 @@ class Player02:
         animacao_comportamento(self, spritesheet, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, socoforte , socoagachado, chuteforte, chuteagachado, voadoradiagonal, atingidoDePeRosto)
 
     def Golpe(self, tecla):
+        if self.game.luta_encerrada == False:
             if tecla == self.tecla_soco and self.movimento in [0,1,2] :
                 self.movimento = 10
                 self.golpe = True
