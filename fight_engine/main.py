@@ -64,8 +64,8 @@ class Game:
     
 
     def desenhar(self):
-        self.Tela.fill((255,255,255))
-        self.superficie.fill(BRANCO)
+        self.Tela.fill(ROSA)
+        self.superficie.fill(ROSA)
         if DEBUG:
             pg.draw.rect(self.superficie, PRETO, self.Palco, 1)
 

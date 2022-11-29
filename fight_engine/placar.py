@@ -13,6 +13,8 @@ class Placar:
         self.spritebasico = spritebasico
         self.cronometo_frame = []
         self.CarregarFrame()
+        self.Principal = pg.Rect(0, 0, TELA_LARGURA, 100)
+        self.moldura 
 
     def CarregarFrame(self):
         
@@ -21,8 +23,10 @@ class Placar:
         
         for frame in matriz_numero:
             # RECUPERA IMAGEM E ADICIONA NA LISTA
-            imagem = spritesheet.subsurface(frame)  
+            imagem = spritesheet.subsurface(frame).convert(self.game.superficie)  
             self.cronometo_frame.append(imagem)
+
+        self.moldura = spritesheet.subsurface((17, 82, 11, 11))
         
 
     def atualizar(self):       
@@ -54,7 +58,9 @@ class Placar:
             x = alinhar_centro(branca_largura, TELA_CENTRO_V) 
         
         bar = pg.Rect(x, self.barra_y, branca_largura, self.barra_altura)
-        pg.draw.rect(self.game.superficie, BRANCO, bar, 3) 
+        pg.draw.rect(self.game.superficie, BRANCO, bar, 3)
+
+        pg.draw.rect(self.game.superficie, PRETO, bar) 
 
         if esquerda:            
             pg.draw.rect(self.game.superficie, AMARELO, (x, bar.y + 3, branca_largura , bar.h - 6))            
@@ -65,47 +71,55 @@ class Placar:
         
     def cronometro(self):
 ## CRONOMETRO        
-        numero_w = 45
-        numero_h = 78
-        texto_tempo = f'{ int(self.game.Tempo) }'
+        numero_w = 40
+        numero_h = 64
 
+        texto_tempo = f'{ int(self.game.Tempo) }'
         # ADICIONAR CASA A ESQUERDA
         if int(self.game.Tempo) < 10:
             texto_tempo = f'0{ int(self.game.Tempo) }'
 
-        crono_rect = pg.Rect(0, 0 , (numero_w + 55), (numero_h + 10))
-        crono_rect.centerx = self.game.Palco.centerx
-        crono_rect.top = self.barra_y
-        pg.draw.rect(self.game.superficie, PRETO, crono_rect)
-
+# BLOCO PRINCIPAL
         dimensao_crono = (numero_w, numero_h)
+
         sprites = pg.sprite.Group() 
         sprt = pg.sprite.Sprite(sprites)
-        sprt.rect = pg.Rect(0, 0, numero_w, numero_h)
+        sprt.rect = pg.Rect(0, 0, 100, 100)
 
-# NÚMERO ESQUERDO        
-        sprt.rect.centery = crono_rect.centery
-        sprt.rect.right = crono_rect.centerx
+        sprt.rect.centery = self.Principal.centery
+        sprt.rect.centerx = self.Principal.centerx
+        sprt.image = self.moldura.convert(self.game.superficie)
+        sprt.image = pg.transform.scale(sprt.image, (sprt.rect.w, sprt.rect.h))
+        sprites.draw(self.game.superficie)
+
+# # NÚMERO ESQUERDO    
+        sprt.rect = pg.Rect(0, 0, numero_w, numero_h)
+        sprt.rect.centery = self.Principal.centery
+        sprt.rect.right = self.Principal.centerx
         sprt.image = self.cronometo_frame[int(texto_tempo[0])]
         sprt.image = pg.transform.scale(sprt.image, dimensao_crono)
         sprites.draw(self.game.superficie)
-        # pg.draw.rect(self.game.superficie, AMARELO, sprt.rect,2)
 
-# NÚMERO DIREITO
-        sprt.rect.centery = crono_rect.centery
-        sprt.rect.left = crono_rect.centerx
+        # if DEBUG:
+        #     pg.draw.rect(self.game.superficie, AMARELO, sprt.rect,2)
+
+# # NÚMERO DIREITO
+        sprt.rect = pg.Rect(0, 0, numero_w, numero_h)
+        sprt.rect.centery = self.Principal.centery
+        sprt.rect.left = self.Principal.centerx
         sprt.image = self.cronometo_frame[int(texto_tempo[1])]
         sprt.image = pg.transform.scale(sprt.image, dimensao_crono)
         sprites.draw(self.game.superficie)
-        # pg.draw.rect(self.game.superficie, AMARELO, sprt.rect,2)
+
+        # if DEBUG:
+        #     pg.draw.rect(self.game.superficie, AMARELO, sprt.rect,2)
 
 
     def desenhar(self):
-
         self.barra_energia(True, self.game.Player01.saude)
         self.barra_energia(False, self.game.Player02.saude)
         self.cronometro()
         
-
         if DEBUG:
-            pg.draw.line(self.game.superficie, 'White', (TELA_CENTRO_V, 0), (TELA_CENTRO_V, TELA_ALTURA), 3)
+            pg.draw.rect(self.game.superficie, AMARELO, self.Principal, 3)
+            pg.draw.line(self.game.superficie, AMARELO, (TELA_CENTRO_V, 0), (TELA_CENTRO_V, TELA_ALTURA), 3)
