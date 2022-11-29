@@ -84,10 +84,14 @@ class Player01:
             # if tecla == self.tecla_chute and self.movimento in [3] :
 
     def eventos(self):                
-        if self.game.Tempo > 0 and self.saude > 0 or TEMPO_LUTA == -99:
-            monitorar_teclas_movimento(self, self.game.Player02)           
-        else:
+        # if self.game.Tempo > 0 and self.saude > 0 or TEMPO_LUTA == -99:
+        #     monitorar_teclas_movimento(self, self.game.Player02)           
+        # else:
+        #     self.movimento = 0
+        if self.game.luta_encerrada:
             self.movimento = 0
+        else:
+            monitorar_teclas_movimento(self, self.game.Player02)           
 
     def atualizar(self):
         # self.esquerda = (self.BlocoMov.x < self.game.Player02.BlocoMov.x)
@@ -105,6 +109,6 @@ class Player01:
         animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, socoforte , socoagachado, chuteforte, chuteagachado, voadoradiagonal, atingidoDePeRosto)
         sprites.draw(self.game.superficie)
         
-        informacoes(self.game,'Blue', f'P1 e:{self.esquerda} x:{self.BlocoMov.x} y:{self.BlocoMov.y} w:{self.BlocoMov.w} h:{self.BlocoMov.h} d:{self.movimento} g:{self.gravidade}', 10, 100)            
+        informacoes(self.game,'Blue', f'P1 e:{self.esquerda} x:{self.BlocoMov.x} y:{self.BlocoMov.y} w:{self.BlocoMov.w} h:{self.BlocoMov.h} d:{self.movimento} g:{self.gravidade}', 10, 200)            
 
         
