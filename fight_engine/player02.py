@@ -55,38 +55,8 @@ class Player02:
 
         animacao_comportamento(self, spritesheet, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, socoforte , socoagachado, chuteforte, chuteagachado, voadoradiagonal, atingidoDePeRosto)
 
-    def Golpe(self, tecla):
-        if self.game.luta_encerrada == False:
-            if tecla == self.tecla_soco and self.movimento in [0,1,2] :
-                self.movimento = 10
-                self.golpe = True
-                self.indice = 0
-            if tecla == self.tecla_soco and self.movimento in [3] :
-                self.movimento = 11
-                self.golpe = True
-                self.indice = 0
-            if tecla == self.tecla_soco and self.movimento in [4,5,6] :
-                self.movimento = 11
-                self.golpe = True
-                self.indice = 0
-            if tecla == self.tecla_chute and self.movimento in [0,1,2] :
-                self.movimento = 12
-                self.golpe = True
-                self.indice = 0
-            if tecla == self.tecla_chute and self.movimento in [3] :
-                self.movimento = 13
-                self.golpe = True
-                self.indice = 0
-
-    def eventos(self):                
-        # if self.game.Tempo > 0 and self.saude > 0 or TEMPO_LUTA == -99:
-        #     monitorar_teclas_movimento(self, self.game.Player01)           
-        # else:
-        #     self.movimento = 0
-        if self.game.luta_encerrada:
-            self.movimento = 0
-        else:
-            monitorar_teclas_movimento(self, self.game.Player01)           
+    def eventos(self, evg):
+        monitorar_teclas_movimento(self, evg)
 
     def atualizar(self):
         self.esquerda = (self.BlocoMov.x < self.game.Player01.BlocoMov.x)

@@ -268,8 +268,10 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
 ####################################################################
         if self.movimento in [100]:
                 if  int(self.indice) < limite:
-                    self.indice += 0.005
+                    self.indice += 0.7
                     self.movimento = 100
+                else:
+                    self.movimento = 0
         elif self.golpe:
             if  self.indice < limite:
                 self.indice += 0.5
@@ -352,19 +354,59 @@ def aplicar_movimentacao(self, gravidadeY, oponente):
     colisao_direita = False
     
 # RECUPERAR ENTRADA DE COMANDOS
-def monitorar_teclas_movimento(self, oponente):
+def monitorar_teclas_movimento(self, evg):
+    
+    pressionando = pg.key.get_pressed()
+    tecla = 0
 
-        tecla = pg.key.get_pressed()
+    oponente = self.game.Player02
+        
+    if self.IDP == 'P2':
+        oponente = self.game.Player01
+
+    if self.game.luta_encerrada:
+        self.movimento = 0
+
+    elif evg.type == pg.KEYDOWN or True in pressionando:
+
+        if evg.type == pg.KEYDOWN:
+            tecla = evg.key
+
+        if self.game.luta_encerrada == False:
+            if tecla == self.tecla_soco and self.movimento in [0,1,2] :
+                self.movimento = 10
+                self.golpe = True
+                self.indice = 0
+            if tecla == self.tecla_soco and self.movimento in [3] :
+                self.movimento = 11
+                self.golpe = True
+                self.indice = 0
+            if tecla == self.tecla_soco and self.movimento in [4,5,6] :
+                self.movimento = 11
+                self.golpe = True
+                self.indice = 0
+            if tecla == self.tecla_chute and self.movimento in [0,1,2] :
+                self.movimento = 12
+                self.golpe = True
+                self.indice = 0
+            if tecla == self.tecla_chute and self.movimento in [3] :
+                self.movimento = 13
+                self.golpe = True
+                self.indice = 0
+            if tecla == self.tecla_chute and self.movimento in [5,6]:
+                self.movimento = 14
+                self.golpe = True
+                self.indice = 0
 
         if self.golpe == False:
         # Diagonal esquerda
-                if tecla[self.tecla_cima] and self.pulo == 0 and tecla[self.tecla_esquerda]:                
+                if self.pulo == 0 and pressionando[self.tecla_cima] and pressionando[self.tecla_esquerda]:
                     self.pulo = 1
                     self.movimento = 5     
                     if self.BlocoMov.bottom == self.game.chao:  
                         self.indice = 0         
         # Diagonal Direita
-                elif tecla[self.tecla_cima] and self.pulo == 0 and tecla[self.tecla_direita]:
+                elif self.pulo == 0 and pressionando[self.tecla_cima] and pressionando[self.tecla_direita]:
                     self.pulo = 1
                     self.movimento = 6
                     if self.BlocoMov.bottom == self.game.chao:  
@@ -372,7 +414,7 @@ def monitorar_teclas_movimento(self, oponente):
                         
                 if self.pulo == 0:  
                     # Esquerda
-                    if tecla[self.tecla_esquerda]:
+                    if tecla == self.tecla_esquerda or pressionando[self.tecla_esquerda]:
                         self.movimento = 1
                         #colisão esquerda
                         # if self.esquerda == False and oponente.pulo == 0:
@@ -380,7 +422,7 @@ def monitorar_teclas_movimento(self, oponente):
                         #         # self.movimento = 0                                
                         #         colisao_esquerda = True
                     # Direita
-                    elif tecla[self.tecla_direita]:                     
+                    elif tecla == self.tecla_direita or pressionando[self.tecla_direita]:
                         self.movimento = 2
                         #colisão direita
                         # if self.esquerda and oponente.pulo == 0:
@@ -391,11 +433,14 @@ def monitorar_teclas_movimento(self, oponente):
                         self.movimento = 0
                     
                     # Pulo
-                    if tecla[self.tecla_cima] :                    
+                    if tecla == self.tecla_cima:                    
                         self.pulo = 1                    
                         self.movimento = 4
                         self.indice = 0
                     # Agacha
-                    elif tecla[self.tecla_baixo] :
+                    elif tecla == self.tecla_baixo:
                         self.movimento = 3         
-        
+    
+    elif evg.type == pg.KEYUP and self.pulo == 0 and self.golpe == False:
+        self.movimento = 0
+        self.indice = 0

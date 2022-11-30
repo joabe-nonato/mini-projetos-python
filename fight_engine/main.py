@@ -7,11 +7,11 @@ from player02 import *
 from stage import *
 from placar import *
 
-teclas = [pg.K_p, pg.K_k, pg.K_m, pg.K_l]
 
 class Game:
     def __init__(self) -> None:
         pg.init()
+        self.continuar = True
         self.Tela = pg.display.set_mode(TELA_RESOLUCAO)
         # self.Tela = pg.display.set_mode()
         self.fonte = pg.font.SysFont('arial', 19, True, False)
@@ -30,26 +30,26 @@ class Game:
 
         self.Estagio = Estagio(self)
         self.Placar = Placar(self)
-
         self.Player01 = Player01(self)
         self.Player02 = Player02(self)
-        
         
 
     def eventos(self):
         
-        for evento in pg.event.get():
-            if evento.type == pg.KEYDOWN:
-                if evento.type == pg.QUIT or evento.key == pg.K_ESCAPE:
-                    pg.quit()
-                    sys.exit()
-                elif  evento.key in teclas:
-                    self.Player01.Golpe(evento.key)
-                    self.Player02.Golpe(evento.key)
+        # pressionado = pg.key.get_pressed()
 
-        self.Player01.eventos()
-        self.Player02.eventos()
+        for evg in pg.event.get():
+            if evg.type == pg.QUIT:
+                self.continuar = False
+            elif (evg.type == pg.KEYDOWN or evg.type == pg.KEYUP) and evg.key == pg.K_ESCAPE:
+                    self.continuar = False
+            elif (evg.type == pg.KEYDOWN or evg.type == pg.KEYUP) or True in pg.key.get_pressed():
+                self.Player01.eventos(evg)
+                self.Player02.eventos(evg)
         
+        if self.continuar == False:
+            pg.quit()
+            sys.exit()
 
     def atualizar(self):        
         self.Relogio.tick(FPS)
@@ -75,7 +75,7 @@ class Game:
         self.Player02.desenhar()     
 
     def executar(self):    
-        while True:
+        while self.continuar:
             self.eventos()
             self.atualizar()
             self.desenhar()
