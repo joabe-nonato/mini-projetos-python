@@ -13,8 +13,7 @@ def redenderizar(self, cor):
     if DEBUG:
         pg.draw.rect(self.game.superficie, cor, self.BlocoMov, 2)        
         # pg.draw.rect(self.game.superficie, cor, self.BlocoImagem, 2)
-        pg.draw.rect(self.game.superficie, VERDE, self.bloco_golpe)
-
+        
 # def criarobjeto(posx, posy, larg, alt, velocidade_x = 1, velocidade_y = 1):
 #     return [pg.Rect(posx, posy, larg, alt), [velocidade_x, velocidade_y]]
 
@@ -154,6 +153,9 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
                     # É UMA CAIXA GOLPE
                     if bloco_colisao[4]:
 
+                        if DEBUG:
+                            pg.draw.rect(self.game.superficie, VERDE, bc)
+
                         for ebloc in oponente.colisoes:   
                             bc2 = pg.Rect(ebloc[0], ebloc[1], ebloc[2], ebloc[3])                         
                             if pg.Rect.colliderect(bc, bc2):
@@ -277,22 +279,23 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
                 self.golpe = False
             elif self.movimento in [14]:
                 if  self.indice < limite:
-                    self.indice += 0.15
+                    self.indice += 0.17
             else:
                 self.indice = 0
                 self.movimento = 0
                 self.golpe = False
-        # agachar e pulo 
+        # agachar 
         elif self.movimento in [3]:
             if  self.indice < limite:
-                self.indice += 0.1
-        elif self.movimento in [4]:
-            if  self.indice < limite:
                 self.indice += 1
-        # pulo diagonal
-        elif self.movimento in [5,6]:
+        # pulo 
+        elif self.movimento in [4,5,6, 11]:
             if  self.indice < limite:
-                self.indice += 0.15
+                self.indice += 0.17
+        # pulo diagonal
+        # elif self.movimento in [5,6]:
+        #     if  self.indice < limite:
+        #         self.indice += 0.15
         # direta esquerda
         else:
             if  self.indice > limite:
@@ -306,6 +309,8 @@ def aplicar_movimentacao(self, gravidadeY, oponente):
     global dy
     dx = self.BlocoMov.x
     dy = self.BlocoMov.y
+
+    # colide = pg.Rect.colliderect(self.BlocoMov, oponente.BlocoMov)
 
     colisao_direita = (int(self.BlocoMov.right) == int(oponente.BlocoMov.left))
     colisao_esquerda = (int(oponente.BlocoMov.right) == int(self.BlocoMov.left))

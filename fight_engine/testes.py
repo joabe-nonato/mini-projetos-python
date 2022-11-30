@@ -12,11 +12,25 @@ Relogio = pg.time.Clock()
 
 Diretorio = os.path.dirname(__file__)
 Imagens = os.path.join(Diretorio, 'imagens')
-sfc = pg.image.load(os.path.join(Imagens, 'ryu.png'))     
+sfc = pg.image.load(os.path.join(Imagens, 'basico.png'))
+tatame = pg.image.load(os.path.join(Imagens, 'tatame.png'))     
+
+superficie = pg.Surface(TELA_RESOLUCAO)
+
+ve1 = 100, 400
+ve1 = 100, 400
+ve2 = 200, 200
+vd3 = 300, 200
+vd4 = 400, 400
 
 
-golpe = ((170,460), (110,95))
-        
+def Poligono(indice):
+    # ve1 += ve1
+    # ve2 += ve2
+    # vd3 += vd3
+    # vd4 += vd4
+    pg.draw.polygon(Tela, 'Green', (ve1, ve2, vd3, vd4))
+
 continuar = True         
 while continuar:
     for evento in pg.event.get():
@@ -27,20 +41,16 @@ while continuar:
                     sys.exit()
 
     Tela.fill((255,255,255))
-# TESTES
-    r1 = pg.Rect((100,100), (150, 150))
-    
-    pg.draw.rect(Tela, 'Red', r1, 3)
 
-    r2 = pg.Rect((300,300), (300, 300))
-    r2.bottom = r1.bottom
-    r2.centerx = r1.centerx
+    for i in range(3):
+        Poligono(i)
+
+# TESTES
     
     # r2.centerx = r2.centerx - 50
-
-    pg.draw.rect(Tela, 'Blue', r2, 3)    
-    
-    Tela.blit(pg.transform.scale(sfc, (r2.width, r2.height)), (r2.x, r2.y))
+    # superficie.fill(ROSA)
+    # sfc.convert(superficie)
+    # Tela.blit(pg.transform.scale(sfc, (r2.width, r2.height)), (r2.x, r2.y))
     
 # FIM TESTES    
     Relogio.tick(FPS)

@@ -36,7 +36,6 @@ class Player01:
         self.colisoes = []
         self.pulo = 0       
         self.golpe = False 
-        self.bloco_golpe = pg.Rect(0,0,0,0)
         self.esquerda = True
         self.saude = BARRA_ENERGIA            
         self.movimento = 0 #0 = parado, 1 = esquerda, 2 = direita, 3 = agacha, 4 = pulo

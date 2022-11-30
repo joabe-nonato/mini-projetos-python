@@ -35,7 +35,6 @@ class Player02:
         self.colisoes = []
         self.pulo = 0        
         self.golpe = False 
-        self.bloco_golpe = pg.Rect(0,0,0,0)
         self.esquerda = False
         self.limite_esquerdo = False
         self.limite_direito = False        

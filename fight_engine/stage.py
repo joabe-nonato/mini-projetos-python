@@ -21,7 +21,7 @@ class Estagio:
 
         eixoY = self.game.Palco.top
 
-        self.game.superficie.blit(pg.transform.scale(self.bckgrd, (TELA_LARGURA * 2, self.game.Palco.h)), (eixoX, eixoY))
+        self.game.superficie.blit(pg.transform.scale(self.bckgrd, (TELA_LARGURA * 2, TELA_ALTURA)), (eixoX, eixoY))
 
 
     def chao(self):                
@@ -62,6 +62,7 @@ class Estagio:
 
     def desenhar(self):
         self.fundo()
-        self.chao()        
+        # self.chao()        
         # self.modelo()
+        pass
         

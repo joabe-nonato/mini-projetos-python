@@ -13,7 +13,7 @@ class Placar:
         self.spritebasico = spritebasico
         self.cronometo_frame = []
         self.CarregarFrame()
-        self.Principal = pg.Rect(0, 0, TELA_LARGURA, 100)
+        self.Principal = pg.Rect(0, 10, TELA_LARGURA, 100)
         self.moldura 
 
     def CarregarFrame(self):
