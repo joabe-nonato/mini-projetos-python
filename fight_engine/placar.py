@@ -11,7 +11,7 @@ class Placar:
         self.barra_altura = 40        
         self.barra_y = 40
         self.spritebasico = spritebasico
-        self.cronometo_frame = []
+        self.cronometro_frame = []
         self.CarregarFrame()
         self.Principal = pg.Rect(0, 10, TELA_LARGURA, 100)
         self.moldura 
@@ -24,7 +24,7 @@ class Placar:
         for frame in matriz_numero:
             # RECUPERA IMAGEM E ADICIONA NA LISTA
             imagem = spritesheet.subsurface(frame).convert(self.game.superficie)  
-            self.cronometo_frame.append(imagem)
+            self.cronometro_frame.append(imagem)
 
         self.moldura = spritesheet.subsurface((17, 82, 11, 11))
         
@@ -48,26 +48,50 @@ class Placar:
 
     def barra_energia(self, esquerda, saude):
                 
-        margem_lateral = 5
-               
-        branca_largura = (TELA_CENTRO_V - (margem_lateral * 2))        
-        
-        x = TELA_CENTRO_V + margem_lateral + 1
+        # margem_lateral = 5
+        borda_preta = pg.Rect(0,0,400, 40)
+        borda_preta.centery = self.Principal.centery
+                
+        barra_amarela = pg.Rect(0, 0, 400, 34)
+        barra_amarela.centery = self.Principal.centery
         
         if esquerda:
-            x = alinhar_centro(branca_largura, TELA_CENTRO_V) 
+            borda_preta.right = (self.Principal.centerx - 55)
+            barra_amarela.right = borda_preta.right
+            pg.draw.rect(self.game.superficie, AMARELO, barra_amarela) 
+        else:    
+            borda_preta.left = (self.Principal.centerx + 57)
+            barra_amarela.left = borda_preta.left
+            pg.draw.rect(self.game.superficie, AMARELO, barra_amarela) 
+
+
+        pg.draw.rect(self.game.superficie, PRETO, borda_preta, 3)
         
-        bar = pg.Rect(x, self.barra_y, branca_largura, self.barra_altura)
-        pg.draw.rect(self.game.superficie, BRANCO, bar, 3)
+        
 
-        pg.draw.rect(self.game.superficie, PRETO, bar) 
+        # barra_amarela.left = self.Principal.centerx
+        
+        
 
-        if esquerda:            
-            pg.draw.rect(self.game.superficie, AMARELO, (x, bar.y + 3, branca_largura , bar.h - 6))            
-            pg.draw.rect(self.game.superficie, VERMELHO, (x, bar.y + 3, self.reverter , bar.h - 6)) 
-        else:            
-            pg.draw.rect(self.game.superficie, AMARELO, (x, bar.y + 3, branca_largura , bar.h - 6)) 
-            pg.draw.rect(self.game.superficie, VERMELHO, (x, bar.y + 3, saude , bar.h - 6))
+        # branca_largura = (TELA_CENTRO_V - (margem_lateral * 2))        
+        
+        # x = TELA_CENTRO_V + margem_lateral + 1
+        
+        # if esquerda:
+        #     x = alinhar_centro(branca_largura, TELA_CENTRO_V) 
+        
+        # 
+        # pg.draw.rect(self.game.superficie, BRANCO, bar, 3)
+
+        # pg.draw.rect(self.game.superficie, PRETO, bar) 
+
+        # if esquerda:            
+        #     pg.draw.rect(self.game.superficie, AMARELO, (x, bar.y + 3, branca_largura , bar.h - 6))            
+        #     pg.draw.rect(self.game.superficie, VERMELHO, (x, bar.y + 3, self.reverter , bar.h - 6)) 
+        # else:            
+        #     pg.draw.rect(self.game.superficie, AMARELO, (x, bar.y + 3, branca_largura , bar.h - 6)) 
+        #     pg.draw.rect(self.game.superficie, VERMELHO, (x, bar.y + 3, saude , bar.h - 6))
+        pass
         
     def cronometro(self):
 ## CRONOMETRO        
@@ -96,7 +120,7 @@ class Placar:
         sprt.rect = pg.Rect(0, 0, numero_w, numero_h)
         sprt.rect.centery = self.Principal.centery
         sprt.rect.right = self.Principal.centerx
-        sprt.image = self.cronometo_frame[int(texto_tempo[0])]
+        sprt.image = self.cronometro_frame[int(texto_tempo[0])]
         sprt.image = pg.transform.scale(sprt.image, dimensao_crono)
         sprites.draw(self.game.superficie)
 
@@ -107,7 +131,7 @@ class Placar:
         sprt.rect = pg.Rect(0, 0, numero_w, numero_h)
         sprt.rect.centery = self.Principal.centery
         sprt.rect.left = self.Principal.centerx
-        sprt.image = self.cronometo_frame[int(texto_tempo[1])]
+        sprt.image = self.cronometro_frame[int(texto_tempo[1])]
         sprt.image = pg.transform.scale(sprt.image, dimensao_crono)
         sprites.draw(self.game.superficie)
 
@@ -116,9 +140,10 @@ class Placar:
 
 
     def desenhar(self):
+        self.cronometro()
         self.barra_energia(True, self.game.Player01.saude)
         self.barra_energia(False, self.game.Player02.saude)
-        self.cronometro()
+        
         
         if DEBUG:
             pg.draw.rect(self.game.superficie, AMARELO, self.Principal, 3)

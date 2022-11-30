@@ -11,10 +11,34 @@ class Estagio:
         self.top = 0
         self.hx = ((TELA_LARGURA // 2) * -1)
         self.dirimage = os.path.join(self.game.Imagens, "tatame.png")
-        # self.dirimage = os.path.join(self.game.Imagens, "fundo.png")
+        self.matriz_frame = []
         self.bckgrd = pg.image.load(self.dirimage)
         self.chaoImg = pg.image.load(os.path.join(self.game.Imagens, "chao.png"))
         
+    
+    def CarregarFrame(self):
+        
+        # RECUPERAR TODAS AS IMAGENS
+        spritesheet = pg.image.load(os.path.join(self.game.Imagens, self.spritebasico))
+        
+        for frame in matriz_numero:
+            # RECUPERA IMAGEM E ADICIONA NA LISTA
+            imagem = spritesheet.subsurface(frame).convert(self.game.superficie)  
+            self.cronometo_frame.append(imagem)
+
+        self.moldura = spritesheet.subsurface((17, 82, 11, 11))
+        
+
+    def eventos(self):
+        pass
+
+    def atualizar(self):
+        pass
+
+    def desenhar(self):
+        pass
+
+
     def fundo(self):        
         # dirimage = os.path.join(self.game.Imagens, "fundo.png")
         eixoX = (-400 - (self.game.Player01.BlocoMov.x * (0.2)))       
