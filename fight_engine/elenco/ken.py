@@ -4,7 +4,7 @@ spritesheet = "ryuB.png"
 gravidade =  (TELA_ALTURA * 0.032) #27px
 velocidade_x = 4 #frente
 velocidade_y = 0.8 #pulo
-velocidade_xy = 11 #pulo diagonal
+velocidade_xy = 7 #pulo diagonal
 largura = (TELA_LARGURA * 0.1593)   #largura = 204px
 altura = (TELA_ALTURA * 0.4625)     #altura = 444px
 dimensao_padrao = [largura, altura]
@@ -122,6 +122,16 @@ socoagachado = [
 [((552,838), (65,61)), (217, 230), [(0, 0, 220, 230, False, 5)]],
 [((482,838), (65,61)), (217, 230), [(0, 0, 220, 230, False, 5)]],
 ]
+
+# parado = [
+# # [((501,393), (69,61)), (187, 165), [(0, 0, 220, 230, False, 5)]],
+# # [((501,393), (69,61)), (187, 165), [(0, 0, 220, 230, False, 5)]],
+# # [((630,838), (93,61)), (300, 230), [(0, 0, 220, 230, False, 5), (100, 150, 200, 50, False, 5), (200, 155, 105, 40, True, 5)]],
+# # [((630,838), (93,61)), (300, 230), colisoes, ((100,70), (200,40))],
+# # [((552,838), (65,61)), (217, 230), [(0, 0, 220, 230, False, 5)]],
+# # [((482,838), (65,61)), (217, 230), [(0, 0, 220, 230, False, 5)]],
+# ]
+
 
 colisoes = [(50, 0, 100, 200, False, 10), (0, 170, 190, 150, False, 15)]
 voadoradiagonal = [

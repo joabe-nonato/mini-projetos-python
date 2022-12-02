@@ -35,10 +35,10 @@ class Player01:
         self.teclaprecionada = False
         self.colisoes = []
         self.pulo = 0       
-        self.golpe = False 
         self.esquerda = True
         self.saude = BARRA_ENERGIA            
         self.movimento = 0 #0 = parado, 1 = esquerda, 2 = direita, 3 = agacha, 4 = pulo
+        self.golpe = 0 
 
         self.BlocoMov = pg.Rect(alinhar_centro(datap[selecionado].largura, TELA_CENTRO_V, self.esquerda), self.game.chao, BLOCOMOV_LARGURA, BLOCOMOV_ALTURA)
         self.BlocoMov.bottom = self.game.chao

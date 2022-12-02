@@ -332,7 +332,7 @@ def aplicar_movimentacao(self, gravidadeY, oponente):
         if self.movimento in [5] and dx > 0:
             if colisao_esquerda == False:
                 dx -= self.velocidade_xy
-        # direita        
+    # direita        
         elif self.movimento in [6] and dx < (TELA_LARGURA - self.BlocoMov.w):
             if colisao_direita == False:
                 dx += self.velocidade_xy

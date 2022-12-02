@@ -52,8 +52,8 @@ class Placar:
 
         calculo = (saude * tamanho_barra / BARRA_ENERGIA)
 
-        borda_preta = pg.Rect(0,0,tamanho_barra, 40)
-        borda_preta.centery = self.Principal.centery
+        borda_barra = pg.Rect(0,0,tamanho_barra, 40)
+        borda_barra.centery = self.Principal.centery
                 
         barra_amarela = pg.Rect(0, 0, calculo, 34)
         barra_amarela.centery = self.Principal.centery
@@ -62,17 +62,17 @@ class Placar:
         barra_vermelha.centery = self.Principal.centery
         
         if esquerda:
-            borda_preta.right = (self.Principal.centerx - 46)
-            barra_amarela.right = barra_vermelha.right = borda_preta.right
+            borda_barra.right = (self.Principal.centerx - 39)
+            barra_amarela.right = barra_vermelha.right = borda_barra.right
             pg.draw.rect(self.game.superficie, VERMELHO, barra_vermelha)
             pg.draw.rect(self.game.superficie, AMARELO, barra_amarela) 
         else:    
-            borda_preta.left = (self.Principal.centerx + 47)
-            barra_amarela.left = barra_vermelha.left = borda_preta.left
+            borda_barra.left = (self.Principal.centerx + 40)
+            barra_amarela.left = barra_vermelha.left = borda_barra.left
             pg.draw.rect(self.game.superficie, VERMELHO, barra_vermelha)
             pg.draw.rect(self.game.superficie, AMARELO, barra_amarela) 
 
-        pg.draw.rect(self.game.superficie, PRETO, borda_preta, 3)
+        pg.draw.rect(self.game.superficie, BORDA, borda_barra, 3)
         
         
     def cronometro(self):
@@ -121,11 +121,10 @@ class Placar:
         #     pg.draw.rect(self.game.superficie, AMARELO, sprt.rect,2)
 
 
-    def desenhar(self):
-        self.cronometro()
+    def desenhar(self):        
         self.barra_energia(True, self.game.Player01.saude)
         self.barra_energia(False, self.game.Player02.saude)
-        
+        self.cronometro()
         
         if DEBUG:
             pg.draw.rect(self.game.superficie, AMARELO, self.Principal, 3)

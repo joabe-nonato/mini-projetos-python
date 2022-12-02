@@ -4,7 +4,7 @@ spritesheet = "ryu.png"
 gravidade =  (TELA_ALTURA * 0.032) #27px
 velocidade_x = 4 #frente
 velocidade_y = 0.8 #pulo
-velocidade_xy = 11 #pulo diagonal
+velocidade_xy = 7 #pulo diagonal
 largura = (TELA_LARGURA * 0.1593)   #largura = 204px
 altura = (TELA_ALTURA * 0.4625)     #altura = 444px
 dimensao_padrao = [largura, altura]
