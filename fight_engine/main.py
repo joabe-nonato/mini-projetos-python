@@ -35,21 +35,22 @@ class Game:
         
 
     def eventos(self):
-        
-        # pressionado = pg.key.get_pressed()
 
         for evg in pg.event.get():
             if evg.type == pg.QUIT:
                 self.continuar = False
             elif (evg.type == pg.KEYDOWN or evg.type == pg.KEYUP) and evg.key == pg.K_ESCAPE:
                     self.continuar = False
-            elif (evg.type == pg.KEYDOWN or evg.type == pg.KEYUP) or True in pg.key.get_pressed():
-                self.Player01.eventos(evg)
-                self.Player02.eventos(evg)
+            elif (evg.type == pg.KEYDOWN or evg.type == pg.KEYUP):
+                self.Player01.monitorar_golpes(evg)
+                self.Player02.monitorar_golpes(evg)
         
         if self.continuar == False:
             pg.quit()
             sys.exit()
+
+        self.Player01.monitorar_movimentos()
+        self.Player02.monitorar_movimentos()            
 
     def atualizar(self):        
         self.Relogio.tick(FPS)

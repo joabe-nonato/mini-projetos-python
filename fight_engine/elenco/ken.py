@@ -167,19 +167,18 @@ atingidoDePeRosto = [
 #altura = 444px
 
 
-personagem = [ 
-    parado
-    , frente
-    , tras
-    , agachado
-    , pulo
-    , pulo_frente
-    , pulo_tras
-    , socoforte 
-    , socoagachado
-    , chuteforte
-    , chuteagachado
-    , voadoradiagonal
-    , atingidoDePeRosto
-    
-]
+personagem = {
+      0 : parado
+    , 1 : frente
+    , 2 : tras
+    , 3 : agachado
+    , 4 : pulo
+    , 5 : pulo_frente
+    , 6 : pulo_tras
+    , 7 : socoforte 
+    , 8 : socoagachado
+    , 9 : chuteforte
+    , 10 : chuteagachado
+    , 11 : voadoradiagonal
+    , 12 : atingidoDePeRosto
+}

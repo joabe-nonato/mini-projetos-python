@@ -1,5 +1,5 @@
 
-DEBUG = False
+DEBUG = True
 FPS = 20
 GRAVIDADE = 9.8
 

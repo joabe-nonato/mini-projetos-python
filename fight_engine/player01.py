@@ -23,7 +23,7 @@ class Player01:
     def __init__(self, game) -> None:
         self.game = game        
         self.IDP = 'P1'         
-        self.indice = 0         
+               
         self.personagem = personagem[selecionado]
         self.spritesheet = spritesheet[selecionado]                
         self.gravidade = (gravidade[selecionado] * -1)                
@@ -37,8 +37,11 @@ class Player01:
         self.pulo = 0       
         self.esquerda = True
         self.saude = BARRA_ENERGIA            
+        
         self.movimento = 0 #0 = parado, 1 = esquerda, 2 = direita, 3 = agacha, 4 = pulo
+        self.indice = 0  
         self.golpe = 0 
+        self.golpeIndice = 0 
 
         self.BlocoMov = pg.Rect(alinhar_centro(datap[selecionado].largura, TELA_CENTRO_V, self.esquerda), self.game.chao, BLOCOMOV_LARGURA, BLOCOMOV_ALTURA)
         self.BlocoMov.bottom = self.game.chao
@@ -54,8 +57,12 @@ class Player01:
 
         animacao_comportamento(self, spritesheet, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, socoforte , socoagachado, chuteforte, chuteagachado, voadoradiagonal, atingidoDePeRosto)
 
-    def eventos(self, evg):
-        monitorar_teclas_movimento(self, evg)
+
+    def monitorar_golpes(self, evg):
+        monitorar_golpes(self, evg)
+
+    def monitorar_movimentos(self):
+        monitorar_movimentos(self)
 
     def atualizar(self):
         # self.esquerda = (self.BlocoMov.x < self.game.Player02.BlocoMov.x)

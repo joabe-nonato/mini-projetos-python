@@ -55,8 +55,11 @@ class Player02:
 
         animacao_comportamento(self, spritesheet, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, socoforte , socoagachado, chuteforte, chuteagachado, voadoradiagonal, atingidoDePeRosto)
 
-    def eventos(self, evg):
-        monitorar_teclas_movimento(self, evg)
+    def monitorar_golpes(self, evg):
+        monitorar_golpes(self, evg)
+
+    def monitorar_movimentos(self):
+        monitorar_movimentos(self)
 
     def atualizar(self):
         self.esquerda = (self.BlocoMov.x < self.game.Player01.BlocoMov.x)

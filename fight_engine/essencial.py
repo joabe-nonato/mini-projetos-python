@@ -178,11 +178,7 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
                         self.colisoes.append(bc)
                         if DEBUG:
                             pg.draw.rect(self.game.superficie, PRETO, bc, 2)
-                                        
-                    # if len(bloco_colisao) > 5:
-                    #     CALCULAR DANO
                     
-
                     retorno = bloco_colisao[4]
             return retorno
 
@@ -234,19 +230,20 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
         if self.movimento == 6: 
             generico = esquerda_direita(pulo_frente, pulo_tras)
 
-        if self.movimento == 10: 
+# GOLPES
+        if self.golpe == 10: 
             generico = socoforte           
 
-        if self.movimento == 11:
+        if self.golpe == 11:
             generico = socoagachado
 
-        if self.movimento == 12:
+        if self.golpe == 12:
             generico = chuteforte
         
-        if self.movimento == 13:
+        if self.golpe == 13:
             generico = chuteagachado
 
-        if self.movimento == 14:
+        if self.golpe == 14:
             generico = voadoradiagonal
         
         if self.movimento == 100:
@@ -263,7 +260,6 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
         sprt.image = retorno_imagem(self.esquerda, generico[int(self.indice)])
 
         colisoes(self, oponente,  generico[int(self.indice)])
-        
 
 ####################################################################
         if self.movimento in [100]:
@@ -273,33 +269,32 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
                     aplicar_movimentacao(self.game.Player02, self.game.Player02.gravidade, self.game.Player01)
                 else:
                     self.movimento = 0
-        elif self.golpe:
-            if  self.indice < limite:
-                self.indice += 0.5
-            elif self.movimento in [11] :
-                # self.indice = 0
-                # self.movimento = 0
-                self.golpe = False
-            elif self.movimento in [14]:
-                if  self.indice < limite:
-                    self.indice += 0.17
-            else:
-                self.indice = 0
-                self.movimento = 0
-                self.golpe = False
+
         # agachar 
         elif self.movimento in [3]:
             if  self.indice < limite:
                 self.indice += 1
+            else:
+                self.golpe = 0
+
         # pulo 
-        elif self.movimento in [4,5,6, 11]:
-            if  self.indice < limite:
+        elif self.movimento in [4,5,6]:
+
+            if self.indice > 0 and self.BlocoMov.bottom == self.game.chao:
+                self.movimento = 0
+                self.golpe = 0
+                self.indice = 0
+            elif  self.indice < limite:
                 self.indice += 0.17
-        # pulo diagonal
-        # elif self.movimento in [5,6]:
-        #     if  self.indice < limite:
-        #         self.indice += 0.15
-        # direta esquerda
+
+# GOLPES
+        elif self.golpe > 0:
+            if  self.indice < limite:
+                self.indice += 0.5
+            else:
+                self.indice = 0
+                self.movimento = 0
+                self.golpe = 0
         else:
             if  self.indice > limite:
                 self.indice = 0
@@ -308,40 +303,29 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
         
 # APLICAR MOVIMENTAÇÃO        
 def aplicar_movimentacao(self, gravidadeY, oponente):
-    global dx
-    global dy
+    # global dx
+    # global dy
     dx = self.BlocoMov.x
     dy = self.BlocoMov.y
 
-    # colide = pg.Rect.colliderect(self.BlocoMov, oponente.BlocoMov)
-
-    colisao_direita = (int(self.BlocoMov.right) == int(oponente.BlocoMov.left))
-    colisao_esquerda = (int(oponente.BlocoMov.right) == int(self.BlocoMov.left))
+    colide = pg.Rect.colliderect(self.BlocoMov, oponente.BlocoMov)
     
-    # esquerda 
-    if self.movimento in [1] and dx > 0:        
-        if colisao_esquerda == False:
+    if self.golpe == 0:
+        # esquerda
+        if self.movimento in [1] and dx > 0:
             dx -= self.velocidade_x
-     # direita        
-    elif self.movimento in [2] and dx < (TELA_LARGURA - self.BlocoMov.w):
-        if colisao_direita == False:
-            dx += self.velocidade_x        
-    
+        # direita        
+        elif self.movimento in [2] and dx < (TELA_LARGURA - self.BlocoMov.w):
+            dx += self.velocidade_x
+        
     #pulo diagonal
     if self.pulo:
         if self.movimento in [5] and dx > 0:
-            if colisao_esquerda == False:
-                dx -= self.velocidade_xy
+            dx -= self.velocidade_xy
     # direita        
         elif self.movimento in [6] and dx < (TELA_LARGURA - self.BlocoMov.w):
-            if colisao_direita == False:
-                dx += self.velocidade_xy
-        elif self.golpe or self.movimento in [5,6]:
-            if self.esquerda:
-                dx += self.velocidade_xy
-            else:
-                dx -= self.velocidade_xy
-
+            dx += self.velocidade_xy
+        
     #pulo reto
     if self.pulo == 1:
         self.gravidade += self.velocidade_y
@@ -353,97 +337,102 @@ def aplicar_movimentacao(self, gravidadeY, oponente):
             self.gravidade = (gravidadeY * -1)
             dy = (self.game.chao - self.BlocoMov.h)
                
+# AFASTAR AO SER GOLPEADO
     if self.movimento in [100] and dx > 0:        
         if self.esquerda:
             dx -= self.velocidade_x
         elif dx < (TELA_LARGURA - self.BlocoMov.w):
             dx += self.velocidade_x
 
-    self.BlocoMov.x = dx
-    self.BlocoMov.y = dy
 
-    colisao_esquerda = False
-    colisao_direita = False
-    
+    if colide and self.BlocoMov.bottom == self.game.chao and oponente.BlocoMov.bottom == self.game.chao: 
+        if oponente.movimento == 0:
+            if self.esquerda:
+                oponente.BlocoMov.x = (self.BlocoMov.w + dx)
+            else:
+                oponente.BlocoMov.right = self.BlocoMov.left
+    else:        
+        self.BlocoMov.x = dx
+        self.BlocoMov.y = dy
+
 # RECUPERAR ENTRADA DE COMANDOS
-def monitorar_teclas_movimento(self, evg):
+def monitorar_golpes(self, evg):
+    
+    tecla = 0
+
+    if self.game.luta_encerrada == False:
+        # self.movimento = 0
+
+        if evg.type == pg.KEYDOWN:
+            tecla = evg.key
+            # if tecla == self.tecla_soco :                
+            # if tecla == self.tecla_chute:
+            if tecla == self.tecla_soco and self.movimento in [0,1,2]:
+                # self.movimento = 10
+                self.golpe = 10
+                self.indice = 0
+            if tecla == self.tecla_soco and self.movimento in [3]:
+                # self.movimento = 11
+                self.golpe = 11
+                self.indice = 0
+            if tecla == self.tecla_soco and self.movimento in [4,5,6]:
+                # self.movimento = 11
+                self.golpe = 11
+                self.indice = 0
+            if tecla == self.tecla_chute and self.movimento in [0,1,2] :
+                # self.movimento = 12
+                self.golpe = 12
+                self.indice = 0
+            if tecla == self.tecla_chute and self.movimento in [3] :
+                # self.movimento = 13
+                self.golpe = 13
+                self.indice = 0
+            if tecla == self.tecla_chute and self.movimento in [5,6]:
+                # self.movimento = 14
+                self.golpe = 14
+                self.indice = 0
+        
+
+# MOVIMENTOS
+def monitorar_movimentos(self):
     
     pressionando = pg.key.get_pressed()
     tecla = 0
 
-    oponente = self.game.Player02
-        
-    if self.IDP == 'P2':
-        oponente = self.game.Player01
-
-    if self.game.luta_encerrada:
-        self.movimento = 0
-
-    elif evg.type == pg.KEYDOWN or True in pressionando:
-
-        if evg.type == pg.KEYDOWN:
-            tecla = evg.key
-
-        if self.game.luta_encerrada == False:
-            # if tecla == self.tecla_soco :                
-            # if tecla == self.tecla_chute:
-            if tecla == self.tecla_soco and self.movimento in [0,1,2]:
-                self.movimento = 10
-                self.golpe = True
-                self.indice = 0
-            if tecla == self.tecla_soco and self.movimento in [3]:
-                self.movimento = 11
-                self.golpe = True
-                self.indice = 0
-            if tecla == self.tecla_soco and self.movimento in [4,5,6]:
-                self.movimento = 11
-                self.golpe = True
-                self.indice = 0
-            if tecla == self.tecla_chute and self.movimento in [0,1,2] :
-                self.movimento = 12
-                self.golpe = True
-                self.indice = 0
-            if tecla == self.tecla_chute and self.movimento in [3] :
-                self.movimento = 13
-                self.golpe = True
-                self.indice = 0
-            if tecla == self.tecla_chute and self.movimento in [5,6]:
-                self.movimento = 14
-                self.golpe = True
-                self.indice = 0
-
-        if self.golpe == False:
-        # Diagonal esquerda
-                if self.pulo == 0 and pressionando[self.tecla_cima] and pressionando[self.tecla_esquerda]:
-                    self.pulo = 1
-                    self.movimento = 5     
-                    if self.BlocoMov.bottom == self.game.chao:  
-                        self.indice = 0         
-        # Diagonal Direita
-                elif self.pulo == 0 and pressionando[self.tecla_cima] and pressionando[self.tecla_direita]:
-                    self.pulo = 1
-                    self.movimento = 6
-                    if self.BlocoMov.bottom == self.game.chao:  
-                        self.indice = 0
-                        
-                if self.pulo == 0:  
-                    # Esquerda
-                    if tecla == self.tecla_esquerda or pressionando[self.tecla_esquerda]:
-                        self.movimento = 1
-                    # Direita
-                    elif tecla == self.tecla_direita or pressionando[self.tecla_direita]:
-                        self.movimento = 2
-                    else:
-                        self.movimento = 0                    
-                    # Pulo
-                    if tecla == self.tecla_cima or pressionando[self.tecla_cima]:                    
-                        self.pulo = 1                    
-                        self.movimento = 4
-                        self.indice = 0
-                    # Agacha
-                    elif tecla == self.tecla_baixo or pressionando[self.tecla_baixo]:
-                        self.movimento = 3         
+    if self.game.luta_encerrada == False and self.golpe == 0:
+    # Diagonal esquerda
+            if self.pulo == 0 and pressionando[self.tecla_cima] and pressionando[self.tecla_esquerda]:
+                self.pulo = 1
+                self.movimento = 5     
+                if self.BlocoMov.bottom == self.game.chao:  
+                    self.indice = 0         
+    # Diagonal Direita
+            elif self.pulo == 0 and pressionando[self.tecla_cima] and pressionando[self.tecla_direita]:
+                self.pulo = 1
+                self.movimento = 6
+                if self.BlocoMov.bottom == self.game.chao:  
+                    self.indice = 0
+                    
+            if self.pulo == 0:  
+                # Esquerda
+                if tecla == self.tecla_esquerda or pressionando[self.tecla_esquerda]:
+                    self.movimento = 1
+                # Direita
+                elif tecla == self.tecla_direita or pressionando[self.tecla_direita]:
+                    self.movimento = 2
+                else:
+                    self.movimento = 0                    
+                # Pulo
+                if tecla == self.tecla_cima or pressionando[self.tecla_cima]:                    
+                    self.pulo = 1                    
+                    self.movimento = 4
+                    self.indice = 0
+                # Agacha
+                elif tecla == self.tecla_baixo or pressionando[self.tecla_baixo]:
+                    self.movimento = 3         
     
-    elif evg.type == pg.KEYUP and self.pulo == 0 and self.golpe == False:
+    elif self.pulo == 0 and self.golpe == 0:
+    # else:
+        self.golpe = 0
         self.movimento = 0
         self.indice = 0
