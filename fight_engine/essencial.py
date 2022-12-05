@@ -150,7 +150,7 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
 # CALCULO PRINCIPAL DE GOLPES
                 if len(bloco_colisao) > 4:
 
-                    # É UMA CAIXA GOLPE
+                    # CAIXA DE GOLPE
                     if bloco_colisao[4]:
 
                         if DEBUG:
@@ -160,6 +160,7 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
                             bc2 = pg.Rect(ebloc[0], ebloc[1], ebloc[2], ebloc[3])                         
                             if pg.Rect.colliderect(bc, bc2):
                                 oponente.movimento = 100
+                                oponente.golpe = 0
                                 # oponente.indice = 0
                                 oponente_saude = 0
 
@@ -264,7 +265,7 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
 ####################################################################
         if self.movimento in [100]:
                 if  int(self.indice) < limite:
-                    self.indice += 0.5
+                    self.indice += 0.7
                     self.movimento = 100
                     aplicar_movimentacao(self.game.Player02, self.game.Player02.gravidade, self.game.Player01)
                 else:
@@ -307,10 +308,10 @@ def aplicar_movimentacao(self, gravidadeY, oponente):
     # global dy
     dx = self.BlocoMov.x
     dy = self.BlocoMov.y
-
+    
     colide = pg.Rect.colliderect(self.BlocoMov, oponente.BlocoMov)
     
-    if self.golpe == 0:
+    if self.golpe == 0 and self.movimento not in [100]:
         # esquerda
         if self.movimento in [1] and dx > 0:
             dx -= self.velocidade_x
@@ -340,10 +341,9 @@ def aplicar_movimentacao(self, gravidadeY, oponente):
 # AFASTAR AO SER GOLPEADO
     if self.movimento in [100] and dx > 0:        
         if self.esquerda:
-            dx -= self.velocidade_x
+            dx -= self.velocidade_x + 11
         elif dx < (TELA_LARGURA - self.BlocoMov.w):
-            dx += self.velocidade_x
-
+            dx += self.velocidade_x + 11
 
     if colide and self.BlocoMov.bottom == self.game.chao and oponente.BlocoMov.bottom == self.game.chao: 
         if oponente.movimento == 0:
@@ -360,7 +360,7 @@ def monitorar_golpes(self, evg):
     
     tecla = 0
 
-    if self.game.luta_encerrada == False:
+    if self.game.luta_encerrada == False and self.golpe == 0:
         # self.movimento = 0
 
         if evg.type == pg.KEYDOWN:

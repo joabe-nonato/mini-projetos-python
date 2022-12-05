@@ -15,6 +15,7 @@ matriz_numero = [
     [(154,0), (17,27)],
 ]
 
+# TEXTOS GERAIS
 spritebasico = "basico.png"
 
 ########################################
