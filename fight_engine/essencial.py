@@ -265,7 +265,7 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
 ####################################################################
         if self.movimento in [100]:
                 if  int(self.indice) < limite:
-                    self.indice += 0.7
+                    self.indice += 0.1
                     self.movimento = 100
                     aplicar_movimentacao(self.game.Player02, self.game.Player02.gravidade, self.game.Player01)
                 else:
@@ -341,9 +341,9 @@ def aplicar_movimentacao(self, gravidadeY, oponente):
 # AFASTAR AO SER GOLPEADO
     if self.movimento in [100] and dx > 0:        
         if self.esquerda:
-            dx -= self.velocidade_x + 11
+            dx -= (self.velocidade_x * 10)
         elif dx < (TELA_LARGURA - self.BlocoMov.w):
-            dx += self.velocidade_x + 11
+            dx += (self.velocidade_x * 10)
 
     if colide and self.BlocoMov.bottom == self.game.chao and oponente.BlocoMov.bottom == self.game.chao: 
         if oponente.movimento == 0:
