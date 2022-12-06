@@ -1,5 +1,6 @@
 import elenco.ryu as ryu
 import elenco.ken as ken
+import elenco.molde as molde
 
 # NUMEROS
 matriz_numero = [
@@ -19,36 +20,42 @@ matriz_numero = [
 spritebasico = "basico.png"
 
 ########################################
-datap = [ryu, ken]
+datap = [ryu, ken, molde]
 
 personagem = [
 ryu.personagem, 
-ken.personagem
+ken.personagem,
+molde.personagem,
 ]
 
 spritesheet = [
 ryu.spritesheet, 
-ken.spritesheet
+ken.spritesheet,
+molde.spritesheet,
 ]
 
 gravidade = [
 ryu.gravidade, 
-ken.gravidade
+ken.gravidade,
+molde.gravidade,
 ]
 
 velocidade_x = [
 ryu.velocidade_x, 
-ken.velocidade_x
+ken.velocidade_x,
+molde.velocidade_x
 ]
 
 velocidade_y = [
 ryu.velocidade_y, 
-ken.velocidade_y
+ken.velocidade_y,
+molde.velocidade_y
 ]
 
 velocidade_xy = [
 ryu.velocidade_xy, 
-ken.velocidade_xy
+ken.velocidade_xy,
+molde.velocidade_xy
 ]
 
 

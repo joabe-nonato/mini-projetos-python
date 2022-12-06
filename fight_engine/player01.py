@@ -3,7 +3,7 @@ from essencial import *
 from settings import *
 from data import *
 
-selecionado = 0
+selecionado = 2
 
 parado = []
 frente = []
