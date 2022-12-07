@@ -64,7 +64,24 @@ def carregar_movimentos(self, spritesheet,  inverter, lista_origem, numero, list
 
             lista_destino.append([imagem, transform, colisao])
 
-def animacao_comportamento(self, spritesheet, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, socoforte , socoagachado, chuteforte, chuteagachado, voadoradiagonal, atingidoDePeRosto):
+def animacao_comportamento(self, 
+spritesheet, 
+parado, 
+frente, 
+tras, 
+agachado, 
+pulo, 
+pulo_frente, 
+pulo_tras, 
+socoforte, 
+socoagachado, 
+chuteforte, 
+chuteagachado, 
+voadoradiagonal, 
+atingidoDePeRosto, 
+voadoravertical,
+socoaereo,
+atingidoQueda):
    
 # RECUPERAR TODAS AS IMAGENS
     spritesheet = pg.image.load(os.path.join(self.game.Imagens, self.spritesheet))    
@@ -95,16 +112,27 @@ def animacao_comportamento(self, spritesheet, parado, frente, tras, agachado, pu
     carregar_movimentos(self, spritesheet, False,  self.personagem, 9, chuteforte)
 # CHUTE AGACHADO
     carregar_movimentos(self, spritesheet, False,  self.personagem, 10, chuteagachado)
-# CHUTE VOADORA
+# CHUTE VOADORA DIAGONAL
     carregar_movimentos(self, spritesheet, False,  self.personagem, 11, voadoradiagonal)
     
-# CHUTE VOADORA
+# ATINGIDO NO ROSTO
     carregar_movimentos(self, spritesheet, False,  self.personagem, 12, atingidoDePeRosto)
+
+# CHUTE VOADORA VERTICAL
+    carregar_movimentos(self, spritesheet, False,  self.personagem, 13, voadoravertical)
+
+# SOCO AEREO
+    carregar_movimentos(self, spritesheet, False,  self.personagem, 14, socoaereo)
+
+# ATINGIDO E QUEDA
+    carregar_movimentos(self, spritesheet, False,  self.personagem, 15, atingidoQueda)
+
+
 # VITORIA
     # carregar_movimentos(self, spritesheet, False,  self.personagem[6], vitoria)
 
 # APLICAR ANIMAÇÕES
-def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, socoforte , socoagachado, chuteforte, chuteagachado, voadoradiagonal, atingidoDePeRosto):
+def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, socoforte , socoagachado, chuteforte, chuteagachado, voadoradiagonal, atingidoDePeRosto, voadoravertical, socoaereo, atingidoQueda):
         
         limite = 0  
 
@@ -159,13 +187,19 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
                         for ebloc in oponente.colisoes:   
                             bc2 = pg.Rect(ebloc[0], ebloc[1], ebloc[2], ebloc[3])                         
                             if pg.Rect.colliderect(bc, bc2):
-                                oponente.movimento = 100
+                                
                                 oponente.golpe = 0
                                 # oponente.indice = 0
                                 oponente_saude = 0
 
                                 if len(ebloc) > 5:
                                     oponente_saude = ebloc[5]
+
+                                if len(ebloc) > 6:
+                                    # # # # ADICIONAR LÓGICA DE IDENTIFICAÇÃO DE GOLPE
+                                    oponente_saude = ebloc[6]
+                                else:
+                                    oponente.movimento = 100
                                     
                                 if DEBUG:
                                     pg.draw.rect(self.game.superficie, VERMELHO, bc2)
@@ -247,8 +281,17 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
         if self.golpe == 14:
             generico = voadoradiagonal
         
+        if self.golpe == 15:
+            generico = voadoravertical
+        
+        if self.golpe == 16:
+            generico = socoaereo
+        
         if self.movimento == 100:
             generico = atingidoDePeRosto
+
+        if self.movimento == 101:
+            generico = atingidoQueda
 
         limite = calcular_limite(generico)
             
@@ -375,10 +418,6 @@ def monitorar_golpes(self, evg):
                 # self.movimento = 11
                 self.golpe = 11
                 self.indice = 0
-            if tecla == self.tecla_soco and self.movimento in [4,5,6]:
-                # self.movimento = 11
-                self.golpe = 11
-                self.indice = 0
             if tecla == self.tecla_chute and self.movimento in [0,1,2] :
                 # self.movimento = 12
                 self.golpe = 12
@@ -390,6 +429,14 @@ def monitorar_golpes(self, evg):
             if tecla == self.tecla_chute and self.movimento in [5,6]:
                 # self.movimento = 14
                 self.golpe = 14
+                self.indice = 0
+            if tecla == self.tecla_chute and self.movimento in [4]:
+                # self.movimento = 14
+                self.golpe = 15
+                self.indice = 0
+            if tecla == self.tecla_soco and self.movimento in [4,5,6]:
+                # self.movimento = 11
+                self.golpe = 16
                 self.indice = 0
         
 

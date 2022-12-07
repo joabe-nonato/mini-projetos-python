@@ -18,7 +18,9 @@ chuteforte = []
 chuteagachado = []
 voadoradiagonal = []
 atingidoDePeRosto = []
-
+voadoravertical = []
+socoaereo = []
+atingidoQueda = []
 
 class Player02:
     def __init__(self, game) -> None:
@@ -53,7 +55,7 @@ class Player02:
         global gravidadeY
         gravidadeY = gravidade[selecionado]
 
-        animacao_comportamento(self, spritesheet, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, socoforte , socoagachado, chuteforte, chuteagachado, voadoradiagonal, atingidoDePeRosto)
+        animacao_comportamento(self, spritesheet, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, socoforte , socoagachado, chuteforte, chuteagachado, voadoradiagonal, atingidoDePeRosto, voadoravertical, socoaereo, atingidoQueda)
 
     def monitorar_golpes(self, evg):
         monitorar_golpes(self, evg)
@@ -71,7 +73,7 @@ class Player02:
 
         # executar animações
         sprites = pg.sprite.Group()  
-        animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, socoforte , socoagachado, chuteforte, chuteagachado, voadoradiagonal, atingidoDePeRosto)
+        animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, socoforte , socoagachado, chuteforte, chuteagachado, voadoradiagonal, atingidoDePeRosto, voadoravertical, socoaereo, atingidoQueda)
         sprites.draw(self.game.superficie)
         
         informacoes(self.game,'Red', f'P2 e:{self.esquerda} x:{self.BlocoMov.x} y:{self.BlocoMov.y} w:{self.BlocoMov.w} d:{self.movimento} g:{self.gravidade}', (TELA_LARGURA // 2) + 20, 200)

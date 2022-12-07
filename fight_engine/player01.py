@@ -3,7 +3,7 @@ from essencial import *
 from settings import *
 from data import *
 
-selecionado = 2
+selecionado = 0
 
 parado = []
 frente = []
@@ -18,6 +18,10 @@ chuteforte = []
 chuteagachado = []
 voadoradiagonal = []
 atingidoDePeRosto = []
+voadoravertical = []
+socoaereo = []
+atingidoQueda = []
+
 
 class Player01:
     def __init__(self, game) -> None:
@@ -55,7 +59,7 @@ class Player01:
         global gravidadeY
         gravidadeY = gravidade[selecionado]
 
-        animacao_comportamento(self, spritesheet, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, socoforte , socoagachado, chuteforte, chuteagachado, voadoradiagonal, atingidoDePeRosto)
+        animacao_comportamento(self, spritesheet, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, socoforte , socoagachado, chuteforte, chuteagachado, voadoradiagonal, atingidoDePeRosto, voadoravertical, socoaereo, atingidoQueda)
 
 
     def monitorar_golpes(self, evg):
@@ -77,7 +81,7 @@ class Player01:
 
         # executar animações
         sprites = pg.sprite.Group()  
-        animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, socoforte , socoagachado, chuteforte, chuteagachado, voadoradiagonal, atingidoDePeRosto)
+        animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, socoforte , socoagachado, chuteforte, chuteagachado, voadoradiagonal, atingidoDePeRosto, voadoravertical, socoaereo, atingidoQueda)
         sprites.draw(self.game.superficie)
         
         informacoes(self.game,'Blue', f'P1 e:{self.esquerda} x:{self.BlocoMov.x} y:{self.BlocoMov.y} w:{self.BlocoMov.w} h:{self.BlocoMov.h} d:{self.movimento} g:{self.gravidade}', 10, 200)            
