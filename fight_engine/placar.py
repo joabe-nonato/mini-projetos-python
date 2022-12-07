@@ -39,7 +39,7 @@ class Placar:
             self.game.luta_encerrada = True
         else:
             self.game.luta_encerrada = True
-
+        
         # # TESTE TESTE TESTE        
         # if self.game.Tempo > 0 and self.game.Player01.saude > 0 and self.game.Player02.saude > 0:
         #     self.reverter += int(self.velocidade)

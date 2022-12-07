@@ -14,7 +14,7 @@ bloco_golpe = (10,10, 20, 30)
 # [[(DIMENSOES IMAGEM ORIGEM), (DIMENSAO IMAGEM DESTINO), [(COLISAO6),(COLISAO3),(COLISAO01)], (BLOCO GOLPE)]
 
 colisao = (0, 0, 100,100) # esquerda, topo, largura, altura, golpe, valor
-colisoes = [(0, 0, 170, 100, False, 10), (10, 100, 140, 170, False, 15), (50, 250, 80, 50, False, 20)]
+colisoes = [(0, 0, 170, 100, False, 10, 14), (10, 100, 140, 170, False, 15, 15), (50, 250, 80, 50, False, 20)]
 
 parado = [
  [((0,0),  (60,100)), dimensao_padrao, colisoes]
@@ -51,7 +51,7 @@ pulo = [
 [((60,237), (60,110)),  (163, 333), [(0, 10, 140, 310, False, 10)]],
 [((131,226), (60,100)), (163, 333), [(0, 30, 140, 300, False, 10)]],
 [((190,226), (60,100)), (163, 333), [(0, 70, 140, 260, False, 10)]],
-[((251,233), (60,100)), (163, 333),  [(0, 90, 140, 240, False, 10)]],
+[((251,233), (60,100)), (163, 333), [(0, 90, 140, 240, False, 10)]],
 [((311,227), (55,100)), (163, 333), [(0, 30, 140, 290, False, 10)]],
 [((368,238), (56,110)), (163, 333), [(0, 0, 140, 310, False, 10)]],
 ]
@@ -179,6 +179,8 @@ atingidoQueda = [
 # [((903, 1802), (54, 80)), (150, 214), [(0, 0, 100, 100, False, 10)]],
 # ]
 
+defesaEmPe = []
+
 personagem = {
       0 : parado
     , 1 : frente
@@ -186,14 +188,21 @@ personagem = {
     , 3 : agachado
     , 4 : pulo
     , 5 : pulo_frente
-    , 6 : pulo_tras
+    , 6 : pulo_tras        
     , 7 : socoforte 
     , 8 : socoagachado
     , 9 : chuteforte
     , 10 : chuteagachado
-    , 11 : voadoradiagonal
-    , 12 : atingidoDePeRosto
-    , 13 : voadoravertical
-    , 14 : socoaereo
-    , 15 : atingidoQueda
+    , 11 : voadoradiagonal    
+    , 12 : voadoravertical
+    , 13 : socoaereo
+    , 14 : atingidoQueda
+    , 15 : atingidoDePeRosto
+    
+    # , 7 : defesaEmPe
+    # , 8 : defesaAgachado
+    # , 8 : defesaNoAr
+    # , 9 : RapidoFrente
+    # , 9 : RapidoTras
+    
 }
