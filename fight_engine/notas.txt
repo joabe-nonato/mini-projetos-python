@@ -1,2 +1,0 @@
-links:
-https://humberto.io/pt-br/blog/desbravando-o-pygame-5-movimento-e-colisao/
