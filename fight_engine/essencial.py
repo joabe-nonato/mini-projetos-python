@@ -196,7 +196,6 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
                                     oponente_saude = ebloc[5]
 
                                 if len(ebloc) > 6:
-                                    # # # # ADICIONAR LÓGICA DE IDENTIFICAÇÃO DE GOLPE
                                     oponente_saude = ebloc[6]
                                 else:
                                     oponente.movimento = 100
@@ -296,7 +295,6 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
         limite = calcular_limite(generico)
             
         oponente = self.game.Player02
-
         if self.IDP == 'P2':
             oponente = self.game.Player01
 
@@ -307,12 +305,13 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
 
 ####################################################################
         if self.movimento in [100]:
-                if  int(self.indice) < limite:
+                if  int(self.indice) <= limite:
                     self.indice += 0.1
                     self.movimento = 100
-                    aplicar_movimentacao(self.game.Player02, self.game.Player02.gravidade, self.game.Player01)
+                    aplicar_movimentacao(self, oponente)
                 else:
                     self.movimento = 0
+                    self.indice = 0
 
         # agachar 
         elif self.movimento in [3]:
@@ -346,9 +345,10 @@ def animacao(self, sprites, parado, frente, tras, agachado, pulo, pulo_frente, p
                 self.indice += 0.1
         
 # APLICAR MOVIMENTAÇÃO        
-def aplicar_movimentacao(self, gravidadeY, oponente):
+def aplicar_movimentacao(self, oponente):
     # global dx
     # global dy
+    gravidadeY = self.gravidadeY
     dx = self.BlocoMov.x
     dy = self.BlocoMov.y
     
@@ -384,9 +384,9 @@ def aplicar_movimentacao(self, gravidadeY, oponente):
 # AFASTAR AO SER GOLPEADO
     if self.movimento in [100] and dx > 0:        
         if self.esquerda:
-            dx -= (self.velocidade_x * 10)
+            dx -= (self.velocidade_x * 2.3)
         elif dx < (TELA_LARGURA - self.BlocoMov.w):
-            dx += (self.velocidade_x * 10)
+            dx += (self.velocidade_x * 2.3)
 
     if colide and self.BlocoMov.bottom == self.game.chao and oponente.BlocoMov.bottom == self.game.chao: 
         if oponente.movimento == 0:

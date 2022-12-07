@@ -52,8 +52,7 @@ class Player02:
         self.tecla_soco = pg.K_m
         self.tecla_chute = pg.K_n
 
-        global gravidadeY
-        gravidadeY = gravidade[selecionado]
+        self.gravidadeY = gravidade[selecionado]
 
         animacao_comportamento(self, spritesheet, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, socoforte , socoagachado, chuteforte, chuteagachado, voadoradiagonal, atingidoDePeRosto, voadoravertical, socoaereo, atingidoQueda)
 
@@ -65,7 +64,7 @@ class Player02:
 
     def atualizar(self):
         self.esquerda = (self.BlocoMov.x < self.game.Player01.BlocoMov.x)
-        aplicar_movimentacao(self, gravidadeY, self.game.Player01)        
+        aplicar_movimentacao(self, self.game.Player01)        
 
     def desenhar(self):
         

@@ -46,6 +46,7 @@ class Player01:
         self.indice = 0  
         self.golpe = 0 
         self.golpeIndice = 0 
+        self.gravidadeY = gravidade[selecionado]
 
         self.BlocoMov = pg.Rect(alinhar_centro(datap[selecionado].largura, TELA_CENTRO_V, self.esquerda), self.game.chao, BLOCOMOV_LARGURA, BLOCOMOV_ALTURA)
         self.BlocoMov.bottom = self.game.chao
@@ -55,12 +56,9 @@ class Player01:
         self.tecla_baixo = pg.K_s
         self.tecla_soco = pg.K_p
         self.tecla_chute = pg.K_k
+        self.tecla_magia = pg.K_o
         
-        global gravidadeY
-        gravidadeY = gravidade[selecionado]
-
         animacao_comportamento(self, spritesheet, parado, frente, tras, agachado, pulo, pulo_frente, pulo_tras, socoforte , socoagachado, chuteforte, chuteagachado, voadoradiagonal, atingidoDePeRosto, voadoravertical, socoaereo, atingidoQueda)
-
 
     def monitorar_golpes(self, evg):
         monitorar_golpes(self, evg)
@@ -73,7 +71,7 @@ class Player01:
         if self.BlocoMov.bottom == self.game.chao:
             self.esquerda = (self.BlocoMov.x < self.game.Player02.BlocoMov.x)
 
-        aplicar_movimentacao(self, gravidadeY, self.game.Player02)        
+        aplicar_movimentacao(self, self.game.Player02)        
 
     def desenhar(self):
         
