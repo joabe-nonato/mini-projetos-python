@@ -1,6 +1,8 @@
 
+
 class Funcao:
     def __init__(self) -> None:
+        # self.diretorio = os.listdir("D:\teste")
         pass
 
     def Menu(self):
@@ -14,6 +16,9 @@ class Funcao:
         pass
 
     def CopiarPara(self):
+        
+        
+
         pass
 
     
